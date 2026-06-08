@@ -27,21 +27,6 @@
 
 ================================================================================
 
-                          .--.   ⚠  CRITICAL SYSTEMS  ⚠   .--.
-                         /    \                           /    \
-                        | CORE |     [ REACTOR  ]        | CTRL |
-                         \    /    /             \         \    /
-                          '--'   /   [  VESSEL  ]  \        '--'
-                                |     [  FUEL  ]    |
-                                |    /           \   |
-                          .--. /   / [COOLANT LOOP]\  \ .--.
-                         /    X  /                  \  X    \
-                        | OT  |/  <-- SCADA / ICS -->  \| IT |
-                         \    /                          \    /
-                          '--'    CYBER-PHYSICAL BRIDGE   '--'
-
-================================================================================
-
   COURSE THEMES
   ─────────────────────────────────────────────────────────────────────────────
 
@@ -65,11 +50,6 @@
 
   [7] EMERGING CHALLENGES
       └── AI/ML in reactor control, digital twin vulnerabilities, SMRs
-
-================================================================================
-
-  PREREQUISITES:  CS 481 or equivalent ICS/network security background
-  REPOSITORY:     https://github.com/BoiseState/CS581
 
 ================================================================================
 
