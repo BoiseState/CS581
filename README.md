@@ -27,32 +27,6 @@
 
 ================================================================================
 
-  COURSE THEMES
-  ─────────────────────────────────────────────────────────────────────────────
-
-  [1] FOUNDATIONS OF NUCLEAR SYSTEMS
-      └── Reactor architecture, safety systems, control logic, failure modes
-
-  [2] INDUSTRIAL CONTROL SYSTEMS (ICS/SCADA)
-      └── OT vs IT security, Purdue model, protocol analysis (Modbus, DNP3)
-
-  [3] THREAT LANDSCAPE
-      └── Nation-state actors, insider threats, Stuxnet & beyond
-
-  [4] CYBER-PHYSICAL ATTACK VECTORS
-      └── Sensor spoofing, logic bomb injection, safety system bypass
-
-  [5] REGULATORY & COMPLIANCE FRAMEWORKS
-      └── NRC 10 CFR 73.54, NEI 08-09, IEC 62443, NIST SP 800-82
-
-  [6] DEFENSE-IN-DEPTH & RESILIENCE
-      └── Network segmentation, supply chain integrity, incident response
-
-  [7] EMERGING CHALLENGES
-      └── AI/ML in reactor control, digital twin vulnerabilities, SMRs
-
-================================================================================
-
                 "Security is not a product, but a process —
                  and for nuclear systems, that process never stops."
 
