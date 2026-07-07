@@ -1,0 +1,330 @@
+\documentclass[9pt]{extarticle}
+\usepackage[margin=1in, top=0.85in, bottom=0.85in]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{mdframed}
+
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\setlength{\multicolsep}{4pt}
+\setlength{\columnsep}{14pt}
+
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+\titlespacing*{\subsection}{0pt}{8pt}{3pt}
+
+\setlist{noitemsep, topsep=2pt, partopsep=0pt, parsep=0pt}
+
+\begin{document}
+
+\begin{center}
+    {\large\textbf{CS 581 --- Nuclear Cybersecurity}} \\[2pt]
+    {\normalsize\textbf{Companion Document: AI Coding Assistants in This Course}} \\[1pt]
+    {\normalsize Boise State University \quad|\quad Fall 2026}
+\end{center}
+\vspace{4pt}
+
+%------------------------------------------------------------
+\section*{Why This Course Requires an AI Coding Assistant}
+%------------------------------------------------------------
+
+This course requires every student to use an AI Coding Assistant throughout the
+semester. This is not a convenience --- it is a deliberate professional choice.
+
+Nuclear cybersecurity practitioners at national laboratories, utilities, and
+regulatory agencies are already using AI-assisted tools to draft threat models,
+analyze regulatory documents, triage incidents, and produce security assessments
+at greater depth than was previously possible. A graduate course that ignores
+this reality would be preparing you for a profession that no longer exists.
+
+More importantly: the capabilities covered in this document --- thinking modes,
+function calling, structured output, multimodal analysis, and MCP tool
+integration --- are not features. \textbf{They are the skills this course builds.}
+Each workshop is designed around one or more of these capabilities applied to a
+real nuclear security problem.
+
+%------------------------------------------------------------
+\section*{Choosing Your Tool}
+%------------------------------------------------------------
+
+Selecting your AI Coding Assistant is the first real decision of this course ---
+and it is itself an assignment. You will evaluate and justify your choice based
+on the capability dimensions below. You may use one tool for the entire semester
+or combine tools by task; either approach is valid if you can defend it.
+
+\textbf{Evaluate any candidate tool against these capability areas:}
+
+\begin{itemize}
+    \item \textbf{Thinking \& Reasoning Depth} --- Does it support configurable
+          reasoning modes (deep vs.\ fast)? Can it reason between tool calls?
+          Does it preserve reasoning across turns?
+    \item \textbf{Context Length} --- How much can it hold in a single session?
+          Loading full regulatory documents requires significant context capacity.
+    \item \textbf{Function Calling \& Tool Use} --- Can it invoke external tools,
+          APIs, or scripts during a session? This is essential for live data workflows.
+    \item \textbf{Structured Output} --- Can it reliably return JSON or other
+          defined formats? Required for compliance matrices and threat models.
+    \item \textbf{Vision \& Multimodal Input} --- Can it analyze images, diagrams,
+          and PDFs? Critical for architecture review and document analysis.
+    \item \textbf{MCP / Tool Integration} --- Does it support Model Context Protocol
+          servers for web search, document reading, and live data access?
+    \item \textbf{Provenance \& Trust} --- Who built it, where is data processed,
+          and is it appropriate for use with sensitive security content?
+\end{itemize}
+
+The last criterion is non-negotiable in nuclear security contexts. Only tools
+developed and hosted by US-based providers with clear data handling policies
+are appropriate for this course.
+
+Regardless of tool, you are responsible for the accuracy of everything you submit.
+Verify all regulatory citations, technical claims, and system-specific assertions
+against primary sources.
+
+%------------------------------------------------------------
+\section*{Core Capabilities --- The Skills You Are Building}
+%------------------------------------------------------------
+
+The following capabilities are not optional features to explore. They are the
+technical foundation of AI-assisted security work. You will use each of them
+in the course workshops.
+
+\subsection*{1. Thinking Modes \& Deep Reasoning}
+
+Modern AI coding assistants support configurable reasoning depth. Understanding
+when and how to engage deep thinking is itself a professional skill.
+
+\medskip
+
+\textbf{What it is:} Deep Thinking enables Chain-of-Thought reasoning --- the model
+works through a problem systematically before producing an answer. This
+significantly improves accuracy on complex, multi-step analysis tasks.
+
+\medskip
+
+\textbf{Modes to look for in your chosen tool:}
+\begin{itemize}
+    \item \texttt{enabled} --- Model auto-decides when to think deeply (default)
+    \item \texttt{disabled} --- Direct answers, lower latency, for simple queries
+    \item \textbf{Interleaved Thinking} --- Reasoning occurs between tool calls,
+          allowing the model to interpret each result before deciding the next step
+    \item \textbf{Preserved Thinking} --- Retains reasoning from prior turns;
+          default on Coding Plan endpoints; critical for multi-session workflows
+    \item \texttt{reasoning\_effort} --- Scales from \texttt{none} to \texttt{max};
+          use \texttt{max} for threat modeling, regulatory analysis, and complex
+          incident scenarios
+\end{itemize}
+
+\textbf{Nuclear security application:} Enable deep thinking (\texttt{max} effort)
+for threat modeling, attack chain analysis, and regulatory gap assessment. Disable
+for simple lookups, format conversions, or quick summaries. Misjudging this
+wastes tokens and time --- or produces shallow analysis on complex problems.
+
+\medskip
+
+\textbf{Critical implementation note:} When using preserved or interleaved
+thinking, always return the complete, unmodified \texttt{reasoning\_content}
+back to the model. Truncating it degrades performance and breaks cache efficiency.
+
+\subsection*{2. Function Calling \& Tool Use}
+
+Function calling allows the AI to interact with external systems --- databases,
+APIs, file systems, and security tools --- during a session. This transforms
+the model from a text generator into an active analysis agent.
+
+\medskip
+
+\textbf{What it is:} You define callable functions (tools) with names, descriptions,
+and parameter schemas. The model decides when to invoke them, passes structured
+arguments, receives results, and reasons over the output before continuing.
+
+\medskip
+
+\textbf{Security-relevant applications:}
+\begin{itemize}
+    \item Query a CVE database during a vulnerability analysis session
+    \item Execute a network scan script and have the model interpret results
+    \item Pull NRC regulatory text from an API and map it to a control architecture
+    \item Retrieve ICS/SCADA log data and run anomaly detection routines
+    \item Chain multiple operations: search $\rightarrow$ analyze $\rightarrow$
+          draft recommendation
+\end{itemize}
+
+\textbf{Best practices:} Single responsibility per function. Validate all inputs.
+Log all calls. Implement permission controls. Never pass unvalidated user input
+directly to a function that executes code or queries a database.
+
+\textbf{Nuclear security application:} In the Monitoring \& Anomaly Detection
+workshop, you will build a function-calling workflow that queries a simulated
+ICS data stream, flags anomalies, and drafts an incident notification. This
+is the same pattern used in real SOC environments.
+
+\subsection*{3. Structured Output}
+
+Structured output forces the model to return data in a defined format ---
+typically JSON --- rather than free-form prose. This is essential when your
+output needs to be machine-readable, consistently formatted, or fed into
+another system.
+
+\medskip
+
+\textbf{What it is:} Set \texttt{response\_format: \{"type": "json\_object"\}}
+and define your expected schema in the system prompt. The model guarantees
+output conformance, enabling reliable programmatic processing.
+
+\medskip
+
+\textbf{Security-relevant applications:}
+\begin{itemize}
+    \item Threat models as structured JSON (actor, vector, likelihood, impact, mitigation)
+    \item Compliance matrices with pass/fail fields per regulatory requirement
+    \item Incident timelines with typed event fields
+    \item Vulnerability assessments with CVSS-style scoring fields
+    \item Configuration audit results with remediation status flags
+\end{itemize}
+
+\textbf{Best practices:} Start with simple schemas. Name fields explicitly.
+Add descriptions for each field in the system prompt. Implement validation
+against the schema after receiving output --- JSON mode reduces but does not
+eliminate malformed responses in complex scenarios.
+
+\textbf{Nuclear security application:} Your compliance matrix workshop (NRC 10 CFR
+73.54) will require structured output. A JSON-formatted compliance matrix can be
+imported directly into a spreadsheet or ticketing system --- exactly how this
+work is done at a licensed facility.
+
+\subsection*{4. Vision \& Multimodal Analysis}
+
+Vision Language Models (VLMs) accept images, diagrams, documents, and in some
+cases audio and video as inputs alongside text. This capability is particularly
+powerful for security work where evidence is rarely just text.
+
+\medskip
+
+\textbf{Modalities to look for in your chosen tool:}
+\begin{itemize}
+    \item \textbf{Images} --- Architecture diagrams, network maps, screenshots,
+          scanned documents
+    \item \textbf{Files / PDFs} --- Regulatory documents, configuration exports,
+          inspection reports
+    \item \textbf{Audio} --- Transcription of interviews or practitioner briefings
+    \item \textbf{OCR} --- Structured text extraction from scanned documents
+\end{itemize}
+
+\textbf{Security-relevant applications:}
+\begin{itemize}
+    \item Upload a network architecture diagram and ask the model to identify
+          attack surfaces and missing segmentation controls
+    \item Feed a scanned ICS schematic and map it to the Purdue Model zones
+    \item Analyze a screenshot of anomalous SCADA readings against baseline
+    \item Extract structured data from a scanned NRC inspection report
+\end{itemize}
+
+\textbf{Nuclear security application:} In the Physical Protection workshop, you will
+upload a facility diagram and use a VLM to identify cyber-physical intersection
+points --- where a digital compromise could affect a physical safety boundary.
+
+\subsection*{5. Model Context Protocol (MCP) Integration}
+
+MCPs extend the model's reach beyond its training data by connecting it to live
+external tools and data sources during a session.
+
+\medskip
+
+\textbf{Common MCP servers to look for:}
+\begin{itemize}
+    \item \textbf{Web Search} --- Real-time queries for current threat intelligence,
+          recent CVEs, and regulatory updates
+    \item \textbf{Web Reader} --- Full-page content extraction from URLs; feed the
+          model a live NRC advisory or CISA alert directly
+    \item \textbf{Vision} --- On-demand image analysis within a session
+    \item \textbf{Document Reader} --- Structured extraction from PDFs and reports
+\end{itemize}
+
+\textbf{Security-relevant applications:}
+\begin{itemize}
+    \item Pull the latest CISA ICS advisory and have the model assess applicability
+          to a specific nuclear plant architecture
+    \item Search for recent threat actor TTPs and incorporate them into a live
+          threat model
+    \item Read an NRC regulatory document and extract all applicable control
+          requirements automatically
+\end{itemize}
+
+\textbf{Nuclear security application:} The Insider Threat workshop will use Web
+Search + Web Reader MCPs to pull current case studies and have the model
+synthesize a threat profile grounded in recent real-world incidents --- not
+just training data.
+
+%------------------------------------------------------------
+\section*{Context Length \& Session Management}
+%------------------------------------------------------------
+
+Leading AI coding assistants support up to \textbf{1 million tokens of context}. This is not a
+trivial capability --- it means you can load entire regulatory frameworks,
+multi-document collections, or long session histories into a single working
+context. Used well, it eliminates the need to re-explain your problem across
+sessions.
+
+\medskip
+
+\textbf{Practical guidance:}
+\begin{itemize}
+    \item Load full regulatory documents at session start rather than pasting excerpts
+    \item Keep your session log as a running context --- preserved thinking benefits
+          from continuity across a multi-step analysis
+    \item Be aware that very large contexts increase latency and token cost; use
+          context caching where available
+    \item Maximum output tokens vary by model tier --- plan your prompts accordingly
+          for long deliverables like compliance matrices or threat models
+\end{itemize}
+
+%------------------------------------------------------------
+\section*{Academic Integrity in an AI-Assisted Course}
+%------------------------------------------------------------
+
+Using an AI Coding Assistant is \textbf{required}, not prohibited. However, the
+following remain your sole responsibility:
+
+\begin{itemize}
+    \item The accuracy of all regulatory citations and technical claims
+    \item The analysis, judgment, and conclusions in your work products
+    \item Understanding your submission well enough to discuss and defend it
+\end{itemize}
+
+Session logs are submitted with every assignment. They make your reasoning
+process visible. If you cannot explain or defend your submitted work in a
+follow-up discussion, it will not be counted.
+
+%------------------------------------------------------------
+\section*{Building Your Portfolio on GitHub}
+%------------------------------------------------------------
+
+Every workshop produces a real security artifact. Over the semester you will
+build: threat models, access control policies, protocol analyses, compliance
+matrices, monitoring plans, an incident response package, and a capstone project.
+
+\medskip
+
+\textbf{Repository structure:}
+\begin{itemize}
+    \item \texttt{/workshops} --- one folder per module; artifact + session log
+    \item \texttt{/project} --- semester project materials and interim drafts
+    \item \texttt{/written} --- ethics paper and final written analysis
+    \item \texttt{README.md} --- professional summary of the portfolio
+\end{itemize}
+
+A well-maintained repository is something you can link from a resume or share
+directly with a hiring manager. The combination of security artifacts and
+AI-assisted workflows is a differentiator that very few candidates currently have.
+
+\vspace{8pt}
+\hrule
+\vspace{4pt}
+{\small \textit{CS 581 --- Nuclear Cybersecurity \quad|\quad
+Christopher Spirito \quad|\quad
+\href{mailto:cspirito@boisestate.edu}{cspirito@boisestate.edu} \quad|\quad
+Fall 2026}}
+
+\end{document}

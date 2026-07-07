@@ -1,0 +1,291 @@
+\documentclass[9pt]{extarticle}
+\usepackage[margin=1in, top=0.85in, bottom=0.85in]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{multicol}
+\setlength{\multicolsep}{3pt}
+\setlength{\columnsep}{12pt}
+
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
+
+\setlist{noitemsep, topsep=1pt, partopsep=0pt, parsep=0pt}
+
+\begin{document}
+
+\begin{center}
+    {\large\textbf{CS 581 --- Nuclear Cybersecurity}} \\[2pt]
+    {\normalsize Security for Cyber-Physical \& Nuclear Systems} \\[1pt]
+    {\normalsize Boise State University \quad|\quad Fall 2026}
+\end{center}
+\vspace{2pt}
+
+%------------------------------------------------------------
+\section*{Course Information}
+%------------------------------------------------------------
+
+\textbf{Location}: Online -- Canvas; \textbf{Time}: Asynchronous \\
+Virtual Office Hours: Wed 11am--3pm MT / By Appointment \\
+Instructor: Christopher Spirito \\
+Email: \href{mailto:cspirito@boisestate.edu}{cspirito@boisestate.edu} ~|~ \href{mailto:chris.spirito@gmail.com}{chris.spirito@gmail.com}
+
+%------------------------------------------------------------
+\section*{Course Objectives and Learning Outcomes}
+%------------------------------------------------------------
+
+Security is paramount to creating software and systems that operate in
+high-consequence environments. This course introduces the fundamentals of
+cybersecurity and security engineering through the lens of the nuclear industry
+--- one of the most regulated, adversarially targeted, and safety-critical
+sectors in the world.
+
+\medskip
+
+Students will move beyond passive study: every module includes a hands-on
+\textbf{coding assignment} in which students use an \textbf{AI Coding Assistant}
+(e.g., Claude Code, Codex, Antigravity, or equivalent) to design, build,
+and iterate on working \textbf{security prototypes}. These prototypes --- threat
+models, access control implementations, anomaly detection sketches, compliance
+analysis tools, and incident response artifacts --- form a professional portfolio
+that students carry out of the course.
+
+\medskip
+
+Topics include vulnerability analysis, common exploits and defenses, applied
+cryptography, ICS/SCADA protocol security, nuclear command and control,
+insider threat, side-channel attacks, and emerging challenges at the intersection
+of AI and nuclear systems. The course consists of pre-recorded lectures,
+AI Coding Assistant workshops, individual and group coding activities, a mini-research
+experience, a semester project, and practitioner-led Zoom sessions.
+
+\subsection*{Course Topics}
+
+The course follows a deliberate eight-phase progression across 16 weeks,
+building from security foundations through to advanced and emerging threats.
+
+\medskip
+
+\begin{multicols}{2}
+
+\textbf{Phase 1 --- Foundations} \textit{(Wks 1--2)}
+\begin{itemize}
+    \item Computer Security Overview
+    \item Psychology of Security
+\end{itemize}
+
+\medskip
+
+\textbf{Phase 2 --- Threat Landscape} \textit{(Wks 3--4)}
+\begin{itemize}
+    \item Opponents \& Adversary Taxonomy
+    \item Insider Threat
+\end{itemize}
+
+\medskip
+
+\textbf{Phase 3 --- Technical Core} \textit{(Wks 5--7)}
+\begin{itemize}
+    \item Cryptography \& Protocol Security
+    \item Access Control \& Identity
+    \item ICS/SCADA \& Digital I\&C
+\end{itemize}
+
+\medskip
+
+\textbf{Phase 4 --- Nuclear Context} \textit{(Wks 8--9)}
+\begin{itemize}
+    \item Physical Protection \& Regulatory Frameworks
+    \item Nuclear Command \& Control
+    \item Economics of Security
+\end{itemize}
+
+\columnbreak
+
+{\setlength{\leftskip}{1.5em}
+\textbf{Phase 5 --- Defense \& Detection} \textit{(Wks 11--12)}
+\begin{itemize}
+    \item Monitoring, Metering \& Anomaly Detection
+    \item Supply Chain Security
+\end{itemize}
+
+\medskip
+
+\textbf{Phase 6 --- Incident Response} \textit{(Wk 13)}
+\begin{itemize}
+    \item IR in Nuclear Environments
+    \item Zimmerman's 10 Rules for IR
+\end{itemize}
+
+\medskip
+
+\textbf{Phase 7 --- Advanced \& Emerging} \textit{(Wks 14--15)}
+\begin{itemize}
+    \item Side Channels
+    \item AI, Autonomy \& SMRs
+    \item Emerging Threats
+\end{itemize}
+
+\medskip
+
+\textbf{Phase 8 --- Capstone} \textit{(Wk 16)}
+\begin{itemize}
+    \item Ethics \& Policy
+    \item Guest Practitioner Perspectives
+\end{itemize}
+}
+
+\end{multicols}
+
+%------------------------------------------------------------
+\section*{Texts and Materials}
+%------------------------------------------------------------
+
+\textbf{Required} \\
+\textit{Security Engineering} --- Ross Anderson (2nd and 3rd ed.) \\
+Relevant chapters are freely available at \href{https://www.cl.cam.ac.uk/~rja14/book.html}{https://www.cl.cam.ac.uk/\textasciitilde rja14/book.html}
+
+\medskip
+
+\textbf{Supplemental} \\
+Nuclear-sector primary sources assigned per module, including NRC regulatory
+guidance (10 CFR 73.54, RG 5.71), NEI 08-09, IAEA Nuclear Security Series
+documents, NIST SP 800-82, and selected academic papers on ICS/SCADA and
+cyber-physical system security.
+
+%------------------------------------------------------------
+\section*{Course Requirements}
+%------------------------------------------------------------
+
+\begin{minipage}[t]{0.52\textwidth}
+\vspace{0pt}\raggedright
+All assessments are real work products.
+
+\medskip
+
+\textbf{Participation} \\
+\textit{Attend and engage in at least 8 live Zoom sessions with invited expert practitioners.}
+
+\smallskip
+\textbf{Written Assignments} \\
+\textit{Ethics paper and one final written analysis, each grounded in primary sources.}
+
+\smallskip
+\textbf{Workshops \& Coding Assignments} \\
+\textit{AI Coding Assistant-driven security prototypes submitted with session logs each module.}
+
+\smallskip
+\textbf{Project \& Presentation} \\
+\textit{Semester-long deliverable on a student-selected topic; presented asynchronously in Week 15.}
+
+\smallskip
+\textbf{Practitioner Engagement} \\
+\textit{Written analysis connecting each guest speaker's experience to course material.}
+
+\smallskip
+\textbf{Midterm Scenario Exercise} \\
+\textit{Open-context nuclear incident scenario at Week 10; students produce a full response package.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.38\textwidth}
+\vspace{0pt}
+\begin{tabular}{lr}
+\toprule
+\textbf{Component} & \textbf{Points} \\
+\midrule
+Participation & 100 \\
+Written Assignments & 200 \\
+Workshops \& Coding Assignments & 300 \\
+Project \& Presentation & 200 \\
+Practitioner Engagement & 100 \\
+Midterm Scenario Exercise & 100 \\
+\midrule
+\textbf{Total} & \textbf{1000} \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+
+%------------------------------------------------------------
+\section*{Grade Policies}
+%------------------------------------------------------------
+
+\textbf{Submission} \\
+\textit{All assignments must be pushed to the student's course GitHub repository
+by 11:59pm MT on the due date.} Late submissions are subject to the following
+progressive penalty:
+
+\medskip
+
+\begin{minipage}[t]{0.45\textwidth}
+\raggedright
+\begin{tabular}{ll}
+\toprule
+\textbf{Lateness} & \textbf{Penalty} \\
+\midrule
+Up to 24 hours   & 10\% deduction \\
+24--48 hours     & 25\% deduction \\
+48--72 hours     & 50\% deduction \\
+72+ hours        & Not accepted \\
+\bottomrule
+\end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\raggedright
+\begin{tabular}{ll}
+\toprule
+\textbf{Points} & \textbf{Grade} \\
+\midrule
+$>$899   & A \\
+800--899 & B \\
+700--799 & C \\
+600--699 & D \\
+$<$600   & F \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+
+\medskip
+
+Grades are computed as a direct unweighted sum of all course components.
+Numerical grades are rounded to the nearest whole number (799.5 becomes 800,
+a B; 799.4 remains 799, also a B). Curves, if applied, will only ever move
+in your favor. Grade boundaries may be relaxed but never tightened.
+Grade summaries are posted on Canvas --- review your scores and report
+any discrepancies promptly. Individual assignments may contain optional
+extra credit components; no separate extra credit assignments will be offered.
+
+%------------------------------------------------------------
+\section*{Warning}
+%------------------------------------------------------------
+
+This course covers offensive security techniques with the objective of understanding
+how to design defenses. \textbf{Do not apply any technique, tool, or knowledge from
+this course against any real system without explicit prior written permission.}
+Unauthorized access is illegal, violates BSU network policy, and is incompatible
+with the professional standards of this field. When in doubt, stop and ask.
+
+%------------------------------------------------------------
+\section*{Course Conduct}
+%------------------------------------------------------------
+
+Treat all members of this course --- peers and instructor --- with respect.
+Engage with course materials consistently, meet deadlines, and communicate
+professionally in all course-related interactions. For email or messages,
+include a clear subject line and state your purpose concisely. Active
+participation in Zoom sessions with guest practitioners is expected and
+contributes directly to your grade. Use professional language in all forums.
+
+%------------------------------------------------------------
+\section*{Syllabus Changes}
+%------------------------------------------------------------
+
+This syllabus is a guide, not a contract. Deadlines, requirements, and course
+structure are subject to change at the instructor's discretion. Changes will
+be announced via Canvas and BSU email --- check both regularly.
+
+\end{document}
