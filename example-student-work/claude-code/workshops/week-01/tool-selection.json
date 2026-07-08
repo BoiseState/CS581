@@ -1,0 +1,56 @@
+{
+  "tool": "Claude Code",
+  "provider": "Anthropic",
+  "evaluation_date": "2026-08-25",
+  "version_evaluated": "claude-sonnet-4-6 / claude-opus-4",
+  "capabilities": {
+    "thinking_and_reasoning": {
+      "supported": true,
+      "depth_control": "reasoning_effort: none | low | medium | high | max",
+      "interleaved_thinking": true,
+      "notes": "Extended thinking available on Opus tier. Interleaved reasoning between tool calls is particularly useful for multi-step regulatory analysis — the model reasons about each result before deciding the next step. For threat modeling and compliance gap analysis, use max effort. For formatting or summarization tasks, low is sufficient and faster."
+    },
+    "context_length": {
+      "tokens": 200000,
+      "notes": "Sufficient to load full NRC RG 5.71, NEI 08-09, and a 100-page academic paper simultaneously. For context-heavy sessions (loading multiple regulatory documents), be aware of latency increase. Context caching is available and significantly reduces cost on repeated document loads."
+    },
+    "function_calling": {
+      "supported": true,
+      "parallel_tool_use": true,
+      "notes": "Tool use is a first-class feature. MCP servers extend this to live data. Can chain tool calls with reasoning between each step — critical for workflows like: fetch CVE data → analyze against plant architecture → draft mitigation recommendation."
+    },
+    "structured_output": {
+      "supported": true,
+      "json_mode": true,
+      "schema_enforcement": "via system prompt + tool use",
+      "notes": "Reliable JSON output when schema is specified in system prompt. For compliance matrices and threat models, define schema explicitly and validate output programmatically. Occasional field omission on complex schemas — implement validation."
+    },
+    "vision_multimodal": {
+      "supported": true,
+      "modalities": ["images", "PDFs", "text files"],
+      "notes": "Can analyze architecture diagrams, scanned regulatory documents, and network maps. Useful for Purdue Model zone analysis and physical/cyber intersection review. PDFs loaded via file input or MCP document reader."
+    },
+    "mcp_integration": {
+      "supported": true,
+      "available_servers": ["web-search", "web-reader", "filesystem", "github"],
+      "notes": "MCP is natively supported in Claude Code CLI. Web search and reader MCPs enable live threat intelligence pulls — critical for current CISA advisories and recent ICS incidents. Filesystem MCP allows reading local regulatory documents without copy-paste."
+    },
+    "provenance_trust": {
+      "provider": "Anthropic",
+      "us_based": true,
+      "data_handling": "Inputs not used for training by default on paid tiers. Enterprise agreements available with additional data handling commitments.",
+      "notes": "Meets the non-negotiable provenance requirement for nuclear security coursework. Clear US-based provider with documented data policies. Appropriate for use with non-classified, publicly available nuclear security material."
+    }
+  },
+  "justification": "Claude Code's combination of extended thinking (for deep regulatory and threat analysis), MCP integration (for live threat intelligence), and reliable structured output (for compliance matrices) aligns directly with the five capability areas this course builds. The CLI interface suits a workflow where I'm producing artifacts in a local repository alongside the AI session. The reasoning transparency — being able to see how the model worked through a problem — is pedagogically valuable for learning prompt engineering.",
+  "limitations": [
+    "Cannot access classified or restricted-access nuclear security documents — all analysis limited to public-domain material",
+    "Knowledge cutoff means recent threat actor activity requires MCP web search to supplement training data",
+    "Not appropriate for facility-specific analysis without explicit authorization — all work is generic or scenario-based",
+    "Token cost scales with context length — loading multiple large regulatory documents simultaneously is expensive; use context caching"
+  ],
+  "alternative_considered": {
+    "tool": "OpenAI Codex",
+    "reason_not_selected": "Codex's strength is code generation in a sandboxed execution environment. For this course, the primary artifacts are analytical (threat models, compliance matrices, policy documents) rather than executable code. Claude Code's extended thinking and MCP integration are better suited to the regulatory analysis and multi-document synthesis that dominates the course workload. Codex would be a stronger choice for modules requiring working security tools (e.g., a monitoring prototype)."
+  }
+}

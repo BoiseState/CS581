@@ -1,0 +1,45 @@
+{
+  "tool": "Codex",
+  "provider": "OpenAI",
+  "evaluation_date": "2026-07-08",
+  "capabilities": {
+    "thinking_and_reasoning": {
+      "supported": true,
+      "notes": "Codex supports multi-step reasoning across file reads, shell commands, web lookups, and edits. The visible session does not expose private chain-of-thought, so the user evaluates reasoning through actions, summaries, and artifacts rather than raw internal traces."
+    },
+    "context_length": {
+      "tokens": 0,
+      "notes": "This session does not expose an exact usable token limit. Practically, Codex held the assignment prompt, repository context, tool outputs, and generated deliverables in one run, but very large readings or PDFs would still need summarization, chunking, or file-based retrieval."
+    },
+    "function_calling": {
+      "supported": true,
+      "notes": "Codex can call tools for shell commands, file inspection, patching, web search, image handling, MCP resources, and other configured integrations. In this run it read files, created directories, consulted the Codex manual, and wrote structured outputs."
+    },
+    "structured_output": {
+      "supported": true,
+      "notes": "Codex can produce JSON and other structured formats, but schema conformance should still be validated for graded or automated workflows. This file is intentionally simple JSON to reduce formatting risk."
+    },
+    "vision_multimodal": {
+      "supported": true,
+      "notes": "The environment includes image viewing and image generation/editing tools. Codex documentation also describes browser and computer-use surfaces that can inspect rendered pages or GUI state when enabled. PDF/image interpretation depends on the available tools in the session."
+    },
+    "mcp_integration": {
+      "supported": true,
+      "notes": "Codex supports MCP servers in the CLI and IDE extension, including local STDIO servers and streamable HTTP servers with authentication options. MCP is useful for course work when students need controlled access to documentation, repositories, calendars, or other structured data sources."
+    },
+    "provenance_trust": {
+      "provider": "OpenAI",
+      "us_based": true,
+      "notes": "OpenAI is a US-based provider. For sensitive nuclear cybersecurity work, Codex should be used with non-sensitive, public, or approved course material unless the user's organization has an appropriate enterprise data-handling agreement and policy approval."
+    }
+  },
+  "justification": "Codex is appropriate for this course when the assignment involves reading prompts, producing structured technical writing, inspecting local files, comparing generated outputs, and documenting the process. It is less appropriate as an unquestioned authority for facility-specific nuclear cybersecurity decisions.",
+  "limitations": [
+    "Can produce plausible but overgeneralized security analysis if not constrained to public and generic information.",
+    "Does not replace inspection evidence, plant walkdowns, engineering analysis, or licensee-specific CDA determinations.",
+    "May not expose exact product limits such as current context length inside the active session.",
+    "Tool access depends on sandbox, network, permissions, and configured MCP/plugin availability.",
+    "Generated JSON or markdown should be reviewed before submission because formatting and domain assumptions can still be wrong."
+  ],
+  "best_suited_for": "Codex is best suited for CS 581 modules that involve structured analysis, attack-surface mapping, prompt iteration, local artifact generation, code or configuration review, and reflective comparison of model output against nuclear cybersecurity readings."
+}
