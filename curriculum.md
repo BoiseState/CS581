@@ -1094,19 +1094,26 @@ The divergence to look for: law establishes a floor, not a ceiling. The attorney
 
 ## Ethics Paper
 
-**Due:** End of Week 16 · **5–7 pages** · **Minimum 3 primary sources**
+**Due:** Dec 18 · **Scenario issued ~Dec 8** · **5–7 pages** · **Minimum 3 primary sources**
 
-**Prompt:** What are the ethical obligations of a nuclear cybersecurity practitioner, and how does the use of AI tools change or complicate those obligations?
+Rather than a generic ethics prompt, each student receives a **personalized ethical dilemma** derived from their own W1–W8 portfolio artifacts. The instructor reviews each student's work — the systems chosen, the vulnerabilities documented, the gaps identified — and crafts a scenario specific to what that student found.
 
-Your paper must engage with:
-1. At least one obligation the ACM Code of Ethics establishes that applies directly to nuclear cybersecurity practice
-2. At least one obligation that nuclear context creates that the ACM Code does not address
-3. At least one specific way that AI coding assistants change the ethical calculus — for better or worse
-4. At least one concrete scenario where a practitioner could be legally compliant and still acting unethically
+**Example:** *"In your W3 workshop you documented that the RPS data diode has a maintenance bypass that is not in any public vendor disclosure. You later learned that the vendor has been aware of this for two years. As the plant cybersecurity manager, what are your ethical obligations? To whom do you owe disclosure, in what order, and under what timeline? Where does the ACM Code of Ethics apply and where does it fall short of what this situation actually requires?"*
+
+This approach rewards students who produced rigorous, specific, honest work in their workshops — their dilemmas will be richer and more technically grounded than students who produced generic findings.
+
+**Scenario delivery:** The instructor issues each student's scenario individually (via Canvas message or email) by end of Week 14 (approximately Dec 8), based on W1–W8 artifacts. Students have 10 days to respond.
+
+**Your response must:**
+1. State the ethical obligations at stake and which framework(s) establish them
+2. Identify at least one obligation nuclear context creates that the ACM Code does not address
+3. Address the specific facts of your scenario — not generic ethics principles
+4. Identify where legal compliance and ethical obligation diverge in your scenario
+5. Take a defensible position and defend it with primary sources
 
 You may use your AI Coding Assistant to research, outline, and draft. Your session log must accompany the paper. You must be able to defend every claim and every source in a follow-up discussion.
 
-This is not a summary of ethics frameworks. It is an argument about what this specific profession owes.
+This is not a summary of ethics frameworks. It is an argument about what this specific situation requires of this specific practitioner.
 
 ---
 
