@@ -121,8 +121,10 @@ Each module introduces or deepens one capability from the companion document. By
 primary-repo/
   /workshops/
     /week-01/
+      tool-selection.json
+      system-selection.md
+      sequencing-plan.md
       attack-surface-map.md
-      tool-selection.md
       session-log.md
       README.md
     /week-03/ ...
@@ -141,6 +143,45 @@ secondary-repo/
 ```
 
 ---
+
+---
+
+## System Selection — Your Portfolio Target
+
+Rather than analyzing a generic nuclear plant, you will choose a specific system from the plant architecture each workshop and apply that week's analysis to it. By Week 14 your portfolio must cover all 11 systems — nine workshops means some weeks deliberately pair two related systems. You plan your own sequencing from Week 1.
+
+### The 11 Systems
+
+| System | Purdue Zone | Type |
+|---|---|---|
+| RPS — Reactor Protection System | Level 1 | Safety-critical |
+| DCS — Digital Control System | Level 2 | Operational |
+| TCS — Turbine Control System | Level 1 | Operational / BOP |
+| SFPCM — Spent Fuel Pool Cooling & Monitoring | Level 1 | Safety-critical |
+| EDGC — Emergency Diesel Generator Control | Level 1 | Safety-critical |
+| RMS — Radiation Monitoring System | Level 1–3 | Monitoring |
+| PSI — Physical Security Integration | Level 2–3 | Security |
+| SMR I&C — Integrated I&C Platform | Level 1–2 | Emerging |
+| PPC — Plant Process Computer / Historian | Level 2–3 | Operational |
+| OT-SIEM — OT Security Monitoring Platform | Level 3 | Security |
+| ICT-SIEM — Enterprise Security Monitoring | Level 4 | Security |
+
+Use the Plant Architecture Diagram (linked in Module 1) to explore each system: clicking a node shows its Purdue zone, interfaces, and workshop affinity ratings (W1–W9, rated Primary / Strong / Applicable). Use those ratings to draft your W1 sequencing plan.
+
+### 11 Systems, 9 Workshops
+
+With 11 systems and 9 workshops, you cannot do one system per week and cover all 11. Some weeks will target two related systems in a single workshop submission. Suggested natural pairings:
+
+- **OT-SIEM + ICT-SIEM** (W6): one workshop, both sides of the air gap separation — the monitoring systems are most meaningful in contrast with each other.
+- **RPS + EDGC** (safety systems): both are Level 1 safety-critical and share regulatory treatment under 10 CFR 50 Appendix B.
+- **DCS + PPC** (historian feed): the historian reads the DCS data stream — a single workshop on integrity and tampering covers both.
+
+### W1 Sequencing Plan Deliverable
+
+Your Week 1 primary repo includes two additional files:
+
+1. **`system-selection.md`** — which system you chose for W1, its Purdue zone, and a one-paragraph rationale explaining why
+2. **`sequencing-plan.md`** — a table mapping W1–W9 to your intended system targets, with a one-sentence justification per week. *By Week 14 all 11 systems must appear at least once.* Your plan is not binding — revisions are allowed but must be documented in the file with a brief explanation.
 
 ---
 
@@ -207,19 +248,17 @@ Commit to `/workshops/week-01/tool-selection.json` in your primary repo.
 
 ---
 
-### Part B — Workshop 1: Nuclear Plant Attack Surface Map
+### Part B — Workshop 1: Nuclear Plant Attack Surface Map + System Selection
 
-**The task:** Use your AI Coding Assistant to produce a structured attack surface overview of a generic nuclear power plant. This is the first artifact in your technical portfolio and establishes your baseline understanding of the system you will be securing for the rest of the semester.
+**The task:** Choose your target system from the Plant Architecture Diagram (linked in Module 1) and produce a structured three-layer attack surface overview of that system. This is also the workshop where you commit your semester sequencing plan — mapping all 11 systems across W1–W9.
 
-**Capability focus:** Research synthesis + structured output. Practice loading large context (the Anderson chapters + your supplemental readings) and prompting for structured, layered output.
+**Capability focus:** Research synthesis + structured output. Practice loading large context (the Anderson chapters + your supplemental readings + system-specific public documentation) and prompting for structured, layered output.
 
-**Required output structure:**
+**Deliverables committed to `/workshops/week-01/`:**
 
-```
-/workshops/week-01/attack-surface-map.md
-```
-
-The map must cover three layers:
+1. **`system-selection.md`** — which of the 11 systems you chose, its Purdue zone, and a one-paragraph rationale
+2. **`sequencing-plan.md`** — table mapping W1–W9 to your intended system targets, one-sentence justification per week. By Week 14 all 11 systems must appear at least once. Some workshops deliberately pair two systems — plan for this.
+3. **`attack-surface-map.md`** — three-layer map of your chosen system:
 
 | Layer | Components | Threat Vectors | Notable Gaps | Confidence & Provenance |
 |---|---|---|---|---|
@@ -227,12 +266,12 @@ The map must cover three layers:
 | OT (Operational Technology) | ... | ... | ... | documented / inferred / theoretical + source |
 | Physical / Cyber Intersection | ... | ... | ... | documented / inferred / theoretical + source |
 
-Add a fourth section: **What This Map Cannot Tell You** — what information would you need (that you do not currently have) to turn this from a generic map into a facility-specific assessment? This section demonstrates analytical honesty and is the mark of a practitioner rather than a student.
+Add a fourth section: **What This Map Cannot Tell You** — what information would you need (that you do not currently have) to turn this from a public-knowledge map into a facility-specific assessment? This section demonstrates analytical honesty and is the mark of a practitioner rather than a student.
 
 **Session log:** Commit your full AI Coding Assistant session log alongside the artifact. The session log is graded independently — it is evidence of your prompting process, not just the output.
 
 **Prompt to get started (adapt as needed):**
-> *"I am a graduate student in a nuclear cybersecurity course. Based on publicly available information about nuclear power plant architecture and the ICS/SCADA security literature, help me build a structured attack surface map covering IT, OT, and physical/cyber intersection layers. For each layer, identify key components, likely threat vectors, and known security gaps. Use a markdown table format. Flag anything that would require facility-specific knowledge to complete properly."*
+> *"I am a graduate student in a nuclear cybersecurity course. My chosen system for Week 1 is [SYSTEM]. Based on publicly available information about this system's architecture and the ICS/SCADA security literature, help me build a structured attack surface map covering IT, OT, and physical/cyber intersection layers. For each layer, identify key components, likely threat vectors, and known security gaps. Use a markdown table format. Flag anything that would require facility-specific knowledge to complete properly."*
 
 ---
 
@@ -717,7 +756,7 @@ Follow the JSON with a one-page narrative: *What would a single incident coordin
 **Supplemental Primary Sources**
 1. **CISA ICS Security Advisory** — select a current advisory (2025–2026) affecting ICS equipment used in the energy or nuclear sector from cisa.gov/ics-advisories. Read: the affected system, the vulnerability description, CVSS score, and recommended mitigations. You will use this in Workshop 6 via MCP.
 2. **NIST SP 800-161 Rev. 1** — *Cybersecurity Supply Chain Risk Management Practices* — Sections 1–3 (overview and key practices). Supply chain is the fastest-growing attack surface in ICS security; this is the foundational framework.
-3. **INL Consequence-driven Cyber-informed Engineering (CCE) methodology overview** — publicly available from Idaho National Laboratory (search "INL CCE methodology"). CCE inverts the conventional security approach: start with the worst physical consequences and work backward to the cyber pathways that could cause them. This changes how you prioritize monitoring.
+3. **INL Consequence-driven Cyber-informed Engineering (CCE) methodology overview** — [direct PDF from INL](https://inl.gov/content/uploads/2023/06/Consequence-driven-Cyber-informed-Engineering.pdf) · [OSTI 1341416](https://www.osti.gov/biblio/1341416). CCE inverts the conventional security approach: start with the worst physical consequences and work backward to the cyber pathways that could cause them. This changes how you prioritize monitoring.
 
 ---
 
@@ -915,8 +954,8 @@ Use MCP web search to pull a current CISA ICS advisory. For at least two of the 
 - Chapter on side channels (check edition for chapter number) — timing attacks, power analysis, electromagnetic emanations, acoustic side channels; what information leaks from physical processes that cryptography cannot protect; Kocher's timing attack as the foundational example
 
 **Supplemental Primary Sources**
-1. **A current academic paper on side-channel attacks in embedded or safety-critical systems** — search CHES (Cryptographic Hardware and Embedded Systems) conference proceedings; many papers are freely available. Choose one relevant to the type of hardware used in nuclear instrumentation (microcontrollers, FPGAs, safety PLCs).
-2. **INL or ORNL report on AI/ML in nuclear operations** — search DOE Office of Scientific and Technical Information (osti.gov) for publicly available reports on AI applications in nuclear plant monitoring or control. Several Idaho National Laboratory and Oak Ridge National Laboratory reports are available without restriction.
+1. **A current academic paper on side-channel attacks in embedded or safety-critical systems** — recommended: [O'Flynn & Dewar, "On-Device Power Analysis Across Hardware Security Domains" (TCHES 2019)](https://tches.iacr.org/index.php/TCHES/article/view/8347) — demonstrates power side-channel attack defeating TrustZone-M isolation on ARM Cortex-M microcontrollers using only the device's own on-board ADC (no external equipment). Directly relevant to nuclear safety PLCs. Open access at tches.iacr.org.
+2. **INL/NRC report on AI/ML in nuclear operations** — [OSTI 1847070](https://www.osti.gov/biblio/1847070): INL, "Exploring Advanced Computational Tools and Techniques with AI/ML in Operating Nuclear Plants" (NUREG/CR-7294, 2022). Surveys supervised and unsupervised AI/ML algorithms across reactor operations, predictive maintenance, fault diagnosis, and safety assessments. Open access PDF via OSTI.
 3. **NRC NUREG-0800 Standard Review Plan, Chapter 7** — *Instrumentation and Controls* (summary sections, publicly available from NRC). This is the regulatory framework for digital I&C in nuclear plants — the same systems where AI is being introduced and where side-channel vulnerabilities are most consequential.
 
 ---

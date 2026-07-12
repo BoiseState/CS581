@@ -1,0 +1,718 @@
+<title>CS 581 — Nuclear Plant System Architecture</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Design tokens ── */
+:root {
+  /* Page chrome — light */
+  --chrome-bg: #e6f1f9;
+  --chrome-surface: #ffffff;
+  --chrome-border: #b8d4e8;
+  --chrome-text: #07192b;
+  --chrome-muted: #4a7a9b;
+  --chrome-label: #2a5a7a;
+
+  /* Diagram — always dark (deliberate single-theme) */
+  --diag-bg: #060d1b;
+  --diag-surface: #091627;
+  --diag-grid: rgba(255,255,255,.022);
+  --diag-zone3: rgba(99,102,241,.07);
+  --diag-zone2: rgba(251,191,36,.055);
+  --diag-zone1: rgba(74,222,128,.045);
+  --diag-zone0: rgba(15,40,70,.6);
+  --diag-zone-label: #2d6080;
+  --diag-zone-sublabel: #1d4560;
+  --diag-border: #122a42;
+  --diag-dmz: #f97316;
+  --diag-conn: #163650;
+  --diag-conn-label: #2a5a7a;
+
+  /* System type colors (work on dark diagram) */
+  --c-safety: #4ade80;
+  --c-safety-dim: rgba(74,222,128,.09);
+  --c-ops: #fbbf24;
+  --c-ops-dim: rgba(251,191,36,.09);
+  --c-mon: #a78bfa;
+  --c-mon-dim: rgba(167,139,250,.09);
+  --c-emg: #34d399;
+  --c-emg-dim: rgba(52,211,153,.09);
+
+  /* Detail panel (chrome) */
+  --panel-bg: var(--chrome-surface);
+  --panel-border: var(--chrome-border);
+  --panel-text: var(--chrome-text);
+  --panel-muted: var(--chrome-muted);
+  --panel-label: var(--chrome-label);
+  --panel-section-bg: #f0f7ff;
+  --panel-note-bg: #f7fafc;
+}
+
+@media(prefers-color-scheme:dark){:root{
+  --chrome-bg: #060d1b;
+  --chrome-surface: #091627;
+  --chrome-border: #122a42;
+  --chrome-text: #c8e4f4;
+  --chrome-muted: #3d6a8a;
+  --chrome-label: #5a9abc;
+  --panel-bg: #091627;
+  --panel-border: #122a42;
+  --panel-text: #c8e4f4;
+  --panel-muted: #3d6a8a;
+  --panel-label: #5a9abc;
+  --panel-section-bg: #0a1c2e;
+  --panel-note-bg: #071320;
+}}
+:root[data-theme="dark"]{
+  --chrome-bg:#060d1b;--chrome-surface:#091627;--chrome-border:#122a42;
+  --chrome-text:#c8e4f4;--chrome-muted:#3d6a8a;--chrome-label:#5a9abc;
+  --panel-bg:#091627;--panel-border:#122a42;--panel-text:#c8e4f4;
+  --panel-muted:#3d6a8a;--panel-label:#5a9abc;
+  --panel-section-bg:#0a1c2e;--panel-note-bg:#071320;
+}
+:root[data-theme="light"]{
+  --chrome-bg:#e6f1f9;--chrome-surface:#ffffff;--chrome-border:#b8d4e8;
+  --chrome-text:#07192b;--chrome-muted:#4a7a9b;--chrome-label:#2a5a7a;
+  --panel-bg:#ffffff;--panel-border:#b8d4e8;--panel-text:#07192b;
+  --panel-muted:#4a7a9b;--panel-label:#2a5a7a;
+  --panel-section-bg:#f0f7ff;--panel-note-bg:#f7fafc;
+}
+
+/* ── Page structure ── */
+body{
+  background:var(--chrome-bg);
+  color:var(--chrome-text);
+  font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:13px;
+  line-height:1.5;
+  padding:1.25rem 1.5rem 2rem;
+}
+.wrap{max-width:1040px;margin:0 auto}
+
+/* ── Header ── */
+.hdr{margin-bottom:1rem}
+.hdr-eyebrow{
+  font:600 9.5px/1 system-ui;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--chrome-muted);
+  margin-bottom:.35rem;
+}
+.hdr-title{
+  font:700 1.15rem/1.2 system-ui;
+  color:var(--chrome-text);
+  letter-spacing:-.01em;
+}
+.hdr-sub{
+  font-size:.78rem;
+  color:var(--chrome-muted);
+  margin-top:.2rem;
+}
+
+/* ── Diagram wrapper ── */
+.diag-wrap{
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--diag-border);
+  margin-bottom:1px; /* flush with detail panel */
+}
+svg#plant{width:100%;height:auto;display:block;background:var(--diag-bg)}
+
+/* ── SVG element styles ── */
+.z-ent{fill:var(--diag-zone0);opacity:.5}
+.z3{fill:var(--diag-zone3)}
+.z2{fill:var(--diag-zone2)}
+.z1{fill:var(--diag-zone1)}
+.z0{fill:var(--diag-zone0)}
+.zl{fill:none;stroke:var(--diag-border);stroke-width:.8}
+.zt{font:600 8.5px system-ui;letter-spacing:.1em;text-transform:uppercase;fill:var(--diag-zone-label)}
+.zst{font:400 8px system-ui;fill:var(--diag-zone-sublabel)}
+.dmz-line{stroke:var(--diag-dmz);stroke-width:1.2;stroke-dasharray:7,4}
+.dmz-txt{font:600 8px system-ui;letter-spacing:.1em;fill:var(--diag-dmz);text-anchor:middle}
+.grid-h{stroke:var(--diag-grid);stroke-width:.5}
+.conn{stroke:var(--diag-conn);stroke-width:1.3;fill:none}
+.conn-bi{stroke:var(--diag-conn);stroke-width:1.3;fill:none}
+.conn-diode{stroke:var(--c-safety);stroke-width:1.2;fill:none;stroke-dasharray:5,3;opacity:.75}
+.conn-smr{stroke:var(--c-emg);stroke-width:1;fill:none;stroke-dasharray:4,4;opacity:.45}
+.cl{font:400 7.5px system-ui;fill:var(--diag-conn-label)}
+
+/* Node cards */
+.nd{cursor:pointer}
+.nd .nb{stroke-width:1;rx:5;transition:filter .2s}
+.nd:hover .nb{opacity:1.0}
+.nd .na{} /* accent top bar */
+.nd .nab{
+  font:700 15px 'Courier New','Courier','Lucida Console',monospace;
+  text-anchor:middle;dominant-baseline:central
+}
+.nd .nn{
+  font:400 8.5px system-ui;
+  text-anchor:middle;dominant-baseline:central;
+  fill:var(--diag-zone-label)
+}
+.nd .nn2{
+  font:400 8px system-ui;
+  text-anchor:middle;dominant-baseline:central;
+  fill:var(--diag-zone-sublabel)
+}
+/* Safety */
+.ns .nb{fill:var(--c-safety-dim);stroke:var(--c-safety)}
+.ns .na{fill:var(--c-safety)}
+.ns .nab{fill:var(--c-safety)}
+.ns.sel .nb,.ns:focus .nb{filter:drop-shadow(0 0 7px var(--c-safety))}
+/* Operational */
+.no .nb{fill:var(--c-ops-dim);stroke:var(--c-ops)}
+.no .na{fill:var(--c-ops)}
+.no .nab{fill:var(--c-ops)}
+.no.sel .nb,.no:focus .nb{filter:drop-shadow(0 0 7px var(--c-ops))}
+/* Monitoring */
+.nm .nb{fill:var(--c-mon-dim);stroke:var(--c-mon)}
+.nm .na{fill:var(--c-mon)}
+.nm .nab{fill:var(--c-mon)}
+.nm.sel .nb,.nm:focus .nb{filter:drop-shadow(0 0 7px var(--c-mon))}
+/* Emerging */
+.ne .nb{fill:var(--c-emg-dim);stroke:var(--c-emg);stroke-dasharray:4,2.5}
+.ne .na{fill:var(--c-emg)}
+.ne .nab{fill:var(--c-emg)}
+.ne.sel .nb,.ne:focus .nb{filter:drop-shadow(0 0 7px var(--c-emg))}
+
+@media(prefers-reduced-motion:no-preference){
+  .nd.sel .nb{animation:glow 2.4s ease-in-out infinite}
+  @keyframes glow{0%,100%{opacity:1}50%{opacity:.78}}
+}
+
+/* ── Detail panel ── */
+.detail{
+  background:var(--panel-bg);
+  border:1px solid var(--panel-border);
+  border-top:none;
+  border-radius:0 0 8px 8px;
+  overflow:hidden;
+  min-height:56px;
+  transition:min-height .25s ease;
+}
+.detail-placeholder{
+  color:var(--panel-muted);
+  font-size:.78rem;
+  text-align:center;
+  padding:1rem 0;
+  letter-spacing:.02em;
+}
+.detail-inner{padding:1.1rem 1.25rem 1.25rem}
+.dh{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap}
+.dh-text{flex:1;min-width:0}
+.dh-name{font:700 1rem/1.15 system-ui;color:var(--panel-text);letter-spacing:-.01em}
+.dh-zone{font:400 .73rem/1 system-ui;color:var(--panel-muted);margin-top:.25rem}
+.dbadge{
+  font:700 .62rem system-ui;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:.28em .65em;border-radius:4px;
+  border:1px solid;white-space:nowrap;margin-top:2px;flex-shrink:0
+}
+.b-safety{background:var(--c-safety-dim);color:var(--c-safety);border-color:rgba(74,222,128,.3)}
+.b-ops{background:var(--c-ops-dim);color:var(--c-ops);border-color:rgba(251,191,36,.3)}
+.b-mon{background:var(--c-mon-dim);color:var(--c-mon);border-color:rgba(167,139,250,.3)}
+.b-emg{background:var(--c-emg-dim);color:var(--c-emg);border-color:rgba(52,211,153,.3)}
+
+/* For light mode, darken badge text */
+:root[data-theme="light"] .b-safety,:root:not([data-theme="dark"]) @media(prefers-color-scheme:light){.b-safety}{color:#166534}
+.desc{font:.82rem/1.6 system-ui;color:var(--panel-text);margin-bottom:.9rem;max-width:70ch}
+.cols{display:grid;grid-template-columns:1fr 1.7fr;gap:1.25rem}
+@media(max-width:600px){.cols{grid-template-columns:1fr}}
+.col-label{
+  font:600 .67rem/1 system-ui;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--panel-label);
+  margin-bottom:.45rem
+}
+.proto-list{list-style:none;font-size:.77rem;color:var(--panel-text);line-height:1.75}
+.proto-list li{display:flex;align-items:baseline;gap:.35rem}
+.proto-list li::before{content:"›";color:var(--panel-muted);font-size:.9em;flex-shrink:0}
+
+/* Module grid */
+.mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.3rem}
+.mp{
+  border-radius:4px;padding:.35rem .4rem;border:1px solid transparent;
+  transition:opacity .15s,transform .15s;cursor:default
+}
+.mp:hover{transform:translateY(-1px)}
+.mp-num{font:700 .78rem/1 'Courier New',monospace;display:block;margin-bottom:.18rem}
+.mp-title{font:400 .63rem/1.3 system-ui;display:block;color:inherit;opacity:.8}
+.mp-primary{border-color:rgba(0,0,0,.08)}
+.mp-strong{background:var(--panel-section-bg);border-color:var(--panel-border)}
+.mp-appl{background:transparent;border-color:transparent;opacity:.45}
+
+/* Notes */
+.notes{margin-top:.9rem}
+.note{
+  border-left:2.5px solid;
+  padding:.5rem .65rem .5rem .75rem;
+  background:var(--panel-note-bg);
+  border-radius:0 4px 4px 0;
+  margin-bottom:.5rem;
+  font-size:.78rem;
+  line-height:1.6;
+  color:var(--panel-text)
+}
+.note-lbl{font-weight:700;margin-right:.3em}
+
+/* ── Legend ── */
+.legend{
+  display:flex;flex-wrap:wrap;gap:.6rem 1.25rem;
+  margin-top:.85rem;
+  padding-top:.75rem;
+  border-top:1px solid var(--chrome-border)
+}
+.li{display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--chrome-muted)}
+.li-line{width:24px;height:0;border-top:1.5px;flex-shrink:0}
+.li-swatch{width:11px;height:11px;border-radius:2px;flex-shrink:0;border:1px solid}
+</style>
+
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-eyebrow">CS 581 · Nuclear Cybersecurity · Fall 2026</div>
+    <div class="hdr-title">Nuclear Plant System Architecture</div>
+    <div class="hdr-sub">Select a system to explore its security characteristics, Purdue zone, and workshop module affinities. Annotate this diagram incrementally across all nine workshops.</div>
+  </div>
+
+  <div class="diag-wrap">
+  <svg id="plant" viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nuclear plant system architecture diagram organized by Purdue model zones">
+  <defs>
+    <marker id="ah" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto">
+      <path d="M0,.8 L6.5,3.5 L0,6.2 L1.5,3.5Z" fill="var(--diag-conn)"/>
+    </marker>
+    <marker id="ahb" markerWidth="7" markerHeight="7" refX=".5" refY="3.5" orient="auto-start-reverse">
+      <path d="M0,.8 L6.5,3.5 L0,6.2 L1.5,3.5Z" fill="var(--diag-conn)"/>
+    </marker>
+    <marker id="ah-s" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto">
+      <path d="M0,.8 L6.5,3.5 L0,6.2 L1.5,3.5Z" fill="var(--c-safety)" opacity=".75"/>
+    </marker>
+    <marker id="ah-e" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto">
+      <path d="M0,.8 L6.5,3.5 L0,6.2 L1.5,3.5Z" fill="var(--c-emg)" opacity=".45"/>
+    </marker>
+    <marker id="ah-d" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto">
+      <path d="M0,.8 L6.5,3.5 L0,6.2 L1.5,3.5Z" fill="var(--diag-dmz)" opacity=".85"/>
+    </marker>
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="40" x2="960" y2="40" class="grid-h"/>
+    </pattern>
+  </defs>
+
+  <!-- Zone backgrounds
+       Corp L4:  y=0–78    (ICT-SIEM lives here, above the air gap)
+       Site L3:  y=78–226  (RMS, OT-SIEM, PSI)
+       Super L2: y=226–374 (DCS; PPC spans L3/L2)
+       Ctrl L1:  y=374–544 (RPS, TCS, SFPCM, EDGC; SMR spans L2/L1)
+       Field L0: y=544–620                                              -->
+  <rect x="108" y="0"   width="852" height="78"  class="z-ent"/>
+  <rect x="108" y="78"  width="852" height="148" class="z3"/>
+  <rect x="108" y="226" width="852" height="148" class="z2"/>
+  <rect x="108" y="374" width="852" height="170" class="z1"/>
+  <rect x="108" y="544" width="852" height="76"  class="z0"/>
+
+  <!-- Grid overlay -->
+  <rect x="108" y="0" width="852" height="620" fill="url(#grid)" opacity="1"/>
+
+  <!-- Vertical zone separator -->
+  <line x1="108" y1="0" x2="108" y2="620" class="zl"/>
+
+  <!-- Zone labels -->
+  <text x="6" y="33" class="zt" style="font-size:7.5px">Corp.</text>
+  <text x="6" y="46" class="zst">Level 4</text>
+  <line x1="0" y1="78" x2="108" y2="78" class="zl" style="stroke-dasharray:none"/>
+
+  <text x="6" y="143" class="zt">Site</text>
+  <text x="6" y="155" class="zst">Ops · L3</text>
+  <line x1="0" y1="226" x2="108" y2="226" class="zl"/>
+
+  <text x="6" y="289" class="zt">Super-</text>
+  <text x="6" y="300" class="zt">visory</text>
+  <text x="6" y="313" class="zst">Level 2</text>
+  <line x1="0" y1="374" x2="108" y2="374" class="zl"/>
+
+  <text x="6" y="454" class="zt">Control</text>
+  <text x="6" y="466" class="zst">Level 1</text>
+  <line x1="0" y1="544" x2="108" y2="544" class="zl"/>
+
+  <text x="6" y="579" class="zt">Field</text>
+  <text x="6" y="591" class="zst">Level 0</text>
+
+  <!-- Air gap DMZ line (top of L3) -->
+  <line x1="108" y1="78" x2="960" y2="78" class="dmz-line"/>
+  <text x="760" y="70" class="dmz-txt">— SEPARATION BOUNDARY / AIR GAP —</text>
+
+  <!-- L1/L2 faint divider -->
+  <line x1="108" y1="374" x2="960" y2="374" stroke="var(--diag-border)" stroke-width=".8" stroke-dasharray="3,5"/>
+
+  <!-- Field sensor droplines -->
+  <text x="434" y="584" class="cl" text-anchor="middle" style="font-style:italic;font-size:8px;fill:var(--diag-zone-sublabel)">— sensors · actuators · instruments · final elements —</text>
+  <line x1="194" y1="544" x2="194" y2="557" stroke="var(--diag-zone-sublabel)" stroke-width="1" opacity=".4"/>
+  <line x1="354" y1="544" x2="354" y2="557" stroke="var(--diag-zone-sublabel)" stroke-width="1" opacity=".4"/>
+  <line x1="514" y1="544" x2="514" y2="557" stroke="var(--diag-zone-sublabel)" stroke-width="1" opacity=".4"/>
+  <line x1="674" y1="544" x2="674" y2="557" stroke="var(--diag-zone-sublabel)" stroke-width="1" opacity=".4"/>
+
+  <!-- ── CONNECTIONS (drawn first, rendered under nodes) ────── -->
+
+  <!-- OT-SIEM → ICT-SIEM  crossing air gap (orange DMZ, one-way) -->
+  <path d="M 460,94 L 460,74 L 480,74 L 480,68" stroke="var(--diag-dmz)" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
+  <text x="516" y="68" class="cl" style="fill:var(--diag-dmz);font-size:7px;font-style:italic;opacity:.8">one-way export</text>
+
+  <!-- RMS → OT-SIEM  (syslog / OPC-UA feed) -->
+  <line x1="248" y1="118" x2="390" y2="118" class="conn" marker-end="url(#ah)"/>
+  <text x="319" y="112" class="cl" text-anchor="middle">Syslog / OPC-UA</text>
+
+  <!-- PSI → OT-SIEM  (security events) -->
+  <line x1="700" y1="132" x2="530" y2="132" class="conn" marker-end="url(#ah)"/>
+  <text x="615" y="126" class="cl" text-anchor="middle">Security events</text>
+
+  <!-- PPC → OT-SIEM  (historian event export, stepped through gap) -->
+  <path d="M 598,192 L 550,192 L 550,140 L 530,140" class="conn" marker-end="url(#ah)"/>
+  <text x="570" y="186" class="cl" text-anchor="middle" style="font-size:7px">Historian events</text>
+
+  <!-- DCS → PPC  (OPC-UA historian feed, short horizontal) -->
+  <line x1="530" y1="252" x2="598" y2="252" class="conn" marker-end="url(#ah)"/>
+  <text x="564" y="246" class="cl" text-anchor="middle" style="font-size:7px">OPC-UA historian</text>
+
+  <!-- RMS → DCS  (analog + Modbus, stepped down-right into L2) -->
+  <path d="M 189,156 L 189,212 L 388,212 L 388,244" class="conn" marker-end="url(#ah)"/>
+  <text x="278" y="206" class="cl" text-anchor="middle">Analog + Modbus</text>
+
+  <!-- PSI ↔ DCS  (access interlocks, routes below PPC) -->
+  <path d="M 759,156 L 759,274 L 530,274" class="conn-bi" marker-end="url(#ah)" marker-start="url(#ahb)"/>
+  <text x="645" y="267" class="cl" text-anchor="middle">Access interlocks</text>
+
+  <!-- RPS → DCS  (data diode, safety green, up through L1→L2) -->
+  <path d="M 194,390 L 194,322 L 405,322 L 405,308" class="conn-diode" marker-end="url(#ah-s)"/>
+  <text x="299" y="316" class="cl" text-anchor="middle" style="fill:var(--c-safety);opacity:.7;font-size:7px;font-weight:600">data diode ▸ (status only)</text>
+
+  <!-- DCS ↔ TCS  (Modbus / OPC-UA) -->
+  <path d="M 430,308 L 430,352 L 354,352 L 354,390" class="conn-bi" marker-end="url(#ah)" marker-start="url(#ahb)"/>
+  <text x="392" y="346" class="cl" text-anchor="middle">Modbus / OPC-UA</text>
+
+  <!-- DCS ↔ SFPCM  (Modbus TCP) -->
+  <path d="M 465,308 L 465,347 L 514,347 L 514,390" class="conn-bi" marker-end="url(#ah)" marker-start="url(#ahb)"/>
+  <text x="489" y="341" class="cl" text-anchor="middle">Modbus TCP</text>
+
+  <!-- DCS ↔ EDGC  (serial / hardwired) -->
+  <path d="M 500,308 L 500,357 L 674,357 L 674,390" class="conn-bi" marker-end="url(#ah)" marker-start="url(#ahb)"/>
+  <text x="587" y="350" class="cl" text-anchor="middle">Serial / hardwired</text>
+
+  <!-- SMR → DCS  (replaces, emerging teal) -->
+  <path d="M 820,295 L 645,295 L 645,288 L 530,288" class="conn-smr" marker-end="url(#ah-e)"/>
+  <text x="730" y="289" class="cl" text-anchor="middle" style="fill:var(--c-emg);opacity:.55;font-size:7.5px;font-style:italic">replaces →</text>
+
+  <!-- ── SYSTEM NODES ────────────────────────────────────────── -->
+
+  <!-- ICT-SIEM · L4 center  (above air gap) -->
+  <g class="nd nm" id="n-ictsiem" tabindex="0" onclick="sel('ictsiem')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('ictsiem')" transform="translate(409,10)">
+    <rect class="nb" width="142" height="58" rx="5"/>
+    <rect class="na" width="142" height="2.5"/>
+    <text class="nab" x="71" y="29">ICT-SIEM</text>
+    <text class="nn"  x="71" y="45">Enterprise Security Mon.</text>
+  </g>
+
+  <!-- RMS · L3 left -->
+  <g class="nd nm" id="n-rms" tabindex="0" onclick="sel('rms')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('rms')" transform="translate(130,94)">
+    <rect class="nb" width="118" height="62" rx="5"/>
+    <rect class="na" width="118" height="2.5"/>
+    <text class="nab" x="59" y="30">RMS</text>
+    <text class="nn"  x="59" y="47">Radiation Monitoring</text>
+  </g>
+
+  <!-- OT-SIEM · L3 center -->
+  <g class="nd nm" id="n-otsiem" tabindex="0" onclick="sel('otsiem')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('otsiem')" transform="translate(390,94)">
+    <rect class="nb" width="140" height="62" rx="5"/>
+    <rect class="na" width="140" height="2.5"/>
+    <text class="nab" x="70" y="30">OT-SIEM</text>
+    <text class="nn"  x="70" y="47">OT Security Mon.</text>
+  </g>
+
+  <!-- PSI · L3 right -->
+  <g class="nd nm" id="n-psi" tabindex="0" onclick="sel('psi')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('psi')" transform="translate(700,94)">
+    <rect class="nb" width="118" height="62" rx="5"/>
+    <rect class="na" width="118" height="2.5"/>
+    <text class="nab" x="59" y="30">PSI</text>
+    <text class="nn"  x="59" y="47">Physical Security</text>
+  </g>
+
+  <!-- PPC · spans L3/L2 (historian bridges both levels) -->
+  <g class="nd no" id="n-ppc" tabindex="0" onclick="sel('ppc')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('ppc')" transform="translate(598,168)">
+    <rect class="nb" width="128" height="96" rx="5"/>
+    <rect class="na" width="128" height="2.5"/>
+    <!-- Zone boundary crossing line inside node -->
+    <line x1="0" y1="58" x2="128" y2="58" stroke="var(--diag-border)" stroke-width=".8" stroke-dasharray="4,3" opacity=".6"/>
+    <text class="nab" x="64" y="30">PPC</text>
+    <text class="nn"  x="64" y="46">Process Computer</text>
+    <text class="nn2" x="64" y="58" style="font-size:7px;fill:var(--c-ops);opacity:.65">Historian</text>
+    <text class="nn2" x="64" y="72" style="font-size:6.5px">L3 → L2 bridge</text>
+  </g>
+
+  <!-- DCS · L2 center  (x=388–530, y=244–308) -->
+  <g class="nd no" id="n-dcs" tabindex="0" onclick="sel('dcs')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('dcs')" transform="translate(388,244)">
+    <rect class="nb" width="142" height="64" rx="5"/>
+    <rect class="na" width="142" height="2.5"/>
+    <text class="nab" x="71" y="32">DCS</text>
+    <text class="nn"  x="71" y="49">Digital Control System</text>
+  </g>
+
+  <!-- SMR I&C · spans L2/L1 (x=820–932, y=280–428) -->
+  <g class="nd ne" id="n-smr" tabindex="0" onclick="sel('smr')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('smr')" transform="translate(820,280)">
+    <rect class="nb" width="112" height="148" rx="5"/>
+    <rect class="na" width="112" height="2.5"/>
+    <!-- Zone boundary crossing line -->
+    <line x1="0" y1="94" x2="112" y2="94" stroke="var(--diag-border)" stroke-width=".8" stroke-dasharray="3,4" opacity=".5"/>
+    <text class="nab" x="56" y="38">SMR I&amp;C</text>
+    <text class="nn"  x="56" y="56">Integrated I&amp;C</text>
+    <text class="nn2" x="56" y="69">Platform</text>
+    <text style="font:400 7px system-ui;fill:var(--c-emg);opacity:.5;text-anchor:middle" x="56" y="84">collapses L1/L2</text>
+    <text style="font:600 7px system-ui;fill:var(--c-emg);opacity:.65;text-anchor:middle;letter-spacing:.06em" x="56" y="97">EMERGING</text>
+  </g>
+
+  <!-- L1 nodes (centers x=194,354,514,674  y=426) -->
+
+  <!-- RPS · L1 far left -->
+  <g class="nd ns" id="n-rps" tabindex="0" onclick="sel('rps')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('rps')" transform="translate(134,390)">
+    <rect class="nb" width="120" height="72" rx="5"/>
+    <rect class="na" width="120" height="2.5"/>
+    <text class="nab" x="60" y="33">RPS</text>
+    <text class="nn"  x="60" y="50">Reactor Protection</text>
+  </g>
+
+  <!-- TCS · L1 -->
+  <g class="nd no" id="n-tcs" tabindex="0" onclick="sel('tcs')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('tcs')" transform="translate(294,390)">
+    <rect class="nb" width="120" height="72" rx="5"/>
+    <rect class="na" width="120" height="2.5"/>
+    <text class="nab" x="60" y="33">TCS</text>
+    <text class="nn"  x="60" y="50">Turbine Control</text>
+  </g>
+
+  <!-- SFPCM · L1 -->
+  <g class="nd ns" id="n-sfp" tabindex="0" onclick="sel('sfp')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('sfp')" transform="translate(454,390)">
+    <rect class="nb" width="120" height="72" rx="5"/>
+    <rect class="na" width="120" height="2.5"/>
+    <text class="nab" x="60" y="27">SFPCM</text>
+    <text class="nn"  x="60" y="43">Spent Fuel Pool</text>
+    <text class="nn2" x="60" y="56">Cooling &amp; Mon.</text>
+  </g>
+
+  <!-- EDGC · L1 -->
+  <g class="nd ns" id="n-edg" tabindex="0" onclick="sel('edg')" onkeydown="if(event.key==='Enter'||event.key===' ')sel('edg')" transform="translate(614,390)">
+    <rect class="nb" width="120" height="72" rx="5"/>
+    <rect class="na" width="120" height="2.5"/>
+    <text class="nab" x="60" y="33">EDGC</text>
+    <text class="nn"  x="60" y="50">Emergency Diesel Gen.</text>
+  </g>
+  </svg>
+  </div>
+
+  <!-- Detail panel -->
+  <div class="detail" id="detail">
+    <div class="detail-placeholder">↑ Select any system node to explore its security characteristics and workshop module affinities</div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="li">
+      <span class="li-swatch" style="background:var(--c-safety-dim);border-color:var(--c-safety)"></span>Safety-critical
+    </div>
+    <div class="li">
+      <span class="li-swatch" style="background:var(--c-ops-dim);border-color:var(--c-ops)"></span>Operational / BOP
+    </div>
+    <div class="li">
+      <span class="li-swatch" style="background:var(--c-mon-dim);border-color:var(--c-mon)"></span>Monitoring / Security
+    </div>
+    <div class="li">
+      <span class="li-swatch" style="background:var(--c-emg-dim);border-color:var(--c-emg);border-style:dashed"></span>Emerging architecture
+    </div>
+    <div class="li" style="margin-left:auto">
+      <span class="li-line" style="border-color:var(--c-safety);border-style:dashed"></span>Data diode (one-way)
+    </div>
+    <div class="li">
+      <span class="li-line" style="border-color:var(--diag-conn);border-style:solid"></span>Bidirectional interface
+    </div>
+  </div>
+</div>
+
+<script>
+const W=['Attack Surface Mapping','Adversary Profiling','Protocol Security','Access Control Design','Three-Framework Analysis','Monitoring & Supply Chain','Incident Response','Side-Channel Analysis','AI Risk Assessment'];
+const WS=['Attack Surface','Adversary Profile','Protocol Security','Access Control','Three-Framework','Monitoring','IR (Zimmerman)','Side-Channel','AI Risk'];
+
+const SYSTEMS={
+  rps:{name:'Reactor Protection System',abbr:'RPS',type:'ns',badge:'Safety',badgeClass:'b-safety',
+    zone:'Purdue Level 1 — Control (safety-critical, isolated)',
+    desc:'Monitors reactor parameters (power, temperature, pressure, coolant flow) and automatically initiates emergency shutdown (SCRAM) by inserting control rods when limits are exceeded. Governed by 10 CFR 50 and IEEE Std 603. Isolated from all networks by a unidirectional data diode — commands cannot enter the RPS from any external system.',
+    protocols:['Hardwired logic (primary actuation path)','Proprietary serial (status output only)','Data diode → DCS: status only, no inbound path'],
+    r:[2,3,1,3,3,2,3,3,1],
+    notes:{2:'Nation-states target the RPS for two opposing goals: induce a spurious SCRAM for economic disruption, or suppress a legitimate SCRAM for catastrophic consequence. Both attack vectors use the same pathway — sensor data falsification — but produce opposite outcomes.',
+      4:'Emergency override of RBAC restrictions during a plant transient: operators may need access the policy normally prohibits. The Diverse Actuation System (DAS) creates a second access control domain with different authorities and authentication requirements. The hardest RBAC design problem in the course.',
+      5:'A cyber compromise triggering a spurious SCRAM starts the 10 CFR 50.72(b)(2) Safety notification clock (4 hours). If attributed to an adversary, a concurrent 10 CFR 73.71 Security notification also starts. Both timelines run simultaneously to different NRC offices with different content requirements.',
+      7:'The RPS cannot be taken offline to investigate a cyber incident while the reactor is operating. Every Zimmerman rule requires adaptation when the system under investigation is simultaneously protecting public safety. Evidence collection must not interfere with the safety function.',
+      8:'Safety PLCs on ARM Cortex-M or PowerPC architectures are direct targets for power analysis side-channel attacks. Physical proximity to the protected area server room makes electromagnetic measurement attacks feasible without any network access.'}},
+
+  dcs:{name:'Digital Control System',abbr:'DCS',type:'no',badge:'Operational',badgeClass:'b-ops',
+    zone:'Purdue Level 2 — Supervisory (hub of plant cyber infrastructure)',
+    desc:'The supervisory hub of plant operations. Controls and monitors all major plant processes, interfaces with every other system in this diagram, and feeds the historian server that is the primary data source for anomaly detection. The broadest attack surface in the plant.',
+    protocols:['Modbus TCP (field devices, Level 1 systems)','DNP3 (remote I/O, setpoints)','OPC-UA (historian server, HMI)','Proprietary vendor protocols (Emerson, Siemens, Yokogawa)','Hardwired interlocks (RPS, EDGC)'],
+    r:[3,3,3,3,2,3,3,2,3],
+    notes:{1:'The DCS connects to every other system in this diagram. Its attack surface map is the map of the entire plant cyber infrastructure — IT/OT/physical intersection points are all present in a single system.',
+      3:'A single DCS installation typically runs Modbus, DNP3, OPC-UA, and proprietary historian protocols simultaneously — often in the same network segment. The richest multi-protocol environment in the plant for W3.',
+      6:'The DCS historian IS the monitoring data source for plant-wide anomaly detection. Studying the DCS for W6 means studying the security of the system that is supposed to detect attacks against all other systems.',
+      9:'Nuclear utilities are actively deploying AI anomaly detection against DCS operational data. This is the most mature real-world AI deployment in nuclear operations — your W9 analysis can be grounded in documented production systems.'}},
+
+  tcs:{name:'Turbine Control System',abbr:'TCS',type:'no',badge:'Operational',badgeClass:'b-ops',
+    zone:'Purdue Level 1 — Control (Balance of Plant)',
+    desc:'Controls turbine speed, steam admission, and generator load. Operates on legacy OT protocols (Modbus, DNP3) across the balance-of-plant side. Availability attack target — disruption causes power output loss without direct radiological risk, making it accessible to less sophisticated actors.',
+    protocols:['Modbus RTU / TCP (primary control)','DNP3 (remote setpoints)','4–20 mA analog (steam pressure, vibration, bearing temperature)'],
+    r:[2,2,3,2,1,3,2,2,3],
+    notes:{3:'The TCS operates natively over Modbus and DNP3 — the same protocols covered in W3. This is the most authentic real-world setting in the plant for the protocol security analysis.',
+      6:'Steam pressure, flow rate, vibration signatures, and bearing temperatures form a rich multivariate dataset. AI-assisted anomaly detection on turbine data is one of the most active research areas in nuclear plant operations.',
+      9:'GE, Westinghouse, and Siemens have deployed AI predictive maintenance against turbine data at multiple plants. Publicly available case studies exist — your W9 analysis can reference documented production deployments.'}},
+
+  sfp:{name:'Spent Fuel Pool Cooling & Monitoring',abbr:'SFPCM',type:'ns',badge:'Safety',badgeClass:'b-safety',
+    zone:'Purdue Level 1 — Control (SNM storage — three-framework nexus)',
+    desc:'Maintains cooling water temperature and level in the spent fuel pool, where irradiated fuel assemblies are stored. Contains special nuclear material, placing it under Safeguards jurisdiction alongside Safety and Security. Post-Fukushima, a documented high-priority adversary target.',
+    protocols:['Modbus TCP (cooling pumps, valves)','Analog 4–20 mA (temperature, level, radiation)','Proprietary interface to cooling system vendor'],
+    r:[2,3,2,2,3,3,3,2,3],
+    notes:{2:'Post-Fukushima, adversary interest in spent fuel facilities increased significantly. Cooling loss scenarios — whether from physical attack or cyber manipulation — have been gamed in public threat assessments by both IAEA and NRC.',
+      5:'A single cyber attack on SFPCM can simultaneously trigger Safety (10 CFR 50.72 — cooling function loss), Security (10 CFR 73.71 — deliberate sabotage), and Safeguards (10 CFR 74 — SNM accountability disruption). The only other system with this three-framework reach is a direct RPS attack.',
+      7:'IR during an active SFP cooling-loss event means the cybersecurity team operates while the emergency response team simultaneously responds to a potential radiological event. Coordinating two response streams with different authorities is the W7 scenario.',
+      9:'Remote AI monitoring of SFP parameters is an active deployment area. The W9 analysis is particularly interesting because AI monitoring accuracy has direct SNM safeguards implications.'}},
+
+  edg:{name:'Emergency Diesel Generator Control',abbr:'EDGC',type:'ns',badge:'Safety',badgeClass:'b-safety',
+    zone:'Purdue Level 1 — Control (backup power, availability-critical)',
+    desc:'Controls startup, load sequencing, and operation of emergency diesel generators that provide backup power when offsite power is lost. An availability attack target: disabling backup power can force a controlled shutdown or prolong dangerous loss-of-power conditions without causing immediate radiological harm.',
+    protocols:['Hardwired startup interlocks (primary)','Serial control (load sequencing)','Analog (fuel level, battery voltage, generator output)'],
+    r:[2,3,2,2,2,3,3,1,2],
+    notes:{2:'Disabling backup power is an availability attack — it does not cause immediate radiological harm but forces a plant trip or prolongs a loss-of-power event that simultaneously stresses all safety systems. Nation-state actors targeting economic disruption prioritize this.',
+      6:'Core W6 challenge for EDGC: distinguishing slow degradation (battery discharge, fuel contamination) from active adversarial interference. Availability monitoring under adversarial conditions is the focus.',
+      7:'If the EDGs are compromised during an unrelated plant transient, the IR team is simultaneously the emergency power team. The temporal overlap between cybersecurity response and emergency response is direct and acute — every Zimmerman rule must account for the constraint that power must be restored.'}},
+
+  rms:{name:'Process Radiation Monitoring System',abbr:'RMS',type:'nm',badge:'Monitoring',badgeClass:'b-mon',
+    zone:'Purdue Level 1–3 — Distributed (spans all zones and all three regulatory frameworks)',
+    desc:'Geographically distributed radiation sensors throughout the plant — containment building, spent fuel pool area, ventilation stacks, site boundary. Connects to Safety, Security, and Safeguards frameworks simultaneously. Sensor data integrity failures propagate across all three regulatory obligations.',
+    protocols:['4–20 mA analog (area monitors, area detection)','Serial (local instrumentation panels)','Ethernet → plant historian (dose records, trend data)','IAEA reporting interface (site boundary monitors)'],
+    r:[3,3,2,2,3,3,3,3,3],
+    notes:{1:'RMS sensors are distributed throughout the plant — containment, high-radiation zones, ventilation stacks, perimeter stations. Its attack surface map is geographically distributed, spans all Purdue levels, and touches all three regulatory frameworks simultaneously.',
+      2:'Documented threat scenarios include sensor spoofing to suppress radiation alarms during deliberate radiological release (masking a Safety event) or to falsify site boundary readings (masking a Safeguards event). The adversary goal is detection avoidance across multiple regulatory frameworks at once.',
+      5:'Corrupt RMS data can simultaneously mask a radiological release (Safety), defeat detection of sabotage (Security), and falsify material accounting records (Safeguards). One data integrity attack, three simultaneous regulatory consequences.',
+      7:'When the radiation monitoring system itself is compromised, every other safety decision depends on data that may be unreliable. IR must investigate the compromise while simultaneously re-validating every reading during the compromise window.',
+      8:'Radiation measurement hardware is physically sensitive to energy transfer by design. That sensitivity creates side-channel exposure paths that do not exist in conventional digital systems — the sensor is the side channel.'}},
+
+  psi:{name:'Physical Security Integration',abbr:'PSI',type:'nm',badge:'Security',badgeClass:'b-mon',
+    zone:'Purdue Level 2–3 — Cyber-physical boundary (governs 10 CFR 73)',
+    desc:'Integrates electronic badge readers, biometric entry, CCTV analytics, vehicle barriers, and alarm systems into a networked security management platform. Governs the 10 CFR 73 physical protection program. Every node is a point where digital commands control physical access to nuclear material.',
+    protocols:['OSDP (Open Supervised Device Protocol — badge readers)','Wiegand (legacy card readers — insecure by design)','ONVIF (camera and video analytics network)','Ethernet (security management server)','Hardwired (door strikes, vehicle barriers)'],
+    r:[3,3,2,3,3,3,3,1,3],
+    notes:{1:'The PSI attack surface map IS the map of the cyber-physical boundary. Every badge reader, camera, and door controller is a node where digital commands control physical access. The most literal representation of this course\'s central theme.',
+      2:'Insider threat is the primary adversary model for physical security. W2\'s role pairing (Nation-State Analyst + Insider Threat Investigator) is most analytically powerful when applied to the system designed specifically to detect and prevent insider access.',
+      4:'RBAC design for the physical security system means designing the security of the security system. Meta-challenge: who can modify access control rules, and how do you protect the rule database from an insider with legitimate administrative access?',
+      5:'Physical protection IS 10 CFR 73. A cyber compromise of PSI directly triggers the Security regulatory framework. If access control defeat enables material diversion, Safeguards (10 CFR 74) is triggered simultaneously.',
+      9:'AI video analytics, behavioral pattern recognition, and anomaly detection are the active deployment frontier in physical security. The W9 AI risk analysis is most interesting here because production deployments are already underway at several sites.'}},
+
+  smr:{name:'SMR Integrated I&C Platform',abbr:'SMR I&C',type:'ne',badge:'Emerging',badgeClass:'b-emg',
+    zone:'Purdue Level 1–2 — Integrated (collapses traditional zone boundary)',
+    desc:'Small modular reactor designs consolidate control and protection functions into a single integrated I&C platform, collapsing the Level 1/Level 2 boundary. Uses modern Ethernet-based protocols (IEC 61850). Passive safety features reduce operator intervention, fundamentally changing access control and IR paradigms. NRC regulatory framework has significant gaps for this architecture.',
+    protocols:['IEC 61850 (protection + control — modern standard)','Ethernet / TCP-IP (integrated platform interconnect)','Proprietary APIs (passive safety system monitoring)'],
+    r:[3,3,3,3,3,3,2,3,3],
+    notes:{3:'SMR designs use IEC 61850 and Ethernet rather than legacy Modbus/DNP3. W3 applied to SMR I&C analyzes the transition from legacy to modern protocols — and whether "modern" means "more secure" or merely "differently vulnerable with a larger network attack surface."',
+      4:'Passive safety systems actuate without operator intervention. This changes the RBAC design problem fundamentally: emergency access procedures differ when the system can protect itself without human action. Who can override a passive safety actuation, and under what conditions?',
+      5:'NRC regulatory framework was designed for large light-water reactors. W5 on SMR I&C surfaces gaps that don\'t exist for conventional systems: which 10 CFR 50.72 notification trigger applies when a passive system actuates due to a cyber manipulation? There is no settled answer.',
+      8:'SMR designs use current-generation ARM, PowerPC, and FPGA platforms — direct targets of the O\'Flynn TCHES 2019 paper assigned in W8. Side-channel attack methodology is most immediately applicable to the hardware actually deployed in SMR I&C.',
+      9:'AI monitoring is explicitly incorporated into several SMR designs as a core feature, not a retrofit. The W9 regulatory gap analysis is richest here: NRC guidance on AI in safety-related I&C was developed for large LWRs and does not address SMR-specific integrated architectures.'}}
+};
+
+const typeColor={ns:'var(--c-safety)',no:'var(--c-ops)',nm:'var(--c-mon)',ne:'var(--c-emg)'};
+let current=null;
+
+function sel(id){
+  if(current){
+    const el=document.getElementById('n-'+current);
+    if(el) el.classList.remove('sel');
+  }
+  current=id;
+  const el=document.getElementById('n-'+id);
+  if(el) el.classList.add('sel');
+  render(SYSTEMS[id]);
+}
+
+function render(s){
+  const col=typeColor[s.type];
+  const priIdxs=s.r.map((v,i)=>({v,i})).filter(x=>x.v===3).map(x=>x.i);
+
+  const pills=s.r.map((v,i)=>{
+    const cls=v===3?'mp-primary':v===2?'mp-strong':'mp-appl';
+    const pStyle=v===3?`background:rgba(0,0,0,.0);border-color:${col}22;color:${col}`:'';
+    return `<div class="mp ${cls}" style="${pStyle}" title="W${i+1}: ${W[i]}">
+      <span class="mp-num" style="${v===3?'color:'+col:''}">${'W'+(i+1)}</span>
+      <span class="mp-title">${WS[i]}</span>
+    </div>`;
+  }).join('');
+
+  const notes=priIdxs.map(i=>{
+    const note=s.notes&&s.notes[i+1];
+    if(!note) return '';
+    return `<div class="note" style="border-color:${col}">
+      <span class="note-lbl" style="color:${col}">W${i+1} — ${W[i]}:</span>${note}
+    </div>`;
+  }).join('');
+
+  document.getElementById('detail').innerHTML=`<div class="detail-inner">
+    <div class="dh">
+      <div class="dh-text">
+        <div class="dh-name" style="color:${col}">${s.name}</div>
+        <div class="dh-zone">${s.zone}</div>
+      </div>
+      <span class="dbadge ${s.badgeClass}">${s.badge}</span>
+    </div>
+    <p class="desc">${s.desc}</p>
+    <div class="cols">
+      <div>
+        <div class="col-label">Protocols &amp; Interfaces</div>
+        <ul class="proto-list">${s.protocols.map(p=>`<li>${p}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <div class="col-label">Workshop Affinities <span style="text-transform:none;letter-spacing:0;font-weight:400"> — highlighted = primary fit</span></div>
+        <div class="mod-grid">${pills}</div>
+      </div>
+    </div>
+    ${notes?`<div class="notes"><div class="col-label" style="margin-top:.9rem;margin-bottom:.5rem">Primary Workshop Fit — Why This System Excels Here</div>${notes}</div>`:''}
+  </div>`;
+}
+
+SYSTEMS.ppc={name:'Plant Process Computer / Historian',abbr:'PPC',type:'no',badge:'Operational',badgeClass:'b-ops',
+  zone:'Purdue Level 2–3 — OT/IT data bridge (highest-value data exfiltration target in the plant)',
+  desc:'Aggregates all plant operational data from the DCS, RMS, and field instruments into a long-term historian database (OSIsoft/AVEVA PI System). Every setpoint change, alarm, sensor reading, and operator action is timestamped and stored here. The historian is the plant\'s operational memory — and the most information-rich single target for an adversary conducting reconnaissance before a process manipulation attack.',
+  protocols:['OPC-DA / OPC-UA (DCS data ingestion)','SQL / proprietary API (historian database)','REST API (reporting dashboards, external queries)','Syslog → OT-SIEM (event forwarding)'],
+  r:[3,3,3,2,2,3,3,1,3],
+  notes:{1:'The historian bridges L2 DCS and L3 site operations, making it the widest data aggregation point in the OT network. Every inbound OPC-UA connection is a vector in; every reporting interface is a vector out. The attack surface map spans protocols, authentication models, and trust relationships across two Purdue zones.',
+    2:'APT groups target historian servers for intelligence collection — understanding plant operating state, normal setpoint ranges, and alarm thresholds before launching a manipulation attack. CRASHOVERRIDE and Triton both included historian enumeration in their pre-attack reconnaissance.',
+    3:'OPC-DA, OPC-UA, SQL, proprietary historian APIs, and REST reporting endpoints coexist on a single PPC. The richest multi-protocol environment above Level 1 — every protocol has a distinct authentication model and vulnerability class.',
+    6:'The OT-SIEM anomaly detection baseline IS trained on historian data. If the historian is compromised first, an attacker can slowly poison the training baseline before launching the actual process attack — the monitoring system learns that the manipulated state is "normal."',
+    7:'Forensic investigation of a cyber incident uses historian records as the authoritative ground truth for plant state during the attack window. If the historian was compromised, the forensic record is unreliable. Every Zimmerman rule that references log review must account for this possibility.',
+    9:'ML on historian data is the most mature AI deployment in nuclear operations. Predictive maintenance, anomaly detection, and operational optimization all run against historian data — making the historian simultaneously the AI training source and the highest-value data manipulation target.'}};
+
+SYSTEMS.otsiem={name:'OT Security Information & Event Management',abbr:'OT-SIEM',type:'nm',badge:'Security',badgeClass:'b-mon',
+  zone:'Purdue Level 3 — Site Operations (the system designed to detect attacks on all other systems)',
+  desc:'An OT-specific SIEM platform (Dragos Platform, Claroty, Nozomi Networks) that ingests security events, protocol anomalies, and behavioral alerts from all plant systems — DCS, RMS, PSI, PPC historian feeds. Designed to understand ICS protocols natively, not just parse generic syslog. If the OT-SIEM is compromised or blinded, the adversary can operate undetected across the entire plant network. Suppressing SIEM alerts is the first step in most sophisticated ICS APT playbooks.',
+  protocols:['Syslog (all system log ingestion)','Passive OT protocol monitoring (Modbus, DNP3, IEC 61850 — read-only span port)','OPC-UA (historian/PPC data feeds)','SNMP (device availability)','REST API → ICT-SIEM (one-way alert export)'],
+  r:[3,3,3,3,3,3,3,2,3],
+  notes:{1:'Attacking the OT-SIEM first is more efficient than attacking targets directly — one compromise blinds detection across the entire monitored environment. The SIEM attack surface is the attack surface of the monitoring program itself. Mapping it reveals every detection gap.',
+    2:'SolarWinds (2020) demonstrated the template: target the management/monitoring platform to suppress detection before attacking primary targets. Applied to nuclear OT: compromise OT-SIEM → blind all anomaly detection → execute process attack unobserved.',
+    4:'OT-SIEM administrator access = ability to suppress, modify, or delete any alert. RBAC design for the SIEM is the RBAC design of the entire security program. Who can acknowledge alerts without investigation? Who can tune detection rules? Who can add exclusions?',
+    5:'The OT-SIEM simultaneously monitors Safety (process anomalies), Security (cyber events), and Safeguards (material accountancy data feeds). Alert suppression or manipulation in a single platform affects all three regulatory frameworks at once.',
+    7:'IR playbooks assume the SIEM provides reliable data. When the SIEM itself is the compromised system, every Zimmerman rule that references "alert review," "log correlation," or "detection timeline" must be re-derived from offline sources or physical instruments.',
+    9:'AI-based anomaly detection is the primary differentiator between OT SIEM vendors. ML models trained on historian data form the detection baseline — making the training data pipeline (PPC → OT-SIEM) a supply chain risk as important as the SIEM software itself.'}};
+
+SYSTEMS.ictsiem={name:'ICT Security Information & Event Management',abbr:'ICT-SIEM',type:'nm',badge:'Security',badgeClass:'b-mon',
+  zone:'Purdue Level 4 — Corporate (IT/OT security bridge, above the air gap)',
+  desc:'An enterprise SIEM (Splunk, Microsoft Sentinel, IBM QRadar) operating in the corporate IT network above the air gap. Receives one-way security event exports from the OT-SIEM. Corporate security analysts see plant security events without any direct plant network access. The IT/OT coordination point: the gap between what OT-SIEM exports and what ICT-SIEM receives defines the actual detection capability of the enterprise response team. Coordination breakdown between ICT and OT response teams is one of the most common failure modes in nuclear cyber incident response.',
+  protocols:['Syslog (enterprise log ingestion)','HTTPS / REST (OT-SIEM one-way event export)','LDAP / Active Directory (identity correlation across IT/OT boundary)','Ticketing APIs (ServiceNow, Jira — incident management)'],
+  r:[3,2,2,3,2,3,3,1,3],
+  notes:{1:'ICT-SIEM is the corporate network\'s window into plant security state and the bridge an adversary crossing from enterprise IT into OT must account for. Attacking ICT-SIEM disrupts enterprise incident response without requiring any direct OT access — maximum disruption from the IT side.',
+    4:'ICT-SIEM admin access spans both corporate and plant security monitoring. The identity federation between corporate Active Directory and OT domain accounts — managed through the ICT-SIEM integration — is a lateral movement vector for attackers who have already compromised enterprise credentials.',
+    6:'The fidelity gap between what OT-SIEM exports and what ICT-SIEM receives IS the detection gap. Alert normalization, field mapping, and correlation rules across the air gap export define whether corporate analysts can actually act on plant security events in time.',
+    7:'Nuclear cyber IR requires coordinating two separate response teams (plant OT security + corporate ICT security) with different authorities, different tools, different visibility, and potentially different incident classification. ICT-SIEM is the coordination point — and the most common bottleneck in multi-team response.',
+    9:'AI alert correlation between ICT-SIEM and OT-SIEM is the frontier of enterprise-OT integration. Automated enrichment that crosses the IT/OT boundary introduces AI decision-making into a pathway with no settled regulatory framework under 10 CFR 50 or 73.'}};
+
+// Default selection
+setTimeout(()=>sel('dcs'),200);
+</script>
