@@ -33,8 +33,8 @@ This is the **course materials repository** for CS 581. It contains reference ma
 
 **This is not a submission target.** Your work goes in the two repositories you create in Week 1. This repo is read-only reference material.
 
-- [Canvas Course](https://boisestatecanvas.instructure.com/courses/48925) — assignments, rubrics, announcements, grades
-- [Plant Architecture Diagram](https://boisestate.github.io/CS581/plant-architecture.html) — interactive 11-system nuclear plant map (live)
+- <a href="https://boisestatecanvas.instructure.com/courses/48925" target="_blank" rel="noopener">Canvas Course</a> — assignments, rubrics, announcements, grades
+- <a href="https://boisestate.github.io/CS581/plant-architecture.html" target="_blank" rel="noopener">Plant Architecture Diagram</a> — interactive 11-system nuclear plant map (live)
 
 ---
 
