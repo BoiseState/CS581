@@ -20,11 +20,15 @@ Copy `secondary-repo/` as the starting structure. This is where your role analys
 
 ## How to Use These Templates
 
-1. **Week 1, Day 1:** Create both repos on GitHub (public, named however you like)
+1. **Week 1, Day 1:** Create both repos on GitHub — **make them private**
+   - Suggested names: `cs581-primary` and `cs581-secondary`
+   - Private repos prevent other students from reading your threat models and attack surface maps
 2. Copy `primary-repo/` contents into your primary repo
 3. Copy `secondary-repo/` contents into your secondary repo
-4. Submit both repo URLs via the Repository Setup assignment on Canvas
-5. Fill in placeholder files as you complete each workshop — commit as you go, not all at once
+4. **Add your instructor as a collaborator with Read access** on both repos:
+   - Settings → Collaborators → Add people → search `cspirito` → role: Read
+5. Submit both repo URLs via the Repository Setup assignment on Canvas (Module 1)
+6. Fill in placeholder files as you complete each workshop — commit as you go, not all at once
 
 ---
 
