@@ -105,8 +105,8 @@ Students select from this architecture in Week 1. All 11 systems must appear in 
 
 | Component | Points |
 |---|---|
-| System Selection & Sequencing Plan | 30 |
-| Workshops W1–W9 (9 × 30 pts) | 270 |
+| Workshop 1 (System Selection, Sequencing Plan & Attack Surface Map) | 60 |
+| Workshops W2–W9 (8 × 30 pts) | 240 |
 | Midterm Scenario Exercise | 100 |
 | Ethics Paper | 150 |
 | Portfolio Capstone | 250 |
