@@ -1,0 +1,39 @@
+{
+  "tool": "",
+  "provider": "",
+  "evaluation_date": "",
+  "capabilities": {
+    "thinking_and_reasoning": {
+      "supported": null,
+      "notes": "Does the tool expose its reasoning chain or intermediate steps? Test it on a prompt that requires multi-step inference. Describe what you observed and what it tells you about how to prompt this tool effectively."
+    },
+    "context_length": {
+      "tokens": null,
+      "notes": "Describe your test. Load one or more of the course primary sources (RG 5.71, NEI 08-09, Anderson chapter). Ask a question that requires finding something specific in the text. Did it succeed? This matters because the assignments require synthesizing long documents."
+    },
+    "function_calling": {
+      "supported": null,
+      "notes": "Does the tool support web search, file system access, or custom function definitions? List what you tested and what worked. If web search is available, describe how it cites sources."
+    },
+    "structured_output": {
+      "supported": null,
+      "notes": "Can the tool produce well-formed JSON, markdown tables, and structured lists reliably? Describe what you tested. Note how many prompt iterations it took to get the format right — this is useful calibration for the rest of the semester."
+    },
+    "vision_multimodal": {
+      "supported": null,
+      "notes": "Can you upload images or diagrams? Test with the Plant Architecture Diagram. Ask it to describe connections between systems. Note any errors or hallucinations."
+    },
+    "mcp_integration": {
+      "supported": null,
+      "notes": "Does the tool support MCP servers or equivalent external integrations? List what is available. Note anything you plan to use later in the semester."
+    },
+    "provenance_trust": {
+      "provider": "",
+      "us_based": null,
+      "data_handling": "Summarize the provider's data handling policy in one or two sentences. Link to the relevant policy document. Explain why this tool is or is not appropriate for nuclear cybersecurity coursework involving publicly available primary sources.",
+      "notes": "This is a graded criterion. US-based providers with documented data handling policies are required. Explain your reasoning, not just your conclusion."
+    }
+  },
+  "justification": "Why is this the right tool for this course? Give three specific reasons based on your evaluation above. Each reason should reference something you tested, not something from a marketing page.",
+  "limitations": "What did you find that this tool does poorly or gets wrong? Describe at least two concrete limitations you discovered during your W1 session. Cite the specific moment where each limitation appeared and how you caught or worked around it."
+}
