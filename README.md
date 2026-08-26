@@ -89,13 +89,14 @@ Students select from this architecture in Week 1. All 11 systems must appear in 
 ├── coding-agents-companion.tex / .pdf   # AI tool guidance document
 ├── plant-architecture.html   # Interactive SVG diagram (served via GitHub Pages)
 └── example-student-work/
-    └── week-01/              # Jordan Reyes — complete W1 submission
-        ├── README.md         # Student persona and context
-        ├── system-selection.md
-        ├── sequencing-plan.md
-        ├── attack-surface-map.md
-        ├── session-log.md
-        └── tool-selection.json
+    └── workshops/
+        └── week-01/          # Jordan Reyes — complete W1 submission
+            ├── README.md     # Student persona and context
+            ├── system-selection.md
+            ├── sequencing-plan.md
+            ├── attack-surface-map.md
+            ├── session-log.md
+            └── tool-selection.json
 ```
 
 ---
