@@ -97,7 +97,11 @@ Build a structured attack surface map for a generic US nuclear power plant using
 - Flag anything drawn from specific documented incidents vs. general architectural knowledge
 - Include a brief layer summary paragraph after each table
 
-**Output file:** `workshops/week-01/attack-surface-map.md`
+**Output files:**
+- `workshops/week-01/attack-surface-map-it.md`
+- `workshops/week-01/attack-surface-map-ot.md`
+- `workshops/week-01/attack-surface-map-physical.md`
+- `workshops/week-01/attack-surface-verification.md`
 
 ---
 
@@ -162,7 +166,10 @@ role-analyses/week-01/
   synthesis.md
 
 workshops/week-01/
-  attack-surface-map.md
+  attack-surface-map-it.md
+  attack-surface-map-ot.md
+  attack-surface-map-physical.md
+  attack-surface-verification.md
   tool-selection.json
   session-log.md
 ```

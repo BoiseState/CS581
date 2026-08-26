@@ -1,7 +1,7 @@
 # [Your Name] — CS 581 Portfolio
 
 **Boise State University · CS 581 Nuclear Cybersecurity · Fall 2026**  
-AI Tool: <!-- Claude Code / Codex / Antigravity -->  
+AI Tool: <!-- Claude Code / Codex -->  
 Primary System: <!-- The system you chose in Week 1 -->
 
 ---
@@ -21,7 +21,7 @@ Be specific — name systems, frameworks, and techniques.
 
 | Workshop | System | Artifact | Theme |
 |---|---|---|---|
-| W1 | <!-- system --> | [Attack Surface Map](workshops/week-01/attack-surface-map.md) | Foundations |
+| W1 | <!-- system --> | [IT Layer](workshops/week-01/attack-surface-map-it.md) · [OT Layer](workshops/week-01/attack-surface-map-ot.md) · [Physical Layer](workshops/week-01/attack-surface-map-physical.md) · [Verification](workshops/week-01/attack-surface-verification.md) | Foundations |
 | W2 | <!-- system --> | [Threat Profile](workshops/week-02/threat-profile.md) | Adversary Analysis |
 | W3 | <!-- system --> | [Protocol Security Analysis](workshops/week-03/protocol-security-analysis.md) | Technical Core I |
 | W4 | <!-- system --> | [ICS Security Analysis](workshops/week-04/ics-security-analysis.md) | Technical Core II |
@@ -35,7 +35,7 @@ Be specific — name systems, frameworks, and techniques.
 
 ## AI Tool Evaluation
 
-**Tool used:** <!-- Claude Code / Codex / Antigravity -->
+**Tool used:** <!-- Claude Code / Codex -->
 
 **What it did well:**
 <!-- Be specific. Which workshop produced the best AI-assisted output and why? -->

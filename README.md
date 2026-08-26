@@ -94,7 +94,10 @@ Students select from this architecture in Week 1. All 11 systems must appear in 
             ├── README.md     # Student persona and context
             ├── system-selection.md
             ├── sequencing-plan.md
-            ├── attack-surface-map.md
+            ├── attack-surface-map-it.md
+            ├── attack-surface-map-ot.md
+            ├── attack-surface-map-physical.md
+            ├── attack-surface-verification.md
             ├── session-log.md
             └── tool-selection.json
 ```

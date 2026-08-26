@@ -124,7 +124,10 @@ primary-repo/
       tool-selection.json
       system-selection.md
       sequencing-plan.md
-      attack-surface-map.md
+      attack-surface-map-it.md
+      attack-surface-map-ot.md
+      attack-surface-map-physical.md
+      attack-surface-verification.md
       session-log.md
       README.md
     /week-03/ ...
@@ -258,15 +261,10 @@ Commit to `/workshops/week-01/tool-selection.json` in your primary repo.
 
 1. **`system-selection.md`** — which of the 11 systems you chose, its Purdue zone, and a one-paragraph rationale
 2. **`sequencing-plan.md`** — table mapping W1–W9 to your intended system targets, one-sentence justification per week. By Week 14 all 11 systems must appear at least once. Some workshops deliberately pair two systems — plan for this.
-3. **`attack-surface-map.md`** — three-layer map of your chosen system:
-
-| Layer | Components | Threat Vectors | Notable Gaps | Confidence & Provenance |
-|---|---|---|---|---|
-| IT (Corporate) | ... | ... | ... | documented / inferred / theoretical + source |
-| OT (Operational Technology) | ... | ... | ... | documented / inferred / theoretical + source |
-| Physical / Cyber Intersection | ... | ... | ... | documented / inferred / theoretical + source |
-
-Add a fourth section: **What This Map Cannot Tell You** — what information would you need (that you do not currently have) to turn this from a public-knowledge map into a facility-specific assessment? This section demonstrates analytical honesty and is the mark of a practitioner rather than a student.
+3. **`attack-surface-map-it.md`** — IT (Corporate) layer: table with columns Component | Threat Vectors | Notable Gaps | Confidence & Provenance, plus a layer summary paragraph
+4. **`attack-surface-map-ot.md`** — OT (Operational Technology) layer: same structure
+5. **`attack-surface-map-physical.md`** — Physical / Cyber Intersection layer: same structure. Include a **What This Map Cannot Tell You** section at the end — what facility-specific information would be required to turn this public-knowledge map into a real assessment. This section is the mark of a practitioner rather than a student.
+6. **`attack-surface-verification.md`** — AI self-audit document: pick two public sources, run your AI tool against its own layer outputs, and record corrections in a structured table (Layer | Original Claim | Error Type | Corrected Entry | Source). Include a confidence adjustment section and a note on what this verification cannot resolve.
 
 **Session log:** Commit your full AI Coding Assistant session log alongside the artifact. The session log is graded independently — it is evidence of your prompting process, not just the output.
 
