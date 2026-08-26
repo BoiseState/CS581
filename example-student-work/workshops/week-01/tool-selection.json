@@ -2,6 +2,44 @@
   "tool": "Claude Code",
   "provider": "Anthropic",
   "evaluation_date": "2026-08-25",
+  "models": {
+    "available": [
+      {
+        "model_id": "claude-sonnet-4-6",
+        "description": "Anthropic's current default — balanced speed and reasoning depth.",
+        "tier": "standard",
+        "tested": true,
+        "notes": "Used for all W1 work. Fast enough for iterative prompting. On the attack surface map task it produced the table structure correctly on the second prompt with no additional coaxing. This is my go-to for the bulk of coursework."
+      },
+      {
+        "model_id": "claude-opus-5",
+        "description": "Highest-capability model in the Claude 5 family — slower, deeper reasoning.",
+        "tier": "reasoning",
+        "tested": true,
+        "notes": "Tested on the RG 5.71 synthesis prompt. Produced a more careful answer than Sonnet on a question about whether Appendix E supply chain requirements apply to DCS vendor updates — it correctly flagged an ambiguity that Sonnet glossed over. I would use Opus for any prompt where I need to trust the regulatory reasoning and speed is not the constraint."
+      },
+      {
+        "model_id": "claude-haiku-4-5",
+        "description": "Fastest model in the family — low latency, lower cost, suitable for formatting and simple extraction tasks.",
+        "tier": "fast",
+        "tested": true,
+        "notes": "Used to reformat a long Modbus register table from a public manual into a markdown table. Fast and accurate for mechanical tasks. I would not use it for anything requiring multi-step nuclear regulatory reasoning — the answers are shorter and it skips hedging that Sonnet and Opus include."
+      }
+    ],
+    "reasoning_chain_test": {
+      "model_used": "claude-opus-5",
+      "prompt": "A DCS vendor pushes a firmware update that modifies the OPC-UA server configuration. Walk through whether this is a modification to a Critical Digital Asset under 10 CFR 73.54 Appendix E, and whether the licensee has an obligation to notify the NRC before installation.",
+      "observation": "The visible reasoning chain showed it working through three definitions in sequence — CDA, modification, and the Appendix E trigger conditions — before concluding. It flagged that 'modification' is not defined in the rule text and that NRC inspection reports treat vendor-supplied updates inconsistently. This was correct and not something I had in my notes. Sonnet gave a shorter answer that stated a conclusion without surfacing the definitional ambiguity.",
+      "nuclear_relevance": "In nuclear regulatory work, the gap between what a rule says and how inspectors apply it is operationally important. A model that surfaces definitional ambiguity is more useful than one that gives a confident wrong answer. The reasoning chain is the audit trail that tells me whether the output is trustworthy or whether I need to go to the primary source."
+    },
+    "vision_test": {
+      "model_used": "claude-sonnet-4-6",
+      "image_used": "Screenshot of the CS 581 Plant Architecture Diagram (boisestate.github.io/CS581/plant-architecture.html), cropped to the DCS node and its connections.",
+      "observation": "Correctly identified the data diode connection to RPS and the OPC-UA link to the Plant Process Computer. Correctly identified that there was no direct network path from DCS to ICT-SIEM. Did not hallucinate connections. It missed that the diagram uses color to indicate Purdue zone — it described all connections without noting zone boundaries. I had to ask a follow-up prompt to get zone analysis.",
+      "nuclear_relevance": "Useful for quickly parsing a diagram into a structured description I can then analyze. I would not trust it to catch subtle diagram errors or deliberate omissions — it reads what is drawn, not what should be there. For W1 attack surface mapping, I used it to generate the initial list of connections and then verified each one against the diagram manually."
+    },
+    "model_selection_guide": "Sonnet for all standard coursework — fast, accurate, good at structured output. Opus when the prompt requires regulatory reasoning or multi-step inference where I need to trust the answer. Haiku for mechanical reformatting, extraction from structured documents, and quick lookups where cost matters."
+  },
   "capabilities": {
     "thinking_and_reasoning": {
       "supported": true,
@@ -34,6 +72,6 @@
       "notes": "Critically important for this course context. I would not use this tool with anything marked CUI or export-controlled. Everything in this course uses publicly available primary sources, so no issue."
     }
   },
-  "justification": "Claude Code is the right tool for this course for three reasons. First, the context window is long enough to load multiple primary sources simultaneously — this is not optional when you are trying to synthesize Anderson, RG 5.71, and NEI 08-09 in a single session. Second, web search is integrated, which means I can pull current ICS-CERT advisories without leaving the session. Third, Anthropic's data handling is clear and US-based, which matters when working in a nuclear security context even with public documents.",
+  "justification": "Claude Code is the right tool for this course for three reasons. First, the context window is long enough to load multiple primary sources simultaneously — this is not optional when you are trying to synthesize Anderson, RG 5.71, and NEI 08-09 in a single session. Second, web search is integrated, which means I can pull current ICS-CERT advisories without leaving the session. Third, the model family spans from fast (Haiku) to deep-reasoning (Opus), which means I can match the model to the task rather than using one setting for everything.",
   "limitations": "Two real limitations I hit in Week 1: (1) The model's knowledge of specific DCS vendor implementations is shallow — it knows Ovation and ABB 800xA exist but cannot tell me specifics about their vulnerability histories without web search. (2) It confidently stated that OPC-DA was still in common use in nuclear facilities. This is outdated — OPC-UA has largely replaced OPC-DA in modern deployments. I caught it because I had just read a paragraph about this in NIST SP 800-82r3, but a student who had not done the reading would not have caught it. The session log documents this incident in detail."
 }
