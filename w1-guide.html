@@ -1,0 +1,1378 @@
+<title>W1 Workflow Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0c1117;--surface:#131b25;--raised:#1a2535;
+  --border:#1e2d3d;--border2:#263545;
+  --text:#dce8f4;--text2:#7a8fa6;--text3:#4a6070;
+  --accent:#3b9eff;--accent-dim:#0a1e36;--accent-border:#143258;
+  --ok:#22c55e;--ok-dim:#0a2018;
+  --warn:#f0b429;--err:#f04f4f;
+  --prompt:#060d14;--prompt-border:#1a2d45;
+  --mono:'JetBrains Mono','Fira Code',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+  --r:8px;--r2:4px;--r3:12px;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#f0f4f9;--surface:#fff;--raised:#f5f8fc;
+  --border:#d0dbe8;--border2:#e2eaf4;
+  --text:#1a2535;--text2:#4a6070;--text3:#8099b0;
+  --accent:#1d6fa5;--accent-dim:#eff8ff;--accent-border:#c3dff4;
+  --ok:#16a34a;--ok-dim:#f0fdf4;
+  --warn:#d97706;--err:#dc2626;
+  --prompt:#0c1117;--prompt-border:#1e2d3d;
+}}
+:root[data-theme="dark"]{
+  --bg:#0c1117;--surface:#131b25;--raised:#1a2535;
+  --border:#1e2d3d;--border2:#263545;
+  --text:#dce8f4;--text2:#7a8fa6;--text3:#4a6070;
+  --accent:#3b9eff;--accent-dim:#0a1e36;--accent-border:#143258;
+  --ok:#22c55e;--ok-dim:#0a2018;
+  --warn:#f0b429;--err:#f04f4f;
+  --prompt:#060d14;--prompt-border:#1a2d45;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
+a{color:var(--accent)}
+
+/* ── header ── */
+.hdr{position:fixed;top:0;left:0;right:0;height:52px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:20px;z-index:100}
+.hdr-title{font-size:13px;font-weight:700;letter-spacing:.02em;white-space:nowrap;color:var(--text)}
+.hdr-title span{color:var(--accent)}
+.step-track{display:flex;align-items:center;flex:1;gap:0}
+.s-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .2s;flex-shrink:0}
+.s-dot.active{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.s-dot.done{background:var(--ok)}
+.s-line{flex:1;height:1px;background:var(--border);margin:0 5px}
+
+/* ── layout ── */
+.main{margin-top:52px;min-height:calc(100vh - 52px - 56px)}
+.step{display:none;flex-direction:column;max-width:880px;margin:0 auto;padding:36px 24px 80px}
+.step.active{display:flex}
+
+/* ── step header ── */
+.s-eye{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.s-title{font-size:22px;font-weight:700;text-wrap:balance;margin-bottom:8px}
+.s-desc{color:var(--text2);max-width:600px;line-height:1.7;margin-bottom:28px}
+
+/* ── card ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:20px;margin-bottom:16px}
+.c-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:14px}
+
+/* ── form ── */
+.fg{margin-bottom:18px}
+label{display:block;font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px}
+input[type=text],select,textarea{width:100%;background:var(--raised);border:1px solid var(--border);border-radius:var(--r);padding:9px 13px;font-family:var(--sans);font-size:14px;color:var(--text);outline:none;transition:border-color .15s}
+input[type=text]:focus,select:focus,textarea:focus{border-color:var(--accent)}
+textarea{font-family:var(--mono);font-size:12px;resize:vertical;line-height:1.7}
+select option{background:var(--surface)}
+
+/* ── chips ── */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--raised);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--text)}
+.chip.on{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+
+/* ── system grid ── */
+.sys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px;margin-bottom:8px}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .15s;position:relative}
+.sc:hover{border-color:var(--border2);background:var(--raised)}
+.sc.sel{border-color:var(--accent);background:var(--accent-dim)}
+.sc.dim{opacity:.35}
+.sc-abbr{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--accent);margin-bottom:3px}
+.sc-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.35}
+.sc-meta{font-size:10px;color:var(--text3);margin-bottom:6px}
+.sc-desc{font-size:11px;color:var(--text2);line-height:1.5}
+.sc-check{position:absolute;top:9px;right:9px;width:17px;height:17px;background:var(--accent);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:10px;color:#fff}
+.sc.sel .sc-check{display:flex}
+.aff-row{display:flex;gap:2px;margin-top:8px}
+.af{width:6px;height:6px;border-radius:50%}
+.af3{background:var(--ok)}.af2{background:var(--warn)}.af1{background:var(--err)}
+.diff{display:inline-block;font-size:9px;font-weight:600;padding:2px 6px;border-radius:3px;margin-top:6px}
+.d-e{background:var(--ok-dim);color:var(--ok)}.d-m{background:rgba(240,180,41,.1);color:var(--warn)}.d-h{background:rgba(240,79,79,.1);color:var(--err)}
+
+/* ── prompt box ── */
+.pb{position:relative;margin:16px 0}
+.pb-lbl{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.pb-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+.pb-content{background:var(--prompt);border:1px solid var(--prompt-border);border-radius:var(--r);padding:15px;font-family:var(--mono);font-size:12px;line-height:1.8;color:#a8c4dd;white-space:pre-wrap;word-break:break-word;max-height:280px;overflow-y:auto}
+.copy-btn{position:absolute;top:32px;right:9px;font-size:11px;font-weight:500;padding:3px 9px;background:var(--raised);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text2);cursor:pointer;transition:all .15s}
+.copy-btn:hover{color:var(--accent);border-color:var(--accent)}
+.copy-btn.copied{color:var(--ok);border-color:var(--ok)}
+
+/* ── seq table ── */
+.stbl{width:100%;border-collapse:collapse;font-size:13px}
+.stbl th{text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);padding:8px 12px;border-bottom:1px solid var(--border)}
+.stbl td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.stbl tr:last-child td{border-bottom:none}
+.stbl tr.mw{background:rgba(59,158,255,.04)}
+.wn{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent)}
+.wdue{font-size:10px;color:var(--text3);white-space:nowrap}
+.wmb{font-size:9px;font-weight:600;padding:2px 5px;border-radius:2px;background:rgba(59,158,255,.14);color:var(--accent);margin-left:5px}
+.seq-sel{font-size:12px;padding:4px 8px;min-width:120px}
+
+/* ── sequencing cards ── */
+.seq-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;transition:border-color .2s}
+.seq-row.has-sel{border-color:var(--border2)}
+.seq-row-top{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.seq-row-theme{font-size:12px;color:var(--text2);flex:1}
+.seq-group-lbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.seq-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.sq-chip{padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--raised);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;font-family:var(--mono)}
+.sq-chip:hover{border-color:var(--accent);color:var(--text)}
+.sq-chip.connected{border-color:var(--accent-border);background:var(--accent-dim);color:var(--accent)}
+.sq-chip.connected:hover{opacity:.8}
+.sq-chip.sel{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.sq-chip.used{opacity:.28;cursor:default;pointer-events:none;text-decoration:line-through}
+.sq-chip.at-max{opacity:.38;cursor:default}
+.mwlimit{font-size:10px;padding:2px 8px;border-radius:10px;border:1px solid var(--border);color:var(--text3);margin-left:auto;white-space:nowrap}
+.mwlimit.done{color:var(--ok);border-color:rgba(34,197,94,.3)}
+.seq-locked{font-family:var(--mono);font-size:12px;color:var(--text2);font-style:italic}
+
+/* ── buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 17px;border-radius:var(--r);font-size:13px;font-weight:500;font-family:var(--sans);cursor:pointer;border:none;transition:all .15s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{opacity:.88}
+.btn-s{background:var(--raised);border:1px solid var(--border2);color:var(--text)}.btn-s:hover{border-color:var(--accent);color:var(--accent)}
+.btn-g{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-g:hover{border-color:var(--border2);color:var(--text)}
+.btn:disabled{opacity:.38;cursor:not-allowed}
+
+/* ── scroll nudge ── */
+.scroll-nudge{position:fixed;bottom:68px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;display:flex;align-items:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99;white-space:nowrap;box-shadow:0 4px 16px rgba(59,158,255,.4)}
+.scroll-nudge.visible{opacity:1;pointer-events:auto}
+.nudge-arrow{animation:nudgeBounce 1.2s ease-in-out infinite}
+@keyframes nudgeBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+
+/* ── nav footer ── */
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.btn-reset{font-size:11px;padding:5px 11px;border-radius:var(--r);border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s}
+.btn-reset:hover{border-color:rgba(239,68,68,.4);color:#f87171}
+.btn-reset.armed{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.1);color:#f87171;font-weight:600}
+.nav-info{font-size:12px;color:var(--text2)}
+.nav-acts{display:flex;gap:9px}
+
+/* ── info/validation ── */
+.info{background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:var(--r2);padding:11px 15px;font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.65}
+.info strong{color:var(--accent)}
+.vmsg{font-size:12px;padding:9px 13px;border-radius:var(--r2);margin:10px 0}
+.vmsg.warn{background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);color:var(--warn)}
+.vmsg.ok{background:var(--ok-dim);border:1px solid rgba(34,197,94,.3);color:var(--ok)}
+
+/* ── export ── */
+.file-blk{margin-bottom:22px}
+.file-hdr{display:flex;align-items:center;justify-content:space-between;background:var(--raised);border:1px solid var(--border);border-bottom:none;border-radius:var(--r) var(--r) 0 0;padding:9px 15px}
+.fname{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text2)}
+.fpath{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.file-body{background:var(--prompt);border:1px solid var(--prompt-border);border-radius:0 0 var(--r) var(--r);padding:15px;font-family:var(--mono);font-size:12px;line-height:1.8;color:#a8c4dd;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+
+.divider{height:1px;background:var(--border);margin:22px 0}
+code{font-family:var(--mono);font-size:12px;background:var(--raised);border:1px solid var(--border);border-radius:3px;padding:1px 5px;color:var(--text2)}
+
+/* ── sources panel ── */
+.src-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-top:20px;overflow:hidden}
+.src-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:none;border:none;cursor:pointer;color:var(--text);font-family:var(--sans);font-size:13px;font-weight:600;text-align:left}
+.src-toggle:hover{background:var(--raised)}
+.src-toggle-arrow{font-size:11px;color:var(--text3);transition:transform .2s}
+.src-toggle-arrow.open{transform:rotate(180deg)}
+.src-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.src-body.open{display:block}
+.src-section{margin-top:14px}
+.src-section-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.src-item{display:flex;flex-direction:column;padding:8px 10px;border-radius:var(--r2);margin-bottom:5px;background:var(--raised);border:1px solid var(--border)}
+.src-item a{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none}
+.src-item a:hover{text-decoration:underline}
+.src-note{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.5}
+.src-tag{display:inline-block;font-size:9px;font-weight:600;padding:1px 5px;border-radius:2px;margin-right:4px;margin-top:3px}
+.tag-verify{background:rgba(240,180,41,.12);color:var(--warn)}
+.tag-arch{background:rgba(59,158,255,.12);color:var(--accent)}
+.tag-threat{background:rgba(240,79,79,.1);color:var(--err)}
+.src-ai-note{margin-top:14px;padding:10px 12px;background:var(--ok-dim);border:1px solid rgba(34,197,94,.2);border-radius:var(--r2);font-size:12px;color:var(--text2);line-height:1.6}
+.src-ai-note strong{color:var(--ok)}
+</style>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-title">CS 581 <span>W1</span> Workflow Guide</div>
+  <div class="step-track" id="stepTrack"></div>
+</header>
+
+<main class="main">
+
+<!-- STEP 0: Profile -->
+<section class="step active" id="step-0">
+  <div class="s-eye">Getting started</div>
+  <h1 class="s-title">Set up your profile</h1>
+  <p class="s-desc">Your answers shape every prompt this tool generates. Take two minutes to fill this in accurately — the system selection and attack surface prompts are personalized to your background.</p>
+  <div class="card">
+    <div class="fg"><label>Your name</label><input type="text" id="pName" placeholder="e.g., Jordan Reyes" oninput="save()"></div>
+    <div class="fg"><label>AI Coding Assistant</label>
+      <select id="pTool" onchange="save()">
+        <option value="">Select your tool...</option>
+        <option value="Claude Code">Claude Code (Anthropic)</option>
+        <option value="Codex">Codex (OpenAI)</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="fg"><label>Professional background <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text3)">(select all that apply)</span></label>
+      <div class="chips" id="bgChips"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1: System Selection -->
+<section class="step" id="step-1">
+  <div class="s-eye">Step 1 of 5 — system-selection.md</div>
+  <h1 class="s-title">Choose your Week 1 system</h1>
+  <p class="s-desc">Select one of the 11 nuclear plant systems as your primary analysis target. This anchors your sequencing plan for the semester. The colored dots show workshop affinity (green = strong, amber = moderate, red = weak) for W1 through W9.</p>
+
+  <div class="card" style="padding:12px 16px 10px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--text2)">Filter by background:</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" id="sysFilterChips"></div>
+      <div style="margin-left:auto;display:flex;gap:10px;align-items:center;font-size:10px;color:var(--text3)">
+        <span><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:3px"></span>Strong</span>
+        <span><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warn);margin-right:3px"></span>Moderate</span>
+        <span><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--err);margin-right:3px"></span>Weak</span>
+        <span style="color:var(--text3)">← W1 · · · W9 →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sys-grid" id="sysGrid"></div>
+
+  <div id="sysPromptArea" style="display:none">
+    <div class="divider"></div>
+    <div class="info"><strong>System selected.</strong> Generate the prompt below and run it in your AI tool. Let the tool create <code>system-selection.md</code> in your repo, then come back and log your observations.</div>
+    <button class="btn btn-p" onclick="genSysPrompt()">Generate prompt</button>
+    <div id="sysPromptBox" class="pb" style="display:none">
+      <div class="pb-lbl">Prompt for <span id="sysToolLbl"></span></div>
+      <button class="copy-btn" onclick="copyP('sysPC',this)">Copy</button>
+      <div class="pb-content" id="sysPC"></div>
+    </div>
+    <div id="sysReflArea" style="display:none;margin-top:18px">
+      <div class="info" style="margin-bottom:14px">
+        <strong>Verification exercise:</strong> Pick two sources from the panel below (or from the course references). Ask your AI tool:<br>
+        <em>"Review what you wrote for my system-selection.md. Check the Purdue zone placement, safety classification, and any regulatory claims against [Source A] and [Source B]. What did you get wrong or leave unsupported?"</em><br>
+        Then fill in the fields below based on what you find.
+      </div>
+      <div class="fg"><label>What did the AI get right unprompted?</label>
+        <textarea id="sysRefl1" rows="3" placeholder="Specific things it produced correctly without follow-up — domain knowledge, structure, regulatory framing. Be concrete." oninput="save()"></textarea>
+      </div>
+      <div class="fg" style="margin-top:10px"><label>What did you correct or redirect?</label>
+        <textarea id="sysRefl2" rows="3" placeholder="The specific error or gap the verification found, and which source caught it — e.g. 'claimed RPS uses OPC-UA; RG 5.71 Appendix D shows this is incorrect for Level 1 systems.'" oninput="save()"></textarea>
+      </div>
+    </div>
+  </div>
+  <div id="srcContainer"></div>
+</section>
+
+<!-- STEP 2: Sequencing Plan -->
+<section class="step" id="step-2">
+  <div class="s-eye">Step 2 of 5 — sequencing-plan.md</div>
+  <h1 class="s-title">Build your sequencing plan</h1>
+  <p class="s-desc">Each workshop builds on the ones before it. Recommended systems (shown in blue) connect directly to your prior choices in the plant architecture — picking them gives your analysis a continuous analytical thread. All 11 systems must appear by W9.</p>
+  <div class="info" id="seqInfo"></div>
+  <div style="display:flex;align-items:center;gap:12px;margin:4px 0 14px">
+    <button class="btn btn-s" onclick="validateSeq()" style="flex-shrink:0">Check coverage</button>
+    <div id="seqWarn" class="vmsg warn" style="display:none;margin:0;flex:1"></div>
+    <div id="seqOk" class="vmsg ok" style="display:none;margin:0;flex:1">All 11 systems assigned. ✓</div>
+  </div>
+  <div id="seqCards"></div>
+  <div style="margin-top:16px">
+    <button class="btn btn-s" onclick="genSeqPrompt()">Ask AI to suggest a plan</button>
+    <p style="font-size:12px;color:var(--text3);margin:8px 0 0;line-height:1.6">Rather than choosing yourself, this generates a prompt you can paste into your AI tool. It will produce a suggested workshop-system map based on your W1 system and background — then come back and adjust the selections above before saving to your repo.</p>
+  </div>
+  <div id="seqPromptBox" class="pb" style="display:none">
+    <div class="pb-lbl">Sequencing plan prompt</div>
+    <button class="copy-btn" onclick="copyP('seqPC',this)">Copy</button>
+    <div class="pb-content" id="seqPC"></div>
+  </div>
+  <div id="seqReflArea" style="display:none;margin-top:14px">
+    <div class="info" style="margin-bottom:14px">
+      <strong>Verification exercise:</strong> Ask your AI tool:<br>
+      <em>"Review the justification column in my sequencing plan. For each workshop, check whether the system I assigned is a strong fit for that workshop's theme — use the workshop descriptions in curriculum.md at github.com/BoiseState/CS581. Flag any workshop where the justification is weak or where a different system would be a better fit."</em><br>
+      Then fill in the fields below based on what it finds.
+    </div>
+    <div class="fg"><label>Did the AI's sequencing logic match yours? What did you override?</label>
+      <textarea id="seqRefl1" rows="3" placeholder="Did it pick connected systems by default, or did you steer it? Did it miss coverage gaps? What reasoning did it offer for its choices?" oninput="save()"></textarea>
+    </div>
+    <div class="fg" style="margin-top:10px"><label>What did you correct before saving to your repo?</label>
+      <textarea id="seqRefl2" rows="3" placeholder="A weak justification, a system in the wrong workshop, or logic it couldn't derive from the curriculum alone." oninput="save()"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3: Attack Surface Map -->
+<section class="step" id="step-3">
+  <div class="s-eye">Step 3 of 5 — attack-surface-map.md</div>
+  <h1 class="s-title">Map the attack surface</h1>
+  <p class="s-desc">Each layer generates a separate file. Run the three prompts in order — each produces one deliverable your AI tool saves to your repo. Then run the verification prompt to produce a fourth file that audits the map against primary sources.</p>
+  <div class="info" id="asmInfo"></div>
+  <div id="asmSrcContainer"></div>
+  <div class="card">
+    <div class="c-title">Layer prompts — each produces a separate file</div>
+    <div style="display:grid;gap:8px">
+      <button class="btn btn-s" style="justify-content:space-between" onclick="genAsmPrompt('it')">
+        <span>Layer 1 — IT (Level 4 / Corporate)</span><span style="font-size:11px;color:var(--text3)">→ attack-surface-map-it.md</span>
+      </button>
+      <button class="btn btn-s" style="justify-content:space-between" onclick="genAsmPrompt('ot')">
+        <span>Layer 2 — OT (Levels 1–3 / Plant)</span><span style="font-size:11px;color:var(--text3)">→ attack-surface-map-ot.md</span>
+      </button>
+      <button class="btn btn-s" style="justify-content:space-between" onclick="genAsmPrompt('physical')">
+        <span>Layer 3 — Physical & Cyber-Physical</span><span style="font-size:11px;color:var(--text3)">→ attack-surface-map-physical.md</span>
+      </button>
+    </div>
+  </div>
+  <div id="asmPromptBox" class="pb" style="display:none">
+    <div class="pb-lbl" id="asmLbl">Attack surface prompt</div>
+    <button class="copy-btn" onclick="copyP('asmPC',this)">Copy</button>
+    <div class="pb-content" id="asmPC"></div>
+  </div>
+  <div style="margin-top:16px" class="card">
+    <div class="c-title">Verification — attack-surface-verification.md</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Pick two sources from the panel above, then generate the verification prompt below. Run it in your AI tool — the output becomes <code>attack-surface-verification.md</code>, a graded deliverable alongside the map itself.</p>
+    <button class="btn btn-s" onclick="genAsmVerifyPrompt()">Generate verification prompt</button>
+    <div id="asmVerifyBox" class="pb" style="display:none">
+      <div class="pb-lbl">Verification prompt — attack-surface-verification.md</div>
+      <button class="copy-btn" onclick="copyP('asmVerifyPC',this)">Copy</button>
+      <div class="pb-content" id="asmVerifyPC"></div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px" class="card">
+    <div class="c-title">Session log observations — fill in after verification</div>
+    <div class="fg"><label>Did the AI hallucinate any connections or protocols? How did you catch it?</label>
+      <textarea id="asmRefl1" rows="3" placeholder="Name the specific hallucination and the source that caught it — e.g. 'claimed DNP3 on RPS sensor bus; NIST 800-82r3 §5.2 and RG 5.71 Appendix D both show Level 1 I&amp;C uses hardwired or proprietary serial only.'" oninput="save()"></textarea>
+    </div>
+    <div class="fg" style="margin-top:10px"><label>Which row required the most verification? What settled it?</label>
+      <textarea id="asmRefl2" rows="3" placeholder="The interface or threat vector hardest to confirm, and the primary source that finally resolved it." oninput="save()"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4: Tool Selection -->
+<section class="step" id="step-4">
+  <div class="s-eye">Step 4 of 5 — tool-selection.json</div>
+  <h1 class="s-title">Evaluate your AI tool</h1>
+  <p class="s-desc">Run these prompts to populate tool-selection.json. This is a graded deliverable — test the models, document what you observe. The reasoning chain and vision tests are where the interesting discoveries happen.</p>
+
+  <div class="card">
+    <div class="c-title">Model inventory</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Open the model switcher in your tool and list every variant you have access to — standard, reasoning, vision, fast. One line per model.</p>
+    <div class="fg"><label>Models available in <span id="toolModelLbl"></span></label>
+      <textarea id="modelInv" rows="5" placeholder="[model-id] — deep reasoning, slower&#10;[model-id] — standard, my default&#10;[model-id] — fast, mechanical tasks" oninput="save()"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-title">Reasoning chain test</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Use your most capable model with extended thinking enabled. This prompt is specific to your chosen system.</p>
+    <button class="btn btn-s" onclick="genReasoningPrompt()">Generate reasoning test prompt</button>
+    <div id="reasPromptBox" class="pb" style="display:none">
+      <div class="pb-lbl">Reasoning chain prompt</div>
+      <button class="copy-btn" onclick="copyP('reasPC',this)">Copy</button>
+      <div class="pb-content" id="reasPC"></div>
+    </div>
+    <div style="margin-top:12px" class="fg"><label>What did you observe in the reasoning chain?</label>
+      <textarea id="reasObs" rows="5" placeholder="Did it surface something the final answer missed? Did it confabulate a plausible chain or hedge appropriately? Be specific about what was useful." oninput="save()"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-title">Vision model test</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Upload a screenshot of the <a href="https://boisestate.github.io/CS581/plant-architecture.html" target="_blank" rel="noopener">Plant Architecture Diagram</a> to your tool's vision model. Use the prompt below.</p>
+    <button class="btn btn-s" onclick="genVisionPrompt()">Generate vision test prompt</button>
+    <div id="visPromptBox" class="pb" style="display:none">
+      <div class="pb-lbl">Vision test prompt</div>
+      <button class="copy-btn" onclick="copyP('visPC',this)">Copy</button>
+      <div class="pb-content" id="visPC"></div>
+    </div>
+    <div style="margin-top:12px" class="fg"><label>What did the vision model get right and wrong?</label>
+      <textarea id="visObs" rows="5" placeholder="Did it correctly identify connections? Did it hallucinate edges or miss zone coding?" oninput="save()"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-title">Model selection guide</div>
+    <div class="fg"><label>When would you use each model variant? One sentence per model.</label>
+      <textarea id="modelGuide" rows="4" placeholder="Example: Opus for regulatory reasoning. Sonnet for standard coursework. Haiku for reformatting and extraction." oninput="save()"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 5: Export -->
+<section class="step" id="step-5">
+  <div class="s-eye">Step 5 of 5 — Export &amp; Submit</div>
+  <h1 class="s-title">Your W1 deliverables</h1>
+  <p class="s-desc">Your AI tool already created most of these files. Use the copies below for the session log, sequencing plan, and tool-selection.json — those are generated from your inputs here. For the others, confirm your AI-created versions are in place before committing.</p>
+  <div class="info"><strong>Primary repo:</strong> <code>workshops/week-01/</code> &nbsp;·&nbsp; <strong>Secondary repo:</strong> <code>role-analyses/week-01/synthesis.md</code></div>
+  <div id="exportFiles"></div>
+
+  <div class="card" style="margin-top:24px">
+    <div class="c-title">How to submit on Canvas</div>
+    <ol style="font-size:14px;color:var(--text);line-height:2;padding-left:20px;margin:12px 0 0">
+      <li>Confirm all six files are in your primary repo at <code>workshops/week-01/</code> and <code>role-analyses/week-01/</code>.</li>
+      <li>In your terminal:<br>
+        <code style="display:block;background:var(--raised);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin:6px 0;font-size:12px;line-height:1.8">git add workshops/week-01/ role-analyses/week-01/<br>git commit -m "W1: system selection, sequencing plan, attack surface map (3 layers + verification), session log"<br>git push</code>
+      </li>
+      <li>On GitHub, open your primary repo and click the commit hash to open the commit page.</li>
+      <li>Copy that URL (it looks like <code>github.com/[username]/[repo]/commit/[hash]</code>).</li>
+      <li>On Canvas → <strong>Module 1 → Workshop 1</strong>, paste the commit URL and submit.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<div class="scroll-nudge" id="scrollNudge" onclick="window.scrollBy({top:300,behavior:'smooth'})">
+  <span class="nudge-arrow">↓</span> Scroll for prompt &amp; sources
+</div>
+
+<!-- NAV FOOTER -->
+<footer class="nav">
+  <button class="btn-reset" id="btnClear" onclick="clearData()">Reset</button>
+  <div class="nav-info" id="navInfo"></div>
+  <div class="nav-acts">
+    <button class="btn btn-g" id="btnPrev" onclick="prevStep()">← Back</button>
+    <button class="btn btn-p" id="btnNext" onclick="nextStep()">Next →</button>
+  </div>
+</footer>
+
+<script>
+// ── Data ─────────────────────────────────────────────────────────────────
+const SYSTEMS = [
+  {id:'RPS',abbr:'RPS',name:'Reactor Protection System',purdue:'Level 1',cls:'Safety-critical CDA',zone:1,conns:['DCS','SMR'],
+   desc:'Monitors power, temperature, pressure; triggers emergency shutdown. Isolated by data diode — no inbound commands.',
+   bgs:['safety','regulatory','hardware','nuclear'],diff:'hard',
+   aff:[3,3,2,3,3,2,3,3,3],
+   otFocus:'the data diode interface, sensor input validation paths, hardwired logic vs. software actuation, and IEEE Std 603 isolation requirements',
+   regQ:'if a vendor-supplied firmware update modifies logic in an RPS module, does the licensee need a 10 CFR 50.59 evaluation before installing it, even if the vendor claims it only patches a software bug and changes no setpoints or safety functions?'},
+  {id:'DCS',abbr:'DCS',name:'Digital Control System',purdue:'Level 2',cls:'Safety-related CDA',zone:2,conns:['RPS','TCS','SFPCM','EDGC','RMS','PPC','OT_SIEM','SMR'],
+   desc:'Hub of plant operations. Runs Modbus, DNP3, OPC-UA, and proprietary protocols simultaneously. Widest attack surface in the plant.',
+   bgs:['it','ot','network'],diff:'medium',
+   aff:[3,3,3,3,2,3,3,3,3],
+   otFocus:'Modbus, DNP3, and OPC-UA protocol exposure, HMI network connections, historian data paths, and vendor remote access channels',
+   regQ:'a DCS vendor pushes a firmware update that modifies the OPC-UA server configuration. Walk through whether this is a modification to a Critical Digital Asset under 10 CFR 73.54 Appendix E and whether the licensee must notify the NRC before installation'},
+  {id:'TCS',abbr:'TCS',name:'Turbine Control System',purdue:'Level 2',cls:'Balance-of-plant CDA',zone:2,conns:['DCS','PPC'],
+   desc:'Controls turbine speed and generator load. Availability attack target — disruption causes power loss without radiological risk.',
+   bgs:['ot','power','control'],diff:'medium',
+   aff:[3,2,3,2,2,3,2,2,3],
+   otFocus:'turbine governor control loops, speed sensor inputs, Modbus connections to DCS, and generator protection relay interfaces',
+   regQ:'under 10 CFR 73.54, is the Turbine Control System a Critical Digital Asset, and what is the regulatory basis for that determination given that TCS failures result in turbine trip rather than reactor trip?'},
+  {id:'SFPCM',abbr:'SFPCM',name:'Spent Fuel Pool Cooling Monitor',purdue:'Level 1–2',cls:'Safety-related CDA',zone:1,conns:['DCS','RMS'],
+   desc:'Maintains cooling over stored irradiated fuel. Three separate regulatory frameworks apply simultaneously: Safety, Security, Safeguards.',
+   bgs:['regulatory','safety','policy','nuclear'],diff:'medium',
+   aff:[3,3,2,2,3,2,3,2,3],
+   otFocus:'sensor network connections, cooling actuation paths, IAEA safeguards reporting interfaces, and the regulatory boundary between Safety and Security systems',
+   regQ:'a cyber incident corrupts SFPCM sensor outputs. Which regulation governs the NRC reporting timeline — 10 CFR 50.72 (Safety), 10 CFR 73.71 (Security), or IAEA Safeguards? Can more than one apply simultaneously, and does the order matter?'},
+  {id:'EDGC',abbr:'EDGC',name:'Emergency Diesel Generator Control',purdue:'Level 1',cls:'Safety-related CDA',zone:1,conns:['DCS'],
+   desc:'Starts and sequences backup generators when offsite power fails. Mostly hardwired. Availability attack target.',
+   bgs:['electrical','power','ot','nuclear'],diff:'medium',
+   aff:[3,3,2,2,2,3,3,1,2],
+   otFocus:'automatic start sequence logic, load shedding control, fuel system interfaces, and battery monitoring connections',
+   regQ:'under NRC requirements, is an EDGC system that uses hardwired relay logic instead of software PLCs subject to the same 10 CFR 73.54 cybersecurity requirements as software-based systems? What determines where the regulatory line falls?'},
+  {id:'RMS',abbr:'RMS',name:'Radiation Monitoring System',purdue:'Distributed',cls:'Safety / Safeguards CDA',zone:2,conns:['DCS','SFPCM','PPC'],
+   desc:'Distributed sensors throughout plant feeding historian and IAEA reporting interfaces. Spans all Purdue levels.',
+   bgs:['regulatory','sensors','data','policy','nuclear'],diff:'medium',
+   aff:[3,3,2,2,3,3,3,2,3],
+   otFocus:'distributed sensor network topology, data aggregation paths to the historian, IAEA safeguards reporting feeds, and stack monitoring interfaces',
+   regQ:'a cyberattack corrupts historical RMS data in the plant historian. What are the NRC notification requirements, and does the obligation differ depending on whether the affected data was used for 10 CFR 50 Safety reporting vs. IAEA Safeguards?'},
+  {id:'PSI',abbr:'PSI',name:'Physical Security Integration',purdue:'Level 3–4',cls:'Security CDA',zone:3,conns:['OT_SIEM','ICT_SIEM'],
+   desc:'Badge readers, biometrics, CCTV, access control servers governing 10 CFR 73. Every node controls physical access to nuclear material.',
+   bgs:['it','physical','identity','access'],diff:'medium',
+   aff:[3,3,2,3,3,2,3,2,3],
+   otFocus:'badge reader networks, biometric server connections, CCTV management systems, 10 CFR 73.55 access control boundaries, and visitor management interfaces',
+   regQ:'under 10 CFR 73.55, a cyberattack disables three badge readers controlling Protected Area access. What is the licensee\'s immediate compensatory measure obligation, and at what point does the event require NRC notification under 10 CFR 73.71?'},
+  {id:'SMR',abbr:'SMR I&C',name:'Small Modular Reactor I&C',purdue:'Level 1–2',cls:'Safety-critical (emerging)',zone:1,conns:['RPS','DCS'],
+   desc:'Consolidates control and protection using IEC 61850 and Ethernet, collapsing the traditional Level 1/2 boundary. Highest overall workshop affinity. Regulatory framework has documented gaps.',
+   bgs:['regulatory','ot','research','nuclear'],diff:'hard',
+   aff:[3,3,3,3,3,3,3,3,3],
+   otFocus:'IEC 61850 GOOSE messaging, integrated protection/control bus architecture, the collapsed Level 1/2 boundary, and vendor-proprietary communication channels',
+   regQ:'the NRC\'s regulatory framework has documented gaps around integrated SMR I&C platforms using IEC 61850. If an operator discovers a vulnerability that could affect both control and protection functions simultaneously, which regulations apply, and what should they do if no directly applicable guidance exists?'},
+  {id:'PPC',abbr:'PPC',name:'Plant Process Computer / Historian',purdue:'Level 3',cls:'Non-safety support',zone:3,conns:['DCS','TCS','RMS','OT_SIEM'],
+   desc:'Aggregates all plant data. Highest-value single reconnaissance target — CRASHOVERRIDE and Triton both used the historian for pre-positioning.',
+   bgs:['it','data','database','network'],diff:'medium',
+   aff:[3,3,3,2,2,3,3,2,3],
+   otFocus:'historian database connections, OPC-UA server interfaces, data export to corporate SIEM, and remote engineering access paths',
+   regQ:'the PPC receives data from every plant system and exports a subset to the corporate SIEM. Under 10 CFR 73.54, what are the cybersecurity obligations for the export pipeline, and does the data flowing OT-to-IT rather than IT-to-OT change the analysis?'},
+  {id:'OT_SIEM',abbr:'OT-SIEM',name:'OT Security Information & Event Mgmt',purdue:'Level 3',cls:'Security monitoring',zone:3,conns:['PPC','DCS','ICT_SIEM','PSI'],
+   desc:'Monitoring platform for all OT systems (Dragos, Claroty, Nozomi). Suppressing its alerts is step one of most ICS APT playbooks.',
+   bgs:['soc','blue','detection','it'],diff:'medium',
+   aff:[3,3,3,3,3,3,3,3,3],
+   otFocus:'passive monitoring sensor placement, alert forwarding to ICT-SIEM, threat intelligence feed ingestion, and incident ticket generation interfaces',
+   regQ:'an adversary compromises the OT-SIEM and begins suppressing DCS alerts before launching a process attack. At what point in this attack chain does the licensee have an NRC reporting obligation, and under which specific provision of RG 5.71 or 10 CFR 73.54?'},
+  {id:'ICT_SIEM',abbr:'ICT-SIEM',name:'ICT Security Information & Event Mgmt',purdue:'Level 4',cls:'Corporate security',zone:4,conns:['OT_SIEM','PSI'],
+   desc:'Enterprise SIEM above the air gap receiving one-way exports from OT-SIEM. The IT/OT coordination point for incident response.',
+   bgs:['it','soc','enterprise','compliance'],diff:'easy',
+   aff:[3,2,3,3,2,3,3,1,3],
+   otFocus:'OT-SIEM export pipeline, LDAP/AD integration, alert escalation paths, and the API surface exposed to SOC analyst workstations',
+   regQ:'an adversary manipulates data at the OT-SIEM export layer so ICT-SIEM analysts see normal alerts while the actual OT environment is under attack. What are the regulatory implications of this detection gap for the licensee\'s cybersecurity program under RG 5.71?'}
+];
+
+const WS = [
+  {n:1,theme:'Attack Surface Mapping & System Selection',mw:true,due:'Sep 8'},
+  {n:2,theme:'Adversary Profiling & Threat Modeling',mw:true,due:'Sep 21'},
+  {n:3,theme:'Protocol Security & Access Control',mw:true,due:'Oct 5'},
+  {n:4,theme:'ICS/SCADA & Digital I&C Security',mw:false,due:'Oct 12'},
+  {n:5,theme:'Physical Protection & Regulatory Frameworks',mw:true,due:'Oct 26'},
+  {n:6,theme:'Monitoring Strategy & Supply Chain Security',mw:true,due:'Nov 16'},
+  {n:7,theme:'Incident Response in Nuclear Environments',mw:false,due:'Nov 30'},
+  {n:8,theme:'Side Channels, AI & Emerging Threats',mw:true,due:'Dec 7'},
+  {n:9,theme:'Ethics, Policy & Portfolio Synthesis',mw:false,due:'Dec 14'}
+];
+
+const BGS = [
+  {id:'it',lbl:'IT / Network Security'},{id:'ot',lbl:'OT / SCADA / ICS'},
+  {id:'soc',lbl:'SOC / Blue Team'},{id:'regulatory',lbl:'Policy / Regulatory'},
+  {id:'nuclear',lbl:'Nuclear Energy'},{id:'power',lbl:'Power / Electrical'},
+  {id:'data',lbl:'Data / Database'},{id:'identity',lbl:'Identity / Access Mgmt'},
+  {id:'physical',lbl:'Physical Security'},{id:'research',lbl:'Research / Academic'}
+];
+
+// ── State ─────────────────────────────────────────────────────────────────
+const SK = 'cs581_w1';
+let state = {
+  step:0, name:'', tool:'', bgs:[],
+  sys:null,               // selected system id
+  seqPlan:{},             // {W2:'DCS', W3:'RMS', ...}
+  sysRefl1:'', sysRefl2:'',
+  seqRefl1:'', seqRefl2:'',
+  asmRefl1:'', asmRefl2:'',
+  modelInv:'', reasObs:'', visObs:'', modelGuide:'',
+  log:[]
+};
+
+function load() {
+  try { const s=localStorage.getItem(SK); if(s) state=JSON.parse(s); } catch(e){}
+}
+function save() {
+  // pull live values
+  state.name = (document.getElementById('pName')||{}).value || state.name;
+  state.tool = (document.getElementById('pTool')||{}).value || state.tool;
+  ['sysRefl1','sysRefl2','seqRefl1','seqRefl2','asmRefl1','asmRefl2'].forEach(k=>{
+    const el = document.getElementById(k); if(el) state[k] = el.value || state[k];
+  });
+  state.modelInv = (document.getElementById('modelInv')||{}).value || state.modelInv;
+  state.reasObs = (document.getElementById('reasObs')||{}).value || state.reasObs;
+  state.visObs = (document.getElementById('visObs')||{}).value || state.visObs;
+  state.modelGuide = (document.getElementById('modelGuide')||{}).value || state.modelGuide;
+  // seq dropdowns
+  document.querySelectorAll('.seq-sel').forEach(s=>{
+    if(s.value) state.seqPlan[s.dataset.w]=s.value;
+  });
+  try { localStorage.setItem(SK, JSON.stringify(state)); } catch(e){}
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────
+const STEPS = ['Setup','System','Sequencing','Attack Surface','Tool Eval','Export'];
+
+function renderNav() {
+  const track = document.getElementById('stepTrack');
+  track.innerHTML = STEPS.map((lbl,i)=>`
+    <div class="s-dot ${i===state.step?'active':i<state.step?'done':''}" title="${lbl}" onclick="goStep(${i})"></div>
+    ${i<STEPS.length-1?'<div class="s-line"></div>':''}
+  `).join('');
+  document.querySelectorAll('.step').forEach((el,i)=>el.classList.toggle('active',i===state.step));
+  document.getElementById('navInfo').textContent = `${STEPS[state.step]} (${state.step+1}/${STEPS.length})`;
+  document.getElementById('btnPrev').disabled = state.step===0;
+  document.getElementById('btnNext').textContent = state.step===STEPS.length-1 ? 'Done ✓' : 'Next →';
+}
+
+function goStep(n) {
+  save();
+  state.step = Math.max(0, Math.min(n, STEPS.length-1));
+  renderNav();
+  if(state.step===1) initStep1();
+  if(state.step===2) initStep2();
+  if(state.step===3) initStep3();
+  if(state.step===4) initStep4();
+  if(state.step===5) initStep5();
+  window.scrollTo(0,0);
+}
+function nextStep() { goStep(state.step+1); }
+function prevStep() { goStep(state.step-1); }
+
+// ── Step 0: Profile ───────────────────────────────────────────────────────
+function initBgChips() {
+  const c = document.getElementById('bgChips');
+  c.innerHTML = BGS.map(b=>`<div class="chip ${state.bgs.includes(b.id)?'on':''}" onclick="toggleBg('${b.id}',this)">${b.lbl}</div>`).join('');
+}
+function toggleBg(id, el) {
+  if(state.bgs.includes(id)) state.bgs=state.bgs.filter(x=>x!==id);
+  else state.bgs.push(id);
+  el.classList.toggle('on');
+  save();
+}
+
+// ── Sources data ──────────────────────────────────────────────────────────
+const CROSS_SOURCES = [
+  {title:'NRC Regulatory Guide 5.71 — Cyber Security Programs for Nuclear Facilities',
+   url:'https://www.nrc.gov/docs/ML1028/ML102810565.pdf',
+   tags:['verify'],
+   note:'The primary NRC cybersecurity implementation guide. Defines Critical Digital Assets, defense-in-depth tiers, and the security program framework all licensees must follow. Cite specifically by section number.'},
+  {title:'NEI 08-09 Rev. 6 — Cyber Security Plan for Nuclear Power Reactors',
+   url:'https://www.nrc.gov/docs/ML1212/ML12128A142.pdf',
+   tags:['verify'],
+   note:'Industry implementation guidance accepted by NRC. Contains the detailed methodology for identifying CDAs and applying security controls. Maps directly to RG 5.71.'},
+  {title:'NIST SP 800-82r3 — Guide to OT Security',
+   url:'https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf',
+   tags:['arch','verify'],
+   note:'The most comprehensive public reference for ICS/SCADA architecture, protocols, and security controls. Strong on Purdue model, OT network topology, and protocol-specific threats. Section 5 is essential for attack surface mapping.'},
+  {title:'10 CFR 73.54 — Cybersecurity Rule (eCFR)',
+   url:'https://www.ecfr.gov/current/title-10/chapter-I/part-73/section-73.54',
+   tags:['verify'],
+   note:'The actual regulatory text. Read before citing — it is short but precise. Appendix E covers supply chain and software change management. The rule text and the guidance documents do not always align perfectly.'},
+  {title:'IAEA NSS No. 17-T — Computer Security at Nuclear Facilities',
+   url:'https://www.iaea.org/publications/10771/computer-security-at-nuclear-facilities',
+   tags:['arch','verify'],
+   note:'IAEA\'s foundational cybersecurity guidance. Particularly useful for systems with Safeguards implications (RMS, SFPCM) and for international regulatory context.'},
+  {title:'MITRE ATT&CK for ICS',
+   url:'https://attack.mitre.org/matrices/ics/',
+   tags:['threat'],
+   note:'Structured adversary technique taxonomy for industrial control systems. Use to identify and name specific attack techniques in your threat model rather than describing them generically. Cross-reference with publicly known ICS incidents.'},
+  {title:'CISA ICS-CERT Advisories',
+   url:'https://www.cisa.gov/ics-advisories',
+   tags:['threat'],
+   note:'Current vulnerability disclosures for ICS/SCADA products. Search by vendor name or CVE for system-specific findings. Useful for the Provenance column in your attack surface map — a named CVE is High confidence.'},
+];
+
+const SYS_SOURCES = {
+  RPS:[
+    {title:'IEEE Std 603 — Safety Systems for Nuclear Power Plants (abstract)',url:'https://standards.ieee.org/ieee/603/3837/',tags:['arch'],note:'Defines the functional and design criteria for safety systems including RPS. The standard is paywalled but NRC\'s Standard Review Plan Chapter 7 (free) summarizes its requirements.'},
+    {title:'NRC Standard Review Plan Chapter 7 — I&C Systems',url:'https://www.nrc.gov/docs/ML1125/ML112510572.pdf',tags:['arch','verify'],note:'Free NRC guidance on reviewing I&C system designs. Chapter 7.2 covers Reactor Trip systems. Describes the design basis for data diode isolation and hardwired backup.'},
+    {title:'NRC Information Notice 2015-01 — Cyber Security in I&C Systems',url:'https://www.nrc.gov/docs/ML1502/ML15028A632.pdf',tags:['verify'],note:'Documents specific lessons from NRC inspections of digital I&C cybersecurity programs. Useful for understanding what inspectors look for.'},
+  ],
+  DCS:[
+    {title:'INL/NRC Report on Consequence-Driven Cyber-Informed Engineering (CCE)',url:'https://inl.gov/cce/',tags:['arch','threat'],note:'INL methodology for identifying High-Consequence Events in ICS environments. Directly applicable to DCS threat modeling — the CCE process starts from consequences, not vulnerabilities.'},
+    {title:'NIST SP 800-82r3 Section 5 — ICS Network Architecture',url:'https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf',tags:['arch'],note:'Section 5 contains the detailed Purdue model network topology diagrams and protocol tables most directly applicable to DCS environments.'},
+    {title:'Dragos Year in Review — ICS/OT Threat Report',url:'https://www.dragos.com/year-in-review/',tags:['threat'],note:'Annual public threat intelligence report. Contains named threat groups (CHERNOVITE, VOLTZITE) targeting DCS environments, with TTP descriptions.'},
+  ],
+  TCS:[
+    {title:'NERC CIP Standards — Critical Infrastructure Protection',url:'https://www.nerc.com/pa/Stand/Pages/CIPStandards.aspx',tags:['verify'],note:'For grid-connected plants, TCS output feeds into NERC CIP scope. CIP-013 (supply chain) and CIP-007 (systems security management) are the most relevant.'},
+    {title:'NIST SP 800-82r3 — Section 4: OT and IT Differences',url:'https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf',tags:['arch'],note:'Section 4 explains the availability-first design philosophy of systems like TCS, which shapes the threat model (availability attacks are the primary vector, not confidentiality).'},
+  ],
+  SFPCM:[
+    {title:'NRC Post-Fukushima Requirements — SECY-11-0137',url:'https://www.nrc.gov/docs/ML1130/ML113010510.pdf',tags:['verify'],note:'Defines the post-Fukushima cybersecurity obligations for spent fuel pool monitoring. Establishes why SFPCM is a priority CDA and what real-time monitoring is now required.'},
+    {title:'IAEA Safeguards — Information Circular INFCIRC/153',url:'https://www.iaea.org/publications/documents/infcircs/structure-and-content-agreements-between-agency-and-states-required-connection-treaty-non-proliferation-nuclear-weapons',tags:['verify'],note:'The foundational IAEA safeguards agreement structure. Relevant to any system with IAEA reporting interfaces (SFPCM, RMS). Explains the Safeguards third-rail that makes these systems regulatory outliers.'},
+  ],
+  EDGC:[
+    {title:'IEEE Std 308 — Nuclear Power Plant Safety Systems Electric Power (abstract)',url:'https://standards.ieee.org/ieee/308/3731/',tags:['arch'],note:'Defines power supply requirements for safety systems. Understanding the load sequencing EDGC manages is prerequisite to understanding the cybersecurity attack surface.'},
+    {title:'NRC Generic Letter 2006-02 — Grid Reliability and Large Electric Power Transformers',url:'https://www.nrc.gov/docs/ML0607/ML060760186.pdf',tags:['verify'],note:'Establishes NRC expectations for backup power reliability. Context for why EDGC is a CDA even though it is primarily hardwired.'},
+  ],
+  RMS:[
+    {title:'10 CFR Part 20 — Standards for Protection Against Radiation',url:'https://www.ecfr.gov/current/title-10/chapter-I/part-20',tags:['verify'],note:'The regulatory basis for area and effluent radiation monitoring requirements. Defines what RMS must measure and report, which defines its data provenance obligations.'},
+    {title:'IAEA Safeguards — Unattended Monitoring Systems',url:'https://www.iaea.org/topics/safeguards-monitoring-systems',tags:['arch','verify'],note:'IAEA documentation on automated safeguards monitoring systems. Relevant to RMS because safeguards sensor networks use similar distributed architectures.'},
+  ],
+  PSI:[
+    {title:'10 CFR 73.55 — Requirements for Physical Protection',url:'https://www.ecfr.gov/current/title-10/chapter-I/part-73/section-73.55',tags:['verify'],note:'The regulatory backbone for PSI. Paragraph (d) defines Protected Area requirements; (e) covers access authorization; (n) covers cybersecurity for the physical protection systems themselves.'},
+    {title:'NRC Regulatory Guide 5.76 — Physical Protection Programs at Nuclear Power Plants',url:'https://www.nrc.gov/docs/ML1217/ML12170A246.pdf',tags:['verify'],note:'Implementation guidance for 10 CFR 73.55. Contains the specific design and operational requirements for the systems PSI implements.'},
+  ],
+  SMR:[
+    {title:'NRC — Advanced Reactor Licensing (SMR Resources)',url:'https://www.nrc.gov/reactors/new-reactors/advanced.html',tags:['arch','verify'],note:'NRC\'s current SMR licensing materials. The regulatory framework gaps for integrated I&C platforms are discussed in the design-specific safety evaluation reports (publicly available for NuScale, Kairos, TerraPower).'},
+    {title:'IEC 61850 — Communication Networks in Substations (overview)',url:'https://webstore.iec.ch/publication/6028',tags:['arch'],note:'The standard underlying SMR I&C networking. Paywalled, but NIST 800-82r3 and multiple INL reports describe its application in nuclear I&C with enough detail for a W1 attack surface map.'},
+    {title:'INL Report: Cybersecurity for Advanced Nuclear Reactors',url:'https://www.osti.gov/biblio/1847070',tags:['arch','verify'],note:'The AI/ML in nuclear plants OSTI report already on your Canvas. Also covers SMR I&C architecture and the regulatory gap analysis. This is the single best public source for SMR cybersecurity.'},
+  ],
+  PPC:[
+    {title:'CISA ICS-CERT — CRASHOVERRIDE / INDUSTROYER Analysis',url:'https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-17-102-01A',tags:['threat'],note:'The public ICS-CERT analysis of the 2016 Ukraine grid attack. CRASHOVERRIDE specifically targeted historian data to pre-position before the process attack — directly applicable to PPC threat modeling.'},
+    {title:'TRITON/TRISIS Attack Analysis (Dragos)',url:'https://www.dragos.com/blog/industry-news/trisis-malware-real-consequences/',tags:['threat'],note:'Dragos analysis of the Triton attack on a Safety Instrumented System. The attacker used the historian as a reconnaissance platform before moving to the SIS. Directly models the PPC threat vector.'},
+    {title:'NIST SP 800-82r3 — Section 6.2: Historian Security',url:'https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf',tags:['arch'],note:'Section 6.2 covers data historian architecture and security controls. The most concise public treatment of the historian as both a data aggregation target and a lateral movement path.'},
+  ],
+  OT_SIEM:[
+    {title:'Dragos Platform — OT Threat Detection (public resources)',url:'https://www.dragos.com/resources/',tags:['arch','threat'],note:'Dragos publishes extensive free resources on OT-SIEM architecture, detection use cases, and ICS threat group TTPs. Their "Year in Review" and threat group profiles are directly applicable.'},
+    {title:'MITRE ATT&CK for ICS — Defense Evasion Techniques',url:'https://attack.mitre.org/tactics/TA0103/',tags:['threat'],note:'The Defense Evasion tactic in ATT&CK for ICS is where OT-SIEM suppression techniques live. T0851 (Rootkit), T0856 (Spoof Reporting Message) are the primary vectors for defeating monitoring.'},
+    {title:'INL CCE Methodology — Consequence-Driven Analysis',url:'https://inl.gov/cce/',tags:['arch'],note:'CCE starts from High-Consequence Events and works backward. For OT-SIEM, the CCE question is: which HCE would succeed if monitoring were suppressed? That defines the most critical detection gaps.'},
+  ],
+  ICT_SIEM:[
+    {title:'MITRE ATT&CK Enterprise — Initial Access and Lateral Movement',url:'https://attack.mitre.org/matrices/enterprise/',tags:['threat'],note:'ICT-SIEM sits above the air gap where enterprise ATT&CK techniques apply. The IT/OT boundary crossing techniques are in both Enterprise and ICS matrices — understanding both is the ICT-SIEM analyst\'s job.'},
+    {title:'NIST Cybersecurity Framework (CSF) 2.0',url:'https://www.nist.gov/cyberframework',tags:['arch','verify'],note:'The CSF governs enterprise security programs at the ICT layer. ICT-SIEM\'s alert escalation to executive leadership maps to the CSF Respond and Recover functions.'},
+  ],
+};
+
+function renderSources(sysId) {
+  const sysSrcs = SYS_SOURCES[sysId] || [];
+  const sys = SYSTEMS.find(s=>s.id===sysId);
+  const tagHtml = tags => tags.map(t=>
+    `<span class="src-tag tag-${t}">${t==='verify'?'verify citations':t==='arch'?'architecture':t==='threat'?'threat intel':t}</span>`
+  ).join('');
+
+  return `<div class="src-panel" id="srcPanel">
+    <button class="src-toggle" onclick="toggleSrc()">
+      <span>Primary sources for ${sys?.name||'this system'} + course foundations</span>
+      <span class="src-toggle-arrow" id="srcArrow">▼</span>
+    </button>
+    <div class="src-body" id="srcBody">
+      <div class="src-ai-note"><strong>LLM reliability note:</strong> Your AI tool has reliable architectural knowledge of these systems — Purdue model placement, standard protocols, and system functions are well-documented public knowledge it has been trained on. Treat AI output as a strong starting draft. Verify all specific regulatory citations (CFR section numbers, RG paragraphs, NEI requirements) against the primary sources below before submitting — those are where models make precise but plausible errors.</div>
+      ${sysSrcs.length ? `<div class="src-section"><div class="src-section-lbl">System-specific — ${sys?.abbr}</div>${sysSrcs.map(s=>`<div class="src-item"><a href="${s.url}" target="_blank" rel="noopener">${s.title}</a>${tagHtml(s.tags)}<div class="src-note">${s.note}</div></div>`).join('')}</div>` : ''}
+      <div class="src-section"><div class="src-section-lbl">Course foundations — all systems</div>${CROSS_SOURCES.map(s=>`<div class="src-item"><a href="${s.url}" target="_blank" rel="noopener">${s.title}</a>${tagHtml(s.tags)}<div class="src-note">${s.note}</div></div>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
+function toggleSrc() {
+  const body = document.getElementById('srcBody');
+  const arrow = document.getElementById('srcArrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// ── Shared prompt header ──────────────────────────────────────────────────
+const COURSE_CTX = `Course: CS 581 — Nuclear Cybersecurity, Boise State University, Fall 2026.
+Public course materials (syllabus, curriculum, system architecture, example work): https://github.com/BoiseState/CS581
+Read curriculum.md in that repo for the nine workshop themes and due dates before responding.\n\n`;
+
+// ── Step 1: System Selection ──────────────────────────────────────────────
+let activeSysFilter = 'all';
+
+function initStep1() {
+  // filter chips from user's bgs
+  const fc = document.getElementById('sysFilterChips');
+  const userBgLabels = BGS.filter(b=>state.bgs.includes(b.id));
+  fc.innerHTML = `<div class="chip on" data-f="all" onclick="filterSys('all',this)">All</div>` +
+    userBgLabels.map(b=>`<div class="chip" data-f="${b.id}" onclick="filterSys('${b.id}',this)">${b.lbl}</div>`).join('');
+  renderSysGrid();
+  updateSysPromptArea();
+}
+
+function renderSysGrid() {
+  const g = document.getElementById('sysGrid');
+  g.innerHTML = SYSTEMS.map(sys=>{
+    const sel = state.sys===sys.id;
+    const dim = activeSysFilter!=='all' && !sys.bgs.includes(activeSysFilter);
+    const dCls = sys.diff==='easy'?'d-e':sys.diff==='hard'?'d-h':'d-m';
+    return `<div class="sc ${sel?'sel':''} ${dim?'dim':''}" onclick="selectSys('${sys.id}')">
+      <div class="sc-check">✓</div>
+      <div class="sc-abbr">${sys.abbr}</div>
+      <div class="sc-name">${sys.name}</div>
+      <div class="sc-meta">${sys.purdue} · ${sys.cls}</div>
+      <div class="sc-desc">${sys.desc}</div>
+      <div class="aff-row">${sys.aff.map(a=>`<div class="af af${a}"></div>`).join('')}</div>
+      <span class="diff ${dCls}">${sys.diff}</span>
+    </div>`;
+  }).join('');
+}
+
+function filterSys(f, el) {
+  activeSysFilter = f;
+  document.querySelectorAll('#sysFilterChips .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  renderSysGrid();
+}
+
+function selectSys(id) {
+  state.sys = id;
+  save();
+  renderSysGrid();
+  updateSysPromptArea();
+  // Show scroll nudge
+  const nudge = document.getElementById('scrollNudge');
+  if(nudge) nudge.classList.add('visible');
+}
+
+function updateSysPromptArea() {
+  const area = document.getElementById('sysPromptArea');
+  area.style.display = state.sys ? 'block' : 'none';
+  if(state.sys) {
+    const tip = document.getElementById('toolInPrompt'); if(tip) tip.textContent = state.tool || 'your AI tool';
+    if(state.sysRefl1 || state.sysRefl2) {
+      if(state.sysRefl1) document.getElementById('sysRefl1').value = state.sysRefl1;
+      if(state.sysRefl2) document.getElementById('sysRefl2').value = state.sysRefl2;
+      document.getElementById('sysReflArea').style.display='block';
+    }
+    // render/update sources panel
+    const sp = document.getElementById('srcPanel');
+    if(sp) sp.outerHTML = renderSources(state.sys);
+    else {
+      const srcContainer = document.getElementById('srcContainer');
+      if(srcContainer) srcContainer.innerHTML = renderSources(state.sys);
+    }
+  }
+}
+
+function genSysPrompt() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  if(!sys) return;
+  const bglbl = state.bgs.map(b=>BGS.find(x=>x.id===b)?.lbl||b).join(', ') || 'not specified';
+  const prompt = COURSE_CTX + `I am a student in CS 581 (Nuclear Cybersecurity) at Boise State University. I need to write my system-selection.md for Workshop 1.
+
+My AI tool: ${state.tool || '[your tool]'}
+My professional background: ${bglbl}
+System selected: ${sys.name} (${sys.abbr})
+Purdue Zone: ${sys.purdue}
+Safety Classification: ${sys.cls}
+
+Write the content for my system-selection.md using exactly this structure:
+
+# System Selection — Workshop 1
+
+**Student:** ${state.name || '[your name]'}
+**Tool:** ${state.tool || '[your tool]'}
+**Date:** ${new Date().toISOString().split('T')[0]}
+
+## System
+${sys.name} (${sys.abbr})
+
+## Purdue Zone and Safety Classification
+[Explain in one concrete sentence what Zone ${sys.zone} placement and ${sys.cls} status mean specifically for how this system is attacked and defended — not a generic Purdue model definition.]
+
+## Rationale
+[Why this system given my professional background. What domain knowledge I bring that a student without that background would not. Name specific protocols, regulations, failure modes, or operational contexts where my background gives me an edge. Two or three substantial paragraphs — not a generic summary of the system.]
+
+## Workshop Fit Analysis
+[For each of the 9 workshops, one sentence on why this system is a strong, moderate, or weak fit. Note where the fit is weakest and how I plan to address that in my sequencing plan.]
+
+Writing standard for this course: direct and concrete, no em dashes, no filler phrases such as "it is important to note" or "this is crucial". Write as a working professional would write to a peer.`;
+
+  document.getElementById('sysPC').textContent = prompt;
+  document.getElementById('sysToolLbl').textContent = state.tool || 'your AI tool';
+  document.getElementById('sysPromptBox').style.display='block';
+  document.getElementById('sysReflArea').style.display='block';
+  logEntry('System Selection', prompt);
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),50);
+}
+
+// ── Step 2: Sequencing ────────────────────────────────────────────────────
+function initStep2() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  document.getElementById('seqInfo').innerHTML =
+    `<strong>W1 system (locked):</strong> ${sys ? sys.name+' ('+sys.abbr+')' : 'not selected — go back to Step 1'}. Blue chips are systems directly connected to your prior choices in the plant architecture. Pick connected systems to build a continuous analytical thread, or branch out to fill coverage gaps.`;
+  renderSeqCards();
+  if(state.seqRefl1 || state.seqRefl2) {
+    if(state.seqRefl1) document.getElementById('seqRefl1').value = state.seqRefl1;
+    if(state.seqRefl2) document.getElementById('seqRefl2').value = state.seqRefl2;
+    document.getElementById('seqReflArea').style.display='block';
+  }
+  validateSeq();
+}
+
+// Normalize seqPlan entry to array (handles legacy string values from localStorage)
+function seqGet(wNum) {
+  const v = state.seqPlan['W'+wNum];
+  return Array.isArray(v) ? v : (v ? [v] : []);
+}
+
+// Returns the set of system IDs used up to (but not including) workshop wNum
+function usedBefore(wNum) {
+  const used = new Set();
+  if(state.sys) used.add(state.sys);
+  WS.forEach(w => { if(w.n < wNum) seqGet(w.n).forEach(s=>used.add(s)); });
+  return used;
+}
+
+// Returns connected system IDs reachable from the used set (bidirectional)
+function connectedTo(usedSet) {
+  const reached = new Set();
+  SYSTEMS.forEach(s => {
+    const conns = s.conns || [];
+    if(usedSet.has(s.id)) {
+      conns.forEach(c => { if(!usedSet.has(c)) reached.add(c); });
+    }
+    if(!usedSet.has(s.id) && conns.some(c => usedSet.has(c))) reached.add(s.id);
+  });
+  return reached;
+}
+
+function renderSeqCards() {
+  const container = document.getElementById('seqCards');
+  container.innerHTML = WS.map(w => {
+    if(w.n === 1) {
+      const s = SYSTEMS.find(x=>x.id===state.sys);
+      return `<div class="seq-row has-sel">
+        <div class="seq-row-top">
+          <span class="wn">W1</span>
+          ${w.mw?'<span class="wmb">●●</span>':''}
+          <span class="seq-row-theme">${w.theme}</span>
+          <span class="wdue">${w.due}</span>
+        </div>
+        <span class="seq-locked">${s ? s.abbr+' — '+s.name+' (locked)' : 'Not selected — go back to Step 1'}</span>
+      </div>`;
+    }
+    const maxSel = w.mw ? 2 : 1;
+    const selIds = seqGet(w.n);
+    const used = usedBefore(w.n);
+    const connected = connectedTo(used);
+    const remaining = SYSTEMS.filter(s => !used.has(s.id));
+    const connList = remaining.filter(s => connected.has(s.id));
+    const otherList = remaining.filter(s => !connected.has(s.id));
+    const hasSel = selIds.length > 0;
+    const atMax = selIds.length >= maxSel;
+
+    function whyConnected(sysId) {
+      const reasons = [];
+      SYSTEMS.forEach(u => {
+        const uc = u.conns||[], tc = (SYSTEMS.find(x=>x.id===sysId)||{}).conns||[];
+        if(used.has(u.id) && (uc.includes(sysId) || tc.includes(u.id))) {
+          const wn = u.id===state.sys ? 1 : (WS.find(w2=>seqGet(w2.n).includes(u.id))?.n||'?');
+          reasons.push('W'+wn+':'+u.abbr);
+        }
+      });
+      return reasons.slice(0,2).join(', ');
+    }
+
+    const chipClass = (s) => {
+      const isSel = selIds.includes(s.id);
+      const isConn = connected.has(s.id);
+      const blocked = atMax && !isSel;
+      return `sq-chip${isConn?' connected':''}${isSel?' sel':''}${blocked?' at-max':''}`;
+    };
+
+    const connChips = connList.map(s =>
+      `<div class="${chipClass(s)}" onclick="selectSeq(${w.n},'${s.id}')" title="${connected.has(s.id)?'Connected to '+whyConnected(s.id):''}">${s.abbr}</div>`
+    ).join('');
+    const otherChips = otherList.map(s =>
+      `<div class="${chipClass(s)}" onclick="selectSeq(${w.n},'${s.id}')">${s.abbr}</div>`
+    ).join('');
+
+    const limitBadge = w.mw
+      ? `<span class="mwlimit${selIds.length===2?' done':''}">${selIds.length}/2</span>`
+      : '';
+
+    return `<div class="seq-row ${hasSel?'has-sel':''}" id="seqrow-${w.n}">
+      <div class="seq-row-top">
+        <span class="wn">W${w.n}</span>
+        ${w.mw?'<span class="wmb">●●</span>':''}
+        <span class="seq-row-theme">${w.theme}</span>
+        <span class="wdue">${w.due}</span>
+        ${limitBadge}
+      </div>
+      ${connChips ? `<div class="seq-group-lbl">Connects to prior work</div><div class="seq-chips">${connChips}</div>` : ''}
+      ${otherChips ? `<div class="seq-group-lbl">Extends coverage</div><div class="seq-chips">${otherChips}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function selectSeq(wNum, sysId) {
+  const w = WS.find(x=>x.n===wNum);
+  const maxSel = w && w.mw ? 2 : 1;
+  let current = seqGet(wNum);
+  if(current.includes(sysId)) {
+    current = current.filter(s => s !== sysId);
+  } else if(current.length < maxSel) {
+    current = [...current, sysId];
+  }
+  state.seqPlan['W'+wNum] = current;
+  save();
+  renderSeqCards();
+  validateSeq();
+}
+
+function validateSeq() {
+  save();
+  const used = new Set([state.sys]);
+  WS.forEach(w => seqGet(w.n).forEach(s=>used.add(s)));
+  const missing = SYSTEMS.filter(s => !used.has(s.id)).map(s => s.abbr);
+  document.getElementById('seqWarn').style.display = missing.length ? 'block' : 'none';
+  document.getElementById('seqWarn').textContent = `Not yet covered: ${missing.join(', ')}`;
+  document.getElementById('seqOk').style.display = !missing.length ? 'block' : 'none';
+}
+
+function genSeqPrompt() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  const allAbbr = SYSTEMS.map(s=>s.abbr).join(', ');
+  const wsLines = WS.map(w=>`W${w.n} (${w.due}) — ${w.theme}${w.mw?' [two weeks]':''}`).join('\n');
+  const bglbl = state.bgs.map(b=>BGS.find(x=>x.id===b)?.lbl||b).join(', ')||'not specified';
+  const currentPlan = WS.filter(w=>w.n>1).map(w=>{
+    const v = seqGet(w.n);
+    return v.length ? `W${w.n}: ${v.join('+')}` : null;
+  }).filter(Boolean);
+  const planNote = currentPlan.length
+    ? `\n\nMy current selections (review and adjust if needed):\n${currentPlan.join(', ')}`
+    : '';
+
+  const prompt = COURSE_CTX + `I am building my CS 581 sequencing plan. I have selected ${sys?.name||'[system]'} (${sys?.abbr||'—'}) as my W1 system.
+
+My background: ${bglbl}
+
+The 9 workshops (multi-week workshops marked ●● may cover up to 2 systems each to help reach the 11-system requirement):
+${wsLines}
+
+The constraint: all 11 systems must appear at least once across the semester.
+All systems: ${allAbbr}
+
+W1 is locked: ${sys?.abbr||'—'}${planNote}
+
+Create my sequencing-plan.md using this structure:
+
+# Sequencing Plan — CS 581
+
+**Student:** ${state.name || '[your name]'}
+**W1 System:** ${sys?.abbr||'—'} — ${sys?.name||''}
+
+## Workshop-System Map
+
+| Workshop | Theme | System(s) | Justification |
+|---|---|---|---|
+[One row per system. Multi-week workshops may list 2 systems — write a separate justification row for each. W1 locked. Cover all 11 systems by W9. Justification: one concrete sentence connecting that system's properties to the workshop theme.]
+
+## Semester Arc
+[Two paragraphs: (1) how the sequence builds logically from my W1 choice and background — what the thread is. (2) where the sequence requires me to step outside my comfort zone and which workshops I expect to be hardest.]
+
+## Revision Log
+| Date | Change | Reason |
+|---|---|---|
+| ${new Date().toISOString().split('T')[0]} | Initial plan | — |
+
+Writing standard: direct and concrete, no em dashes, no filler phrases.`;
+
+  document.getElementById('seqPC').textContent = prompt;
+  document.getElementById('seqPromptBox').style.display='block';
+  document.getElementById('seqReflArea').style.display='block';
+  logEntry('Sequencing Plan', prompt);
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),50);
+}
+
+// ── Step 3: Attack Surface Map ────────────────────────────────────────────
+function initStep3() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  document.getElementById('asmInfo').innerHTML =
+    `<strong>System:</strong> ${sys?sys.name+' ('+sys.abbr+') · '+sys.purdue+' · '+sys.cls:'not selected — go back to Step 1'}`;
+  if(state.sys) document.getElementById('asmSrcContainer').innerHTML = renderSources(state.sys);
+  if(state.asmRefl1) document.getElementById('asmRefl1').value=state.asmRefl1;
+  if(state.asmRefl2) document.getElementById('asmRefl2').value=state.asmRefl2;
+}
+
+function genAsmPrompt(layer) {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  if(!sys) return;
+  const layers = {
+    it:{lbl:'Layer 1 — IT (Level 4 / Corporate)',n:'1',zone:'Level 4 / corporate network',rows:'5–8',
+      focus:`how data flows from plant systems up through enterprise IT, what protocols cross the Level 3/4 boundary, and what network interfaces or services expose ${sys.abbr} toward the corporate network`,
+      cols:'Interface / Component | Protocol or Connection Type | Threat Vector | Confidence | Provenance'},
+    ot:{lbl:'Layer 2 — OT (Levels 1–3 / Plant)',n:'2',zone:'Levels 1–3 / plant floor',rows:'8–12',
+      focus:sys.otFocus,
+      cols:'Interface / Component | Protocol or Connection Type | Threat Vector | Confidence | Provenance'},
+    physical:{lbl:'Layer 3 — Physical & Cyber-Physical',n:'3',zone:'physical-cyber interface',rows:'4–6',
+      focus:`the interfaces where digital systems produce physical consequences — actuation commands, sensor inputs, physical ports, and environmental interfaces for ${sys.abbr}`,
+      cols:'Interface / Component | Threat Vector | Physical Consequence | Confidence | Provenance'}
+  };
+  const l = layers[layer];
+  const prompt = COURSE_CTX + `I am mapping the ${l.lbl.toLowerCase()} attack surface of ${sys.name} (${sys.abbr}), ${sys.purdue}, ${sys.cls}, at a nuclear power plant for CS 581 Workshop 1.
+
+Focus: ${l.focus}.
+
+Using publicly available sources — NIST SP 800-82r3, NRC RG 5.71, NEI 08-09, IAEA Nuclear Security Series, ICS-CERT advisories, and vendor security bulletins — produce:
+
+## ${l.lbl}
+
+| ${l.cols} |
+|${l.cols.split('|').map(()=>'---|').join('')}
+[${l.rows} rows specific to ${sys.abbr}]
+
+Confidence levels:
+- High: two or more authoritative sources agree
+- Medium: one primary source, or logical inference from system architecture
+- Low: extrapolated from analogous systems
+
+Provenance: cite the specific document and section. "NIST SP 800-82r3 Section 5.4" is acceptable. "General knowledge" is not — assign Low confidence and explain the inference.
+
+End with a "What This Map Cannot Tell You" section (3–5 sentences) being honest about what open-source analysis cannot determine for ${sys.abbr} — information that would require NRC-licensed access, vendor NDA documentation, or direct facility observation.
+
+Writing standard: direct and concrete, no em dashes, no filler phrases.`;
+
+  document.getElementById('asmPC').textContent = prompt;
+  document.getElementById('asmLbl').textContent = l.lbl;
+  document.getElementById('asmPromptBox').style.display='block';
+  logEntry(`Attack Surface Map (${l.lbl})`, prompt);
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),50);
+}
+
+function genAsmVerifyPrompt() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  if(!sys) return;
+  const prompt = COURSE_CTX + `I have completed a three-layer attack surface map for ${sys.name} (${sys.abbr}), ${sys.purdue}, ${sys.cls}.
+
+Select two sources from the course references (replace the placeholders below with your chosen sources):
+- Source A: [e.g., NIST SP 800-82r3 Section 5.X]
+- Source B: [e.g., NRC RG 5.71 Appendix D]
+
+Review the attack surface map I produced across all three layers. For each row, verify the protocol, threat vector, and confidence level against these two sources.
+
+Produce the file attack-surface-verification.md with this structure:
+
+# Attack Surface Verification — ${sys.name} (${sys.abbr})
+
+**Student:** ${state.name||'[name]'}
+**System:** ${sys.name} (${sys.abbr}) · ${sys.purdue} · ${sys.cls}
+**Date:** [today]
+
+## Sources Used
+- Source A: [full citation — document name, section, year]
+- Source B: [full citation — document name, section, year]
+
+## Corrections
+
+| Layer | Original Claim | Error Type | Corrected Entry | Source |
+|---|---|---|---|---|
+[One row per error — hallucination, overclaim, or wrong confidence level. If a row is verified as correct, do not list it. If no errors were found, say so explicitly in a sentence and explain why you are confident.]
+
+## Confidence Adjustments
+[Which rows changed confidence level after verification, and why. Be specific — name the row and the source that changed your assessment.]
+
+## What This Verification Cannot Resolve
+[3–5 sentences specific to ${sys.abbr}: what would require NRC-licensed access, vendor NDA documentation, or direct facility observation to verify. This is not a generic disclaimer — name the specific interfaces or configurations that open-source analysis cannot settle for this system.]
+
+Writing standard: direct and concrete, no em dashes, no filler phrases.`;
+
+  document.getElementById('asmVerifyPC').textContent = prompt;
+  document.getElementById('asmVerifyBox').style.display='block';
+  logEntry('Attack Surface Verification', prompt);
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),50);
+}
+
+// ── Step 4: Tool Selection ────────────────────────────────────────────────
+const MODEL_PLACEHOLDERS = {
+  claude: 'claude-opus-5 — deep reasoning, slower\nclaude-sonnet-5 — standard, my default\nclaude-haiku-4-5 — fast, mechanical tasks',
+  openai: 'gpt-5.6-sol — frontier reasoning, slower\ngpt-5.6-terra — standard, balanced, my default\ngpt-5.6-luna — fast, cost-optimized\ngpt-5.6-cyber — cybersecurity-specific variant (if available)',
+  codex: 'gpt-5.6-sol — frontier reasoning, slower\ngpt-5.6-terra — standard, balanced, my default\ngpt-5.6-luna — fast, cost-optimized\ngpt-5.6-cyber — cybersecurity-specific variant (if available)',
+  gemini: 'gemini-2.5-pro — deep reasoning\ngemini-2.0-flash — standard, my default\ngemini-2.0-flash-lite — fast, mechanical tasks',
+  default: '[model-id] — deep reasoning, slower\n[model-id] — standard, my default\n[model-id] — fast, mechanical tasks'
+};
+
+function modelPlaceholder(tool) {
+  const t = (tool||'').toLowerCase();
+  if(t.includes('claude')) return MODEL_PLACEHOLDERS.claude;
+  if(t.includes('codex')) return MODEL_PLACEHOLDERS.codex;
+  if(t.includes('openai') || t.includes('chatgpt') || t.includes('gpt')) return MODEL_PLACEHOLDERS.openai;
+  if(t.includes('gemini') || t.includes('google')) return MODEL_PLACEHOLDERS.gemini;
+  return MODEL_PLACEHOLDERS.default;
+}
+
+function initStep4() {
+  document.getElementById('toolModelLbl').textContent = state.tool || 'your AI tool';
+  document.getElementById('modelInv').placeholder = modelPlaceholder(state.tool);
+  if(state.modelInv) document.getElementById('modelInv').value=state.modelInv;
+  if(state.reasObs) document.getElementById('reasObs').value=state.reasObs;
+  if(state.visObs) document.getElementById('visObs').value=state.visObs;
+  if(state.modelGuide) document.getElementById('modelGuide').value=state.modelGuide;
+}
+
+function genReasoningPrompt() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  const prompt = COURSE_CTX + `Use your most capable reasoning model (enable extended thinking or chain-of-thought if available).
+
+Question: Under NRC regulations, ${sys?.regQ||'[system-specific regulatory question]'}
+
+Walk through your reasoning step by step before giving an answer. I want to see the intermediate steps, not just the conclusion.
+
+After your answer, add a section called "Confidence Assessment" where you:
+1. Rate your confidence (High / Medium / Low)
+2. Name the specific regulation, standard, or document your answer relies on
+3. Identify any ambiguities in the rule text that affect your answer
+4. Tell me what a reader relying only on the rule text might get wrong
+
+I am evaluating whether you surface definitional gaps and regulatory ambiguities — not just whether you produce a correct answer. Document in your session log whether the reasoning chain surfaced something the final answer did not.`;
+
+  document.getElementById('reasPC').textContent = prompt;
+  document.getElementById('reasPromptBox').style.display='block';
+  logEntry('Reasoning Chain Test', prompt);
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),50);
+}
+
+function genVisionPrompt() {
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  const prompt = COURSE_CTX + `[Attach a screenshot of the CS 581 Plant Architecture Diagram from boisestate.github.io/CS581/plant-architecture.html — crop to show the full diagram]
+
+Without reading any labels outside of what is visible in the image, answer:
+1. List every system you can identify and its connections to other systems.
+2. For ${sys?.abbr||'your selected system'}, what are its direct connections? What protocols or connection types do you infer?
+3. Are there any data-flow direction indicators in the diagram — arrows, data diodes, one-way symbols? Describe them precisely.
+4. What zone or level information does the diagram encode, and how?
+
+Then self-assess:
+- What connections did you identify correctly (I will verify)?
+- What did you add that was not in the image?
+- What did you miss?
+
+Document this in your session log as your vision model test result.`;
+
+  document.getElementById('visPC').textContent = prompt;
+  document.getElementById('visPromptBox').style.display='block';
+  logEntry('Vision Model Test', prompt);
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),50);
+}
+
+// ── Step 5: Export ────────────────────────────────────────────────────────
+function initStep5() {
+  save();
+  const sys = SYSTEMS.find(s=>s.id===state.sys);
+  const today = new Date().toISOString().split('T')[0];
+
+  // session-log.md
+  const logMd = `# Session Log — Workshop 1
+
+**Student:** ${state.name||'[name]'}
+**Tool:** ${state.tool||'[tool]'}
+**Workshop:** W1 — System Selection, Sequencing Plan & Attack Surface Map
+
+---
+
+${state.log.map((e,i)=>`## Entry ${i+1}: ${e.step}
+**Timestamp:** ${e.ts}
+
+### Prompt
+\`\`\`
+${e.prompt}
+\`\`\``).join('\n\n---\n\n')}
+
+---
+
+## Reflections
+
+### System Selection
+**What the AI got right:** ${state.sysRefl1||'[not recorded]'}
+
+**What you corrected:** ${state.sysRefl2||'[not recorded]'}
+
+### Sequencing Plan
+**AI logic vs. your logic:** ${state.seqRefl1||'[not recorded]'}
+
+**What you corrected:** ${state.seqRefl2||'[not recorded]'}
+
+### Attack Surface Map
+**Hallucinations or errors caught:** ${state.asmRefl1||'[not recorded]'}
+
+**Hardest row to verify:** ${state.asmRefl2||'[not recorded]'}
+
+### Tool Evaluation — Reasoning Chain
+${state.reasObs||'[not recorded]'}
+
+### Tool Evaluation — Vision Model
+${state.visObs||'[not recorded]'}
+
+### Model Selection Guide
+${state.modelGuide||'[not recorded]'}
+`;
+
+  // tool-selection.json
+  const toolJson = JSON.stringify({
+    tool: state.tool||'',
+    provider: '',
+    evaluation_date: today,
+    models: {
+      available: state.modelInv||'[inventory not completed]',
+      model_selection_guide: state.modelGuide||'[not completed]'
+    },
+    reasoning_chain_test: {
+      model_used: '',
+      prompt: 'See session log entry: Reasoning Chain Test',
+      observation: state.reasObs||'[not completed]',
+      nuclear_relevance: '[explain why the reasoning chain matters for regulatory work]'
+    },
+    vision_test: {
+      model_used: '',
+      image_used: 'CS 581 Plant Architecture Diagram screenshot',
+      observation: state.visObs||'[not completed]',
+      nuclear_relevance: '[where would you trust vision analysis, and where would you verify manually?]'
+    },
+    justification: '[three specific reasons this tool is right for this course, each referencing something you tested]',
+    limitations: '[at least two concrete limitations you discovered, with the specific moment each appeared]'
+  }, null, 2);
+
+  // seq table from plan
+  const seqRows = WS.flatMap(w=>{
+    if(w.n===1) return [`| W1 | ${w.theme} | ${sys?.abbr||'—'} | [justification] |`];
+    const vals = seqGet(w.n);
+    if(!vals.length) return [`| W${w.n} | ${w.theme} | [unassigned] | [justification] |`];
+    return vals.map(v=>`| W${w.n} | ${w.theme} | ${v} | [justification] |`);
+  }).join('\n');
+  const seqFallback = `# Sequencing Plan — CS 581\n\n**Student:** ${state.name||'[name]'}\n**W1 System:** ${sys?.abbr||'—'}\n\n## Workshop-System Map\n\n| Workshop | Theme | System | Justification |\n|---|---|---|---|\n${seqRows}\n\n## Semester Arc\n[two paragraphs: the thread connecting your choices, and where you expect to stretch furthest]\n\n## Revision Log\n| Date | Change | Reason |\n|---|---|---|\n| ${today} | Initial plan | — |\n`;
+
+  const files = [
+    {name:'system-selection.md', path:'workshops/week-01/', repo:'primary', content:`# System Selection — Workshop 1\n\n**Student:** ${state.name||'[name]'}\n**Tool:** ${state.tool||'[tool]'}\n**Date:** ${today}\n\n[Your AI tool created this file — copy it to this path in your primary repo]\n\nIf you need a starting point, use the prompt from Step 1 to regenerate it.`},
+    {name:'sequencing-plan.md', path:'workshops/week-01/', repo:'primary', content: seqFallback},
+    {name:'attack-surface-map-it.md', path:'workshops/week-01/', repo:'primary', content:`# Attack Surface Map — IT Layer (Level 4 / Corporate)\n\n**Student:** ${state.name||'[name]'}\n**System:** ${sys?.name||'[system]'}\n**Date:** ${today}\n\n[Your AI tool created this file from the Layer 1 prompt in Step 3 — copy it here]`},
+    {name:'attack-surface-map-ot.md', path:'workshops/week-01/', repo:'primary', content:`# Attack Surface Map — OT Layer (Levels 1–3 / Plant)\n\n**Student:** ${state.name||'[name]'}\n**System:** ${sys?.name||'[system]'}\n**Date:** ${today}\n\n[Your AI tool created this file from the Layer 2 prompt in Step 3 — copy it here]`},
+    {name:'attack-surface-map-physical.md', path:'workshops/week-01/', repo:'primary', content:`# Attack Surface Map — Physical & Cyber-Physical Layer\n\n**Student:** ${state.name||'[name]'}\n**System:** ${sys?.name||'[system]'}\n**Date:** ${today}\n\n[Your AI tool created this file from the Layer 3 prompt in Step 3 — copy it here]`},
+    {name:'attack-surface-verification.md', path:'workshops/week-01/', repo:'primary', content:`# Attack Surface Verification — ${sys?.name||'[system]'}\n\n**Student:** ${state.name||'[name]'}\n**System:** ${sys?.name||'[system]'}\n**Date:** ${today}\n\n[Your AI tool created this file from the Verification prompt in Step 3 — copy it here]`},
+    {name:'session-log.md', path:'workshops/week-01/', repo:'primary', content: logMd},
+    {name:'tool-selection.json', path:'workshops/week-01/', repo:'primary', content: toolJson},
+    {name:'synthesis.md', path:'role-analyses/week-01/', repo:'secondary', content:`# Role Analysis Synthesis — Workshop 1\n\n**Student:** ${state.name||'[name]'}\n**System:** ${sys?.name||'[system]'}\n**Date:** ${today}\n\n## NRC Regulator Lens\n[what an NRC regulator would flag, require, or do differently after reading your attack surface map]\n\n## Plant Cybersecurity Manager Lens\n[what a plant cybersecurity manager would flag, require, or do differently]\n\n## Synthesis\n[where the two perspectives align and where they diverge — and what that tells you about this system's regulatory posture]`}
+  ];
+
+  const container = document.getElementById('exportFiles');
+  container.innerHTML = files.map((f,i)=>`
+    <div class="file-blk">
+      <div class="file-hdr">
+        <div>
+          <div class="fname">${f.name}</div>
+          <div class="fpath">${f.repo}-repo / ${f.path}${f.name}</div>
+        </div>
+        <button class="copy-btn" style="position:relative;top:auto;right:auto" onclick="copyP('fc${i}',this)">Copy</button>
+      </div>
+      <div class="file-body" id="fc${i}">${escHtml(f.content)}</div>
+    </div>
+  `).join('');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Session log ───────────────────────────────────────────────────────────
+function logEntry(step, prompt) {
+  state.log.push({step, ts:new Date().toLocaleString(), prompt});
+  save();
+}
+
+// ── Reset ─────────────────────────────────────────────────────────────────
+let _clearArmed = false, _clearTimer = null;
+function clearData() {
+  const btn = document.getElementById('btnClear');
+  if(!_clearArmed) {
+    _clearArmed = true;
+    btn.textContent = 'Confirm reset';
+    btn.classList.add('armed');
+    _clearTimer = setTimeout(()=>{
+      _clearArmed = false;
+      btn.textContent = 'Reset';
+      btn.classList.remove('armed');
+    }, 3000);
+    return;
+  }
+  clearTimeout(_clearTimer);
+  try { localStorage.removeItem(SK); } catch(e){}
+  location.reload();
+}
+
+// ── Copy ──────────────────────────────────────────────────────────────────
+function copyP(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.textContent || el.innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+// Defensive: ensure every system has a conns array
+SYSTEMS.forEach(s => { if(!s.conns) s.conns = []; });
+
+load();
+initBgChips();
+if(document.getElementById('pName')) document.getElementById('pName').value=state.name||'';
+if(document.getElementById('pTool')) document.getElementById('pTool').value=state.tool||'';
+renderNav();
+// Call step-specific init so page state is correct on load (e.g. after refresh with localStorage)
+const STEP_INITS = [null, initStep1, initStep2, initStep3, initStep4, initStep5];
+try { if(STEP_INITS[state.step]) STEP_INITS[state.step](); } catch(e){ console.warn('Step init error:', e); }
+
+// Show scroll nudge on load if system already selected on Step 1
+if(state.step === 1 && state.sys) {
+  const nudge = document.getElementById('scrollNudge');
+  if(nudge) nudge.classList.add('visible');
+}
+
+// Hide nudge when user scrolls near bottom
+window.addEventListener('scroll', () => {
+  const nudge = document.getElementById('scrollNudge');
+  if(!nudge) return;
+  const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 120;
+  if(atBottom) nudge.classList.remove('visible');
+}, {passive:true});
+</script>
