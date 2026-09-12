@@ -204,8 +204,10 @@ Your Week 1 primary repo includes two additional files:
 Both chapters are freely available at [https://www.cl.cam.ac.uk/~rja14/book.html](https://www.cl.cam.ac.uk/~rja14/book.html)
 
 **Supplemental Primary Sources**
-1. **NRC Regulatory Guide 5.71** — *Cyber Security Programs for Nuclear Facilities* (2010): Read Sections 1–3 only (Purpose, Applicability, Regulatory Position overview). This is the foundational regulatory document for everything that follows. You are not reading it for detail — you are reading it to understand *why* nuclear cybersecurity has its own regulatory framework separate from NIST/FISMA.
+1. **NRC Regulatory Guide 5.71, Revision 1** — *Cybersecurity Programs for Nuclear Power Reactors* (February 2023): Read Sections 1–3 only (Purpose, Applicability, Regulatory Position overview). This is the foundational regulatory document for everything that follows. You are not reading it for detail — you are reading it to understand *why* nuclear cybersecurity has its own regulatory framework separate from NIST/FISMA.
 2. **NEI 08-09 Rev. 6** — *Cyber Security Plan for Nuclear Power Reactors* (2010): Executive Summary and Section 1 only. This is the industry's implementation guidance that maps to RG 5.71. Notice where the regulator's language and the industry's language diverge — that divergence will come up repeatedly.
+
+> **Note on RG 5.71 revisions.** Revision 1 (February 2023) supersedes Revision 0 (January 2010, ADAMS ML102810565). Section numbering changed between the two, so a citation that is correct in one revision can point at the wrong control in the other. Always name the revision you are citing. Separately, sections C.3.1, C.3.2, and C.3.4 each appear twice within RG 5.71, once in the main body Regulatory Position and once in Appendix C, with different content. An unqualified citation to any of those numbers is ambiguous, so say which one you mean.
 
 ---
 
@@ -348,6 +350,8 @@ The divergence to look for: nation-state threat analysts think in terms of exter
 
 ```json
 {
+  "target_system": ["PPC"],
+  "w1_map_reference": "workshops/week-01/attack-surface-map-ot.md",
   "actor": "...",
   "also_known_as": ["..."],
   "attributed_to": "...",
@@ -365,6 +369,7 @@ The divergence to look for: nation-state threat analysts think in terms of exter
       "technique": "...",
       "mitre_ics_id": "T0XXX",
       "nuclear_relevance": "...",
+      "system_relevance": "which interface on YOUR W1 map this technique would reach",
       "confidence": "documented | inferred | theoretical"
     }
   ],
@@ -379,7 +384,9 @@ Note the `gaps_in_public_knowledge` field — this is where you document what at
 **Prompt to get started (adapt as needed):**
 > *"I am building a structured threat intelligence profile for a CS 581 nuclear cybersecurity course. Using only publicly available information and named open-source reporting, produce a JSON-formatted adversary profile for [actor name] targeting the nuclear energy sector. Map their known TTPs to MITRE ATT&CK for ICS technique IDs. Include a confidence level and source citation for each claim. Flag anything that is assessed rather than documented."*
 
-**Output file:** `/workshops/week-02/adversary-profile.json` + `/workshops/week-02/session-log.md`
+**Output files:** `/workshops/week-02/adversary-profile.json` + `/workshops/week-02/threat-cards/` (five stat-line cards plus `cards.json`) + `/workshops/week-02/session-log.md`
+
+**Threat actor cards.** Five actors beyond the one profiled in depth. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, capability tier, signature TTP with MITRE ICS ID, a provenance line, and a `what_this_card_cannot_tell_you` field. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
 
 ---
 

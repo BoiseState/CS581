@@ -1,0 +1,29 @@
+{
+  "_comment": "W2 deliverable. Replace every ... with your own content. Delete this _comment key before committing. File MUST parse as valid JSON.",
+  "target_system": ["<from your sequencing plan; array so a pair can name both>"],
+  "w1_map_reference": "workshops/week-01/attack-surface-map-<it|ot|physical>.md",
+  "actor": "...",
+  "also_known_as": ["..."],
+  "attributed_to": "...",
+  "confidence": "documented | assessed | theoretical",
+  "provenance": "specific public report, with section or page",
+  "motivation": {
+    "primary": "...",
+    "secondary": ["..."]
+  },
+  "capability_tier": "nation-state-tier-1 | nation-state-tier-2 | criminal | hacktivist",
+  "nuclear_targeting_evidence": "...",
+  "primary_ttps": [
+    {
+      "tactic": "...",
+      "technique": "...",
+      "mitre_ics_id": "T0XXX",
+      "nuclear_relevance": "...",
+      "system_relevance": "which interface on YOUR W1 map this technique would reach",
+      "confidence": "documented | inferred | theoretical"
+    }
+  ],
+  "historical_precedent": ["..."],
+  "detection_opportunities": ["..."],
+  "gaps_in_public_knowledge": ["..."]
+}

@@ -1,0 +1,582 @@
+<title>W2 Workflow Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0c1117;--surface:#131b25;--raised:#1a2535;
+  --border:#1e2d3d;--border2:#263545;
+  --text:#dce8f4;--text2:#7a8fa6;--text3:#4a6070;
+  --accent:#3b9eff;--accent-dim:#0a1e36;--accent-border:#143258;
+  --ok:#22c55e;--ok-dim:#0a2018;
+  --warn:#f0b429;--err:#f04f4f;
+  --prompt:#060d14;--prompt-border:#1a2d45;
+  --sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Fira Code',monospace;
+  --r:8px;--r2:4px;--r3:12px;
+}
+:root[data-theme="light"] {
+  --bg:#f0f4f9;--surface:#ffffff;--raised:#f5f8fc;
+  --border:#d0dbe8;--border2:#e2eaf4;
+  --text:#0f1c2b;--text2:#4a5f75;--text3:#7d90a4;
+  --accent:#1d6fa5;--accent-dim:#eff8ff;--accent-border:#c3dff4;
+  --ok:#16a34a;--ok-dim:#f0fdf4;--err:#dc2626;
+  --prompt:#0c1117;--prompt-border:#1e2d3d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 120px}
+header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding-block:14px}
+.hrow{max-width:920px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.htitle{font-weight:700;font-size:15px;letter-spacing:-.2px}
+.hsub{color:var(--text3);font-size:12px;font-family:var(--mono)}
+.spacer{flex:1}
+button{font-family:var(--sans);font-size:13px;cursor:pointer;border-radius:var(--r2);border:1px solid var(--border2);background:var(--raised);color:var(--text);padding:7px 13px}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button.ghost{background:transparent}
+.bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:12px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+h1{font-size:24px;margin:28px 0 6px;letter-spacing:-.4px}
+h2{font-size:18px;margin:0 0 4px;letter-spacing:-.2px}
+h3{font-size:14px;margin:22px 0 8px;color:var(--text)}
+p{margin:8px 0}
+.lede{color:var(--text2);margin-bottom:22px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:20px;margin:16px 0}
+.step{display:none}
+.step.on{display:block}
+.stepno{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+label{display:block;font-size:12px;color:var(--text2);margin:14px 0 5px;font-weight:500}
+select,input[type=text],textarea{width:100%;padding:9px 11px;border-radius:var(--r2);border:1px solid var(--border2);background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px}
+textarea{font-family:var(--mono);font-size:12px;line-height:1.55;resize:vertical}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.prompt{background:var(--prompt);border:1px solid var(--prompt-border);border-radius:var(--r);padding:14px 15px;font-family:var(--mono);font-size:12px;line-height:1.6;color:#c8dcf0;white-space:pre-wrap;position:relative;margin:10px 0}
+.copy{position:absolute;top:8px;right:8px;font-size:11px;padding:4px 9px;background:#16324d}
+.copy{border:1px solid #24476b;color:#9fc8ea;background:#122a41}
+.note{border-left:3px solid var(--accent);background:var(--accent-dim);padding:11px 14px;border-radius:0 var(--r2) var(--r2) 0;margin:12px 0;font-size:13px}
+.warn{border-left-color:var(--warn);background:rgba(240,180,41,.09)}
+.hard{border-left-color:var(--err);background:rgba(240,79,79,.09)}
+.okbox{border-left-color:var(--ok);background:var(--ok-dim)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.chip{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--raised);color:var(--text2)}
+.chip.hl{border-color:var(--accent-border);background:var(--accent-dim);color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+code{font-family:var(--mono);font-size:12px;background:var(--raised);padding:1.5px 5px;border-radius:3px;color:var(--accent)}
+.files{font-family:var(--mono);font-size:12px}
+.files div{padding:5px 0;color:var(--text2)}
+.files b{color:var(--text);font-weight:500}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 0;z-index:60}
+.navin{max-width:920px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px}
+.navlbl{font-size:12px;color:var(--text3);font-family:var(--mono)}
+.vout{font-family:var(--mono);font-size:12px;padding:12px 14px;border-radius:var(--r);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.vout.good{background:var(--ok-dim);border:1px solid var(--ok);color:var(--ok)}
+.vout.bad{background:rgba(240,79,79,.09);border:1px solid var(--err);color:var(--err)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}.wrap{padding:0 14px 130px}}
+ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
+.mut{color:var(--text3);font-size:12px}
+</style>
+<header>
+  <div class="hrow">
+    <div>
+      <div class="htitle">CS 581 · Workshop 2 Workflow Guide</div>
+      <div class="hsub">Adversary Profile &amp; Threat Cards · due Sep 21, 11:59 PM MT</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="ghost" id="btnTheme">Theme</button>
+    <button class="ghost" id="btnReset">Reset</button>
+  </div>
+  <div class="hrow"><div class="bar" style="flex:1"><i id="bar"></i></div></div>
+</header>
+
+<div class="wrap">
+
+<!-- STEP 0 -->
+<section class="step on" data-step="0">
+  <h1>Workshop 2 — Adversary Profile</h1>
+  <p class="lede">W1 asked what an attacker could reach. W2 asks who would actually try, what they have done before, and what you can prove about them from public sources.</p>
+
+  <div class="card">
+    <h2>Start here</h2>
+    <p>Pick your W2 system. Everything after this page adjusts to it, including the file path you reference from your W1 map and the prompts you copy.</p>
+
+    <label for="sysSel">My W2 target system (from my own sequencing plan)</label>
+    <select id="sysSel">
+      <option value="">Select your system...</option>
+      <option value="ppc_psi">PPC + PSI (paired)</option>
+      <option value="sfpcm">SFPCM</option>
+      <option value="rps">RPS</option>
+      <option value="otsiem_edgc">OT-SIEM + EDGC (paired)</option>
+      <option value="ppc_rms">PPC + RMS (paired)</option>
+      <option value="rms">RMS</option>
+      <option value="dcs">DCS</option>
+      <option value="other">Other / I revised my plan</option>
+    </select>
+
+    <label for="toolSel">My AI coding assistant</label>
+    <select id="toolSel">
+      <option value="">Select...</option>
+      <option>Claude Code</option>
+      <option>OpenAI Codex</option>
+      <option>Other</option>
+    </select>
+
+    <div id="sysInfo"></div>
+  </div>
+
+  <div class="note warn">
+    <b>Two corrections before you start.</b>
+    <ul>
+      <li>If your repo has <code>workshops/week-02/threat-profile.md</code> from the original template, that file is retired. It is not a W2 deliverable. Delete it.</li>
+      <li>The course reference list linked <b>RG 5.71 Revision 0</b> (2010). <b>Revision 1</b> (Feb 2023) is current and section numbering changed. Use Rev. 1 from here on. Also, C.3.1, C.3.2 and C.3.4 each appear twice in RG 5.71, once in the main body and once in Appendix C. Say which one you mean.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>What you will produce</h2>
+    <div class="files">
+      <div><b>workshops/week-02/adversary-profile.json</b> · one actor, in depth, against your system</div>
+      <div><b>workshops/week-02/threat-cards/cards.json</b> · five more actors, stat-line depth</div>
+      <div><b>workshops/week-02/threat-cards/card-01 … card-05</b> · the cards themselves</div>
+      <div><b>workshops/week-02/session-log.md</b> · full session log plus a short reflection</div>
+      <div><b>role-analyses/week-02/synthesis.md</b> · secondary repo, two lenses</div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1 -->
+<section class="step" data-step="1">
+  <div class="stepno">Step 1 of 7</div>
+  <h1>Choose your actor</h1>
+  <p class="lede">One nation-state actor, profiled in depth. The choice matters less than your ability to source it.</p>
+
+  <div class="card">
+    <h2>Where actor names actually come from</h2>
+    <p>Do not ask your assistant to invent a list. Start from primary sources and derive names from them:</p>
+    <ul>
+      <li><b>MITRE ATT&amp;CK for ICS, Groups</b> — the closest thing to a standardised catalogue, and every entry carries technique mappings you will need anyway.</li>
+      <li><b>CISA advisories and joint alerts</b> — including AA22-083A on this module's reading list, which covers indicted state-sponsored actors targeting the energy sector.</li>
+      <li><b>Vendor threat-group reporting</b> — Dragos, Mandiant, and similar. Useful, but note that vendors name groups differently and the naming does not always line up.</li>
+    </ul>
+    <div class="note">
+      <b>The naming problem is part of the lesson.</b> The same activity cluster often carries three or four different names depending on who is reporting. Your <code>also_known_as</code> field exists because of this. If you cannot reconcile the names, say so in <code>gaps_in_public_knowledge</code>.
+    </div>
+    <div class="note warn">
+      <b>Attribution is contested, and you are not resolving it.</b> Your job is to record what public reporting claims, who claims it, and how strongly. An actor that a government has formally indicted is on different evidentiary footing than one a vendor has named in a blog post. Your <code>confidence</code> field should reflect that difference, not flatten it.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Fit your actor to your system</h2>
+    <p id="actorFit" class="mut">Select your system on the first page to see this.</p>
+    <label for="actorPick">Actor I am profiling in depth</label>
+    <input type="text" id="actorPick" placeholder="e.g. the group name as it appears in your primary source">
+    <label for="actorSrc">The primary source I am starting from (report name, section or page)</label>
+    <input type="text" id="actorSrc" placeholder="e.g. CISA AA22-083A, section on energy sector targeting">
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="step" data-step="2">
+  <div class="stepno">Step 2 of 7</div>
+  <h1>Build adversary-profile.json</h1>
+  <p class="lede">Structured output is the capability this module tests. The file must parse.</p>
+
+  <div class="card">
+    <h2>The prompt</h2>
+    <p class="mut">Adapt this. Do not paste it unchanged and accept what comes back.</p>
+    <div class="prompt" id="pr1"><button class="copy" data-t="pr1">Copy</button><span id="pr1t"></span></div>
+  </div>
+
+  <div class="card">
+    <h2>Two fields carry the most weight</h2>
+    <table>
+      <tr><th>Field</th><th>What it is for</th></tr>
+      <tr><td><code>system_relevance</code></td><td>On every TTP, name the specific interface on <b>your own W1 map</b> that the technique would reach. This is the field that connects W2 to W1. A generic answer here means the profile is about nuclear facilities in general, which is not the assignment.</td></tr>
+      <tr><td><code>gaps_in_public_knowledge</code></td><td>Attribution claims that exist but cannot be verified from open sources. An empty array means the analysis was not finished.</td></tr>
+    </table>
+    <div class="note">
+      <b>Six to ten TTP entries.</b> Map each to a MITRE ATT&amp;CK for ICS ID in <code>T0XXX</code> form. Enterprise <code>T1XXX</code> IDs are acceptable only where no ICS equivalent exists, and say so in that entry.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Validate before you commit</h2>
+    <p>Paste your <code>adversary-profile.json</code> here. This checks that it parses and that the required keys are present. It does not check whether your content is any good.</p>
+    <textarea id="jsonIn" rows="10" placeholder="paste adversary-profile.json"></textarea>
+    <div style="margin-top:10px"><button class="primary" id="btnVal">Validate</button></div>
+    <div id="valOut"></div>
+  </div>
+</section>
+<!-- STEP 3 -->
+<section class="step" data-step="3">
+  <div class="stepno">Step 3 of 7</div>
+  <h1>The system_relevance pass</h1>
+  <p class="lede">Go back through your own W1 attack surface map, one TTP at a time.</p>
+
+  <div class="card">
+    <h2>Why this is a separate step</h2>
+    <p>If you fill <code>system_relevance</code> while the assistant is generating the profile, it will write something plausible and generic. Do it as a second pass, with your W1 map open, and the answers get specific.</p>
+    <p id="mapRef" class="mut">Select your system on the first page to see your map file.</p>
+    <div class="prompt" id="pr2"><button class="copy" data-t="pr2">Copy</button><span id="pr2t"></span></div>
+    <div class="note okbox">
+      <b>What good looks like.</b> Not "could target the historian" but "would reach the store-and-forward buffer identified in row 4 of my OT layer map, which has no authentication on the collector side." The row number is the tell that you actually went back and looked.
+    </div>
+    <div class="note warn">
+      <b>If a technique has nowhere to land on your map, say so.</b> A TTP with no reachable interface on your system is a real finding, not a failure. Record it, and consider whether your W1 map missed an interface or whether the technique genuinely does not apply.
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section class="step" data-step="4">
+  <div class="stepno">Step 4 of 7</div>
+  <h1>Threat cards</h1>
+  <p class="lede">Five actors beyond the one you profiled. Stat-line depth. The point is breadth.</p>
+
+  <div class="card">
+    <h2>Style is yours</h2>
+    <div class="chips">
+      <span class="chip">baseball card</span><span class="chip">Pokemon card</span><span class="chip">tarot</span>
+      <span class="chip">trading card</span><span class="chip">anime</span><span class="chip">vaporwave</span>
+      <span class="chip">field guide</span><span class="chip">your call</span>
+    </div>
+    <p>Every card must legibly show four things: actor name, capability tier, signature TTP with its MITRE ICS ID, and a provenance line naming a public source.</p>
+    <p>Cards are graded on whether the stat lines are accurate and sourced, not on artistic quality. A hand-drawn card photographed with your phone scores the same as a polished render if the data is right.</p>
+  </div>
+
+  <div class="card">
+    <h2>One hard rule</h2>
+    <div class="note hard">
+      <b>No card may depict a real person.</b> Original characters, mascots, creatures, emblems, and abstract art are all fine. What is not fine is art that presents itself as showing what a real operator looks like.
+      <p style="margin-bottom:0">Several of the actors you will look at are tied to named individuals under federal indictment, including in AA22-083A on this module's reading list. Inventing faces for them is the one thing this assignment will not accept.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Making them</h2>
+    <p>Ask your assistant to emit each card as SVG or HTML. It costs nothing, the files stay small and diffable, and getting an agent to produce clean SVG is a useful exercise in its own right. If you already have an image generator you may use it instead, subject to the course rule on AI providers. <b>Do not buy a subscription for this.</b></p>
+    <div class="prompt" id="pr3"><button class="copy" data-t="pr3">Copy</button><span id="pr3t"></span></div>
+  </div>
+
+  <div class="card">
+    <h2>Validate cards.json</h2>
+    <p>Five objects, each with the required keys. Same gate as the profile: it must parse.</p>
+    <textarea id="cardsIn" rows="8" placeholder="paste cards.json"></textarea>
+    <div style="margin-top:10px"><button class="primary" id="btnValC">Validate</button></div>
+    <div id="valOutC"></div>
+  </div>
+</section>
+
+<!-- STEP 5 -->
+<section class="step" data-step="5">
+  <div class="stepno">Step 5 of 7</div>
+  <h1>Session log and reflection</h1>
+  <p class="lede">Graded independently of the artifacts it describes.</p>
+
+  <div class="card">
+    <h2>The log</h2>
+    <p>What you asked, what came back, what you changed. Enough detail that a reader can follow how the profile and the cards were built.</p>
+    <p class="mut">W1 note: several logs were thin relative to the artifacts they described. If your log is shorter than the work it documents, it is not finished.</p>
+  </div>
+
+  <div class="card">
+    <h2>The reflection</h2>
+    <p>A short section at the end of the log. You have just asked a generative tool to produce confident, attractive artifacts about actors whose attribution is contested, and in some cases disputed by the people accused.</p>
+    <p>Write down what that felt like, and what you would want a reader of those cards to know that the cards themselves do not say.</p>
+    <div class="note">Module 9 returns to this question about AI in nuclear operations. Your answer here is the start of that thread, so write it honestly rather than tidily.</div>
+    <label for="reflNote">Scratch space (saved locally in your browser, not submitted)</label>
+    <textarea id="reflNote" rows="5" placeholder="what did the card exercise feel like?"></textarea>
+  </div>
+</section>
+
+<!-- STEP 6 -->
+<section class="step" data-step="6">
+  <div class="stepno">Step 6 of 7</div>
+  <h1>Role synthesis</h1>
+  <p class="lede">Secondary repo. One page. <code>role-analyses/week-02/synthesis.md</code></p>
+
+  <div class="card">
+    <h2>This module's two lenses</h2>
+    <div class="grid2">
+      <div>
+        <h3>Nation-State Threat Analyst</h3>
+        <p class="mut">Thinks in external actors, technical TTPs, and attribution. Asks which actors are targeting this sector and what historical evidence says about their next move.</p>
+      </div>
+      <div>
+        <h3>Insider Threat Investigator</h3>
+        <p class="mut">Thinks in organisational psychology, behavioural baselines, and the limits of technical detection. Asks what conditions create insider risk and what indicators are actually observable.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>Use the assigned roles.</b> Several W1 submissions substituted different roles because the old template listed its examples with "e.g." That template has been corrected. For W2 the roles are the two above.
+    </div>
+    <p>Apply both to <b>your own profile and cards</b>, not to the reading in general. The divergence to look for is not about facts. Both roles read the same reporting. It is about what each would actually do with it.</p>
+  </div>
+</section>
+
+<!-- STEP 7 -->
+<section class="step" data-step="7">
+  <div class="stepno">Step 7 of 7</div>
+  <h1>Pre-flight</h1>
+  <p class="lede">Check these before your last commit.</p>
+  <div class="card">
+    <h2>Checklist</h2>
+    <div id="checklist"></div>
+  </div>
+  <div class="card">
+    <h2>Submit</h2>
+    <p>Submit the URL to your <code>workshops/week-02/</code> folder in Canvas. We evaluate the last commit before <b>Sep 21, 11:59 PM MT</b>.</p>
+    <div class="note warn">Commit as you work. In W1, two students pushed everything within seven minutes of the deadline. That leaves no room for anything to go wrong.</div>
+  </div>
+</section>
+
+</div>
+
+<div class="nav">
+  <div class="navin">
+    <button class="ghost" id="btnPrev">Back</button>
+    <span class="navlbl" id="navLbl"></span>
+    <div class="spacer"></div>
+    <button class="primary" id="btnNext">Next</button>
+  </div>
+</div>
+<script>
+const SYS = {
+  ppc_psi:{label:"PPC + PSI",purdue:"Level 2–3 / Level 2–3",paired:true,
+    maps:["workshops/week-01/attack-surface-map-ot.md","workshops/week-01/attack-surface-map-physical.md"],
+    note:"A paired week. Profile one actor against both systems and put both abbreviations in target_system. The interesting seam is that PPC holds the operational record while PSI holds the access record, so an actor who reaches both can alter what happened and who was there.",
+    fit:"Your pair spans records integrity and physical access. Look for actors with documented interest in manipulating or erasing operational data, and for reporting on abuse of authorised access rather than only external intrusion."},
+  sfpcm:{label:"SFPCM",purdue:"Level 1",paired:false,
+    maps:["workshops/week-01/attack-surface-map-ot.md"],
+    note:"Safety-critical, Level 1. Your W1 map may have been built on a different system, so expect the system_relevance pass to be more work than it looks.",
+    fit:"A high-consequence safety target. Public reporting on actors pursuing physical consequence rather than espionage is the relevant body of work here."},
+  rps:{label:"RPS",purdue:"Level 1",paired:false,
+    maps:["workshops/week-01/attack-surface-map-ot.md"],
+    note:"Safety instrumented systems have the clearest public incident record of anything on the course system list.",
+    fit:"RPS is the closest analogue on this list to a documented attack on a safety instrumented system. That gives you a real incident to map against ATT&CK for ICS rather than a theoretical one. Use the primary incident reporting, not summaries of it."},
+  otsiem_edgc:{label:"OT-SIEM + EDGC",purdue:"Level 3 / Level 1",paired:true,
+    maps:["workshops/week-01/attack-surface-map-ot.md"],
+    note:"A wide pair, Level 3 down to Level 1. Say in your profile why one actor would pursue both, or the pairing will read as two unrelated analyses stapled together.",
+    fit:"Blinding detection and disabling backup power are both documented adversary objectives. The through-line is an actor who wants the consequence to land without being seen while it happens."},
+  ppc_rms:{label:"PPC + RMS",purdue:"Level 2–3 / Level 1–3",paired:true,
+    maps:["workshops/week-01/attack-surface-map-ot.md"],
+    note:"Both systems are about the integrity of what the plant believes to be true. That is your pairing rationale and it is a strong one.",
+    fit:"Look for actors with documented interest in falsifying or suppressing monitoring data. The historian and the radiation monitor fail in the same direction: the operator's picture of the plant stops matching the plant."},
+  rms:{label:"RMS",purdue:"Level 1–3",paired:false,
+    maps:["workshops/week-01/attack-surface-map-ot.md"],
+    note:"RMS spans Safety, Security and Safeguards at once, which makes the consequence analysis richer than most single systems.",
+    fit:"Radiation data is read by three different authorities for three different purposes. An actor who manipulates it affects all three, and public reporting on data manipulation attacks is the place to start."},
+  dcs:{label:"DCS",purdue:"Level 2",paired:false,
+    maps:["workshops/week-01/attack-surface-map-ot.md"],
+    note:"DCS is the asset class with the deepest public ICS incident record. You will have more source material than you can use.",
+    fit:"The documented ICS attack platforms were built against control system environments. Your constraint here is selection, not availability, so be deliberate about which incident you anchor to and why."},
+  other:{label:"your revised system",purdue:"per your plan",paired:false,
+    maps:["workshops/week-01/attack-surface-map-<layer>.md"],
+    note:"You changed your plan, which is allowed. Document the change and the reason in sequencing-plan.md.",
+    fit:"Fit your actor to the system you actually chose, and make sure your W1 map reference points at the right layer file."}
+};
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='cs581_w2_guide';
+let step=0, ST={};
+
+function save(){ try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){} }
+function load(){ try{ST=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){ST={};} }
+
+function sysData(){ return SYS[ST.sys] || null; }
+
+function prompts(){
+  const d=sysData();
+  const sysName = d? d.label : "[your W2 system]";
+  const map = d? d.maps[0] : "workshops/week-01/attack-surface-map-<layer>.md";
+  const actor = ST.actor || "[actor name]";
+  const tool = ST.tool || "my coding assistant";
+
+  $('#pr1t').textContent =
+`I am building a structured threat intelligence profile for CS 581, a nuclear cybersecurity course.
+
+Target system: ${sysName}
+My W1 attack surface map: ${map}
+
+Using ONLY publicly available information and named open-source reporting, produce a JSON
+adversary profile for ${actor} as it relates to the energy and nuclear sector.
+
+Requirements:
+- Map 6 to 10 TTPs to MITRE ATT&CK for ICS technique IDs (T0XXX form).
+  Use an Enterprise T1XXX ID only where no ICS equivalent exists, and say so in that entry.
+- Every claim carries a confidence value: documented, assessed, or theoretical.
+- Every claim carries a provenance string naming a specific report plus section or page.
+- Populate gaps_in_public_knowledge with attribution claims that exist but cannot be
+  verified from open sources. Do not leave it empty.
+- Do not speculate past what the sources support. If you are inferring, label it inferred.
+
+Output valid JSON only, matching the schema in the assignment. Leave system_relevance
+as an empty string for now; I will fill those in myself against my own map.`;
+
+  $('#pr2t').textContent =
+`I am filling in the system_relevance field on each TTP in my adversary profile.
+
+Read my W1 attack surface map at ${map}.
+
+For each TTP in adversary-profile.json, tell me which specific row or interface in that
+map the technique would actually reach. Cite the row by its component name.
+
+If a technique has no reachable interface on my map, say so plainly rather than
+inventing a connection. I want to know where the gaps are.
+
+Do not rewrite the rest of the profile.`;
+
+  $('#pr3t').textContent =
+`Produce a threat actor card as a single self-contained SVG file.
+
+Style: [your choice - baseball card, Pokemon card, tarot, anime, etc.]
+Dimensions: roughly 750 x 1050, readable at half size.
+
+The card must legibly show:
+- actor name
+- capability tier
+- signature TTP with its MITRE ATT&CK for ICS ID
+- a provenance line naming the public source
+
+Hard constraint: do NOT depict a real person. No faces, no portraits, no likenesses.
+Use an emblem, an original mascot, a creature, or abstract shapes instead.
+
+Use the data from cards.json entry [n]. Do not invent facts that are not in that entry.
+All text must be real SVG <text> elements, not paths, so the card stays searchable.`;
+}
+
+function renderSys(){
+  const d=sysData(), box=$('#sysInfo');
+  if(!d){ box.innerHTML=''; $('#actorFit').textContent='Select your system on the first page to see this.'; $('#mapRef').textContent='Select your system on the first page to see your map file.'; prompts(); return; }
+  box.innerHTML =
+    '<div class="chips"><span class="chip hl">'+d.label+'</span><span class="chip">Purdue '+d.purdue+'</span>'+
+    (d.paired?'<span class="chip hl">paired week</span>':'')+'</div>'+
+    '<div class="note">'+d.note+'</div>'+
+    '<p class="mut">Your <code>w1_map_reference</code> should point at:</p>'+
+    '<div class="files">'+d.maps.map(m=>'<div><b>'+m+'</b></div>').join('')+'</div>'+
+    (d.paired?'<p class="mut">Your <code>target_system</code> is an array. Put both abbreviations in it.</p>':'');
+  $('#actorFit').textContent=d.fit;
+  $('#mapRef').innerHTML='Your W1 map: '+d.maps.map(m=>'<code>'+m+'</code>').join(' and ');
+  prompts();
+}
+
+const REQ=["target_system","w1_map_reference","actor","also_known_as","attributed_to","confidence","provenance","motivation","capability_tier","nuclear_targeting_evidence","primary_ttps","historical_precedent","detection_opportunities","gaps_in_public_knowledge"];
+const TTPREQ=["tactic","technique","mitre_ics_id","nuclear_relevance","system_relevance","confidence"];
+const CARDREQ=["actor","aka","capability_tier","sector_targeting","signature_ttp","first_observed","confidence","provenance","what_this_card_cannot_tell_you"];
+
+function validate(){
+  const raw=$('#jsonIn').value.trim(), out=$('#valOut');
+  if(!raw){ out.className='vout bad'; out.textContent='Nothing pasted.'; return; }
+  let o; try{ o=JSON.parse(raw); }catch(e){ out.className='vout bad'; out.textContent='DOES NOT PARSE\n\n'+e.message+'\n\nThis file would score zero on AI Tool Use Quality. Fix it before committing.'; return; }
+  const errs=[], warns=[];
+  if(Array.isArray(o)) errs.push('Top level is an array. adversary-profile.json should be a single object.');
+  REQ.forEach(k=>{ if(!(k in o)) errs.push('missing key: '+k); });
+  if('_comment' in o) warns.push('_comment key still present. Delete it before committing.');
+  if(Array.isArray(o.primary_ttps)){
+    const n=o.primary_ttps.length;
+    if(n<6) warns.push('only '+n+' TTP entries. The assignment asks for 6 to 10.');
+    if(n>10) warns.push(n+' TTP entries. The assignment asks for 6 to 10.');
+    o.primary_ttps.forEach((t,i)=>{
+      TTPREQ.forEach(k=>{ if(!(k in t)) errs.push('primary_ttps['+i+'] missing: '+k); });
+      if(t.mitre_ics_id && !/^T\d{4}(\.\d{3})?$/.test(t.mitre_ics_id)) warns.push('primary_ttps['+i+'] mitre_ics_id "'+t.mitre_ics_id+'" is not in T0XXX form.');
+      if(t.mitre_ics_id && /^T1/.test(t.mitre_ics_id)) warns.push('primary_ttps['+i+'] uses an Enterprise T1XXX ID. Allowed only where no ICS equivalent exists, and you must say so in that entry.');
+      if(t.system_relevance!==undefined && String(t.system_relevance).trim()==='') errs.push('primary_ttps['+i+'] system_relevance is empty. This is the field that connects W2 to your W1 map.');
+    });
+  } else if('primary_ttps' in o) errs.push('primary_ttps must be an array.');
+  if(!Array.isArray(o.target_system) && 'target_system' in o) warns.push('target_system should be an array, even for a single system.');
+  if(Array.isArray(o.gaps_in_public_knowledge) && o.gaps_in_public_knowledge.length===0) errs.push('gaps_in_public_knowledge is empty. An empty gaps array means the analysis is not finished.');
+  if(!errs.length && !warns.length){ out.className='vout good'; out.textContent='PARSES, and all required keys are present.\n\nThis checks structure only. It says nothing about whether your content is sourced or accurate.'; return; }
+  out.className = errs.length? 'vout bad':'vout good';
+  out.textContent = (errs.length? 'PARSES, but '+errs.length+' problem'+(errs.length>1?'s':'')+':\n'+errs.map(e=>'  - '+e).join('\n')+'\n\n':'PARSES, required keys present.\n\n')
+    + (warns.length? 'Worth a look:\n'+warns.map(w=>'  - '+w).join('\n'):'');
+}
+
+function validateCards(){
+  const raw=$('#cardsIn').value.trim(), out=$('#valOutC');
+  if(!raw){ out.className='vout bad'; out.textContent='Nothing pasted.'; return; }
+  let a; try{ a=JSON.parse(raw); }catch(e){ out.className='vout bad'; out.textContent='DOES NOT PARSE\n\n'+e.message; return; }
+  const errs=[],warns=[];
+  if(!Array.isArray(a)){ errs.push('cards.json must be an array of five objects.'); a=[]; }
+  else if(a.length!==5) errs.push('found '+a.length+' card'+(a.length===1?'':'s')+'. The assignment asks for exactly five.');
+  a.forEach((c,i)=>{
+    if('_comment' in c) warns.push('card['+i+'] still has _comment. Delete it.');
+    CARDREQ.forEach(k=>{ if(!(k in c)) errs.push('card['+i+'] missing: '+k); });
+    if(c.signature_ttp && !c.signature_ttp.mitre_ics_id) errs.push('card['+i+'] signature_ttp missing mitre_ics_id.');
+    if(c.what_this_card_cannot_tell_you!==undefined && String(c.what_this_card_cannot_tell_you).trim()==='') warns.push('card['+i+'] what_this_card_cannot_tell_you is empty.');
+  });
+  if(!errs.length && !warns.length){ out.className='vout good'; out.textContent='PARSES. Five cards, all required keys present.'; return; }
+  out.className = errs.length?'vout bad':'vout good';
+  out.textContent = (errs.length? errs.length+' problem'+(errs.length>1?'s':'')+':\n'+errs.map(e=>'  - '+e).join('\n')+'\n\n':'Structure looks right.\n\n')
+    + (warns.length? 'Worth a look:\n'+warns.map(w=>'  - '+w).join('\n'):'');
+}
+
+function renderCheck(){
+  const d=sysData();
+  const items=[
+    ['adversary-profile.json parses as valid JSON', null],
+    ['target_system matches my sequencing plan'+(d?' ('+d.label+')':''), null],
+    ['w1_map_reference points at a file that exists in my repo', null],
+    ['6 to 10 TTPs, each with a T0XXX MITRE ICS ID', null],
+    ['every system_relevance names a specific row on my own W1 map', null],
+    ['gaps_in_public_knowledge is not empty', null],
+    ['cards.json parses and has exactly five actors', null],
+    ['five card files committed, card-01 through card-05', null],
+    ['no card depicts a real person', null],
+    ['every card shows name, tier, signature TTP with MITRE ID, and provenance', null],
+    ['session-log.md includes the reflection on the card exercise', null],
+    ['role-analyses/week-02/synthesis.md uses the two assigned roles', null],
+    ['the retired threat-profile.md is deleted from my repo', null],
+    ['RG 5.71 citations name Revision 1, and say main body or Appendix C', null],
+    ['I committed as I worked, not all at once', null]
+  ];
+  $('#checklist').innerHTML = items.map((it,i)=>
+    '<label style="display:flex;gap:9px;align-items:flex-start;margin:9px 0;color:var(--text);font-size:13px;font-weight:400;cursor:pointer">'+
+    '<input type="checkbox" data-ck="'+i+'" '+(ST['ck'+i]?'checked':'')+' style="width:auto;margin-top:3px">'+
+    '<span>'+it[0]+'</span></label>').join('');
+  $$('#checklist input').forEach(cb=>cb.addEventListener('change',e=>{ ST['ck'+e.target.dataset.ck]=e.target.checked; save(); }));
+}
+
+function show(n){
+  const steps=$$('.step'); step=Math.max(0,Math.min(steps.length-1,n));
+  steps.forEach(s=>s.classList.toggle('on', +s.dataset.step===step));
+  $('#bar').style.width=((step)/(steps.length-1)*100)+'%';
+  $('#navLbl').textContent = step===0? 'Setup' : 'Step '+step+' of 7';
+  $('#btnPrev').style.visibility = step===0?'hidden':'visible';
+  $('#btnNext').textContent = step===steps.length-1? 'Done' : 'Next';
+  if(step===steps.length-1) renderCheck();
+  ST.step=step; save(); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+load();
+$('#sysSel').value=ST.sys||''; $('#toolSel').value=ST.tool||'';
+$('#actorPick').value=ST.actor||''; $('#actorSrc').value=ST.actorSrc||''; $('#reflNote').value=ST.refl||'';
+if(ST.theme==='light') document.documentElement.setAttribute('data-theme','light');
+
+$('#sysSel').addEventListener('change',e=>{ST.sys=e.target.value;save();renderSys();});
+$('#toolSel').addEventListener('change',e=>{ST.tool=e.target.value;save();prompts();});
+$('#actorPick').addEventListener('input',e=>{ST.actor=e.target.value;save();prompts();});
+$('#actorSrc').addEventListener('input',e=>{ST.actorSrc=e.target.value;save();});
+$('#reflNote').addEventListener('input',e=>{ST.refl=e.target.value;save();});
+$('#btnVal').addEventListener('click',validate);
+$('#btnValC').addEventListener('click',validateCards);
+$('#btnNext').addEventListener('click',()=>show(step+1));
+$('#btnPrev').addEventListener('click',()=>show(step-1));
+$('#btnTheme').addEventListener('click',()=>{
+  const light=document.documentElement.getAttribute('data-theme')==='light';
+  if(light){document.documentElement.removeAttribute('data-theme');ST.theme='dark';}
+  else{document.documentElement.setAttribute('data-theme','light');ST.theme='light';}
+  save();
+});
+$('#btnReset').addEventListener('click',()=>{
+  if(!confirm('Clear everything saved in this browser for the W2 guide?')) return;
+  try{localStorage.removeItem(KEY);}catch(e){}
+  ST={};location.reload();
+});
+$$('.copy').forEach(b=>b.addEventListener('click',()=>{
+  const t=document.getElementById(b.dataset.t+'t').textContent;
+  navigator.clipboard.writeText(t).then(()=>{const o=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=o,1200);});
+}));
+
+renderSys(); show(ST.step||0);
+</script>
