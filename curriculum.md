@@ -318,7 +318,7 @@ Commit to `/workshops/week-01/tool-selection.json` in your primary repo.
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- **Who Is the Opponent?** — **3rd ed. Ch. 2** · *no direct 2nd ed. equivalent* — Anderson's own adversary taxonomy: state actors, crooks, hacktivists, insiders. This is the chapter this module is built on, and it went unassigned in earlier versions of this curriculum. 2nd edition readers should substitute the MITRE ATT&CK for ICS group listings and CISA advisory AA22-083A below, which cover the same ground with different examples.
+- **Who is the Opponent?** — **3rd ed. Ch. 2** · *no direct 2nd ed. equivalent* — Anderson's own adversary taxonomy: state actors, crooks, hacktivists, insiders. This is the chapter this module is built on, and it went unassigned in earlier versions of this curriculum. 2nd edition readers should substitute the MITRE ATT&CK for ICS group listings and CISA advisory AA22-083A below, which cover the same ground with different examples.
 - **Psychology and Usability** (continued) — **3rd ed. Ch. 3** · 2nd ed. Ch. 2 — social engineering as cognitive exploitation; authority compliance; the insider threat as a psychology problem, not just an access control problem
 
 **Supplemental Primary Sources**
@@ -628,7 +628,7 @@ This module is the conceptual core of the course. Every other module builds tech
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- **Economics of Security** — 3rd ed. Ch. 8 · **2nd ed. Ch. 7** (titled *Economics*) — cost-benefit analysis of security investment; why regulated entities need external pressure to invest in security; incentive structures between operators, vendors, and regulators
+- **Economics** — 3rd ed. Ch. 8 · 2nd ed. Ch. 7 — cost-benefit analysis of security investment; why regulated entities need external pressure to invest in security; incentive structures between operators, vendors, and regulators
 - Chapter on physical protection (check edition) — the intersection of physical and electronic security; why physical security assumptions underpin cyber security controls
 
 **Supplemental Primary Sources**
@@ -759,7 +759,7 @@ Follow the JSON with a one-page narrative: *What would a single incident coordin
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- Chapter on monitoring and intrusion detection (check edition for chapter number) — what monitoring can detect; the base rate problem in anomaly detection; the cost of false positives in operational environments
+- **Monitoring and Metering** — **3rd ed. Ch. 14** · 2nd ed. Ch. 12 — what monitoring can detect; the base rate problem in anomaly detection; the cost of false positives in operational environments
 
 **Supplemental Primary Sources**
 1. **CISA ICS Security Advisory** — select a current advisory (2025–2026) affecting ICS equipment used in the energy or nuclear sector from cisa.gov/ics-advisories. Read: the affected system, the vulnerability description, CVSS score, and recommended mitigations. You will use this in Workshop 6 via MCP.
@@ -959,7 +959,7 @@ Use MCP web search to pull a current CISA ICS advisory. For at least two of the 
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- Chapter on side channels (check edition for chapter number) — timing attacks, power analysis, electromagnetic emanations, acoustic side channels; what information leaks from physical processes that cryptography cannot protect; Kocher's timing attack as the foundational example
+- **Side Channels** — **3rd ed. Ch. 19** · 2nd ed. Ch. 17 (titled *Emission Security*) — timing attacks, power analysis, electromagnetic emanations, acoustic side channels; what information leaks from physical processes that cryptography cannot protect; Kocher's timing attack as the foundational example
 
 **Supplemental Primary Sources**
 1. **A current academic paper on side-channel attacks in embedded or safety-critical systems** — recommended: [O'Flynn & Dewar, "On-Device Power Analysis Across Hardware Security Domains" (TCHES 2019)](https://tches.iacr.org/index.php/TCHES/article/view/8347) — demonstrates power side-channel attack defeating TrustZone-M isolation on ARM Cortex-M microcontrollers using only the device's own on-board ADC (no external equipment). Directly relevant to nuclear safety PLCs. Open access at tches.iacr.org.
