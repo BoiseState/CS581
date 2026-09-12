@@ -3,9 +3,29 @@
     "_comment": "Five actors, NOT the one in adversary-profile.json. Delete _comment before committing. Must parse as valid JSON.",
     "actor": "...",
     "aka": ["..."],
-    "capability_tier": "nation-state-tier-1 | nation-state-tier-2 | criminal | hacktivist",
+    "capability_tier": "nation-state-tier-1 | nation-state-tier-2 | criminal | hacktivist | insider",
     "sector_targeting": ["..."],
-    "signature_ttp": { "technique": "...", "mitre_ics_id": "T0XXX" },
+    "signature_ttp": {
+      "technique": "...",
+      "mitre_ics_id": "TNNNN or TNNNN.NNN, from the ATT&CK for ICS matrix"
+    },
+    "first_observed": "...",
+    "confidence": "documented | assessed | theoretical",
+    "provenance": "named public source",
+    "what_this_card_cannot_tell_you": "..."
+  },
+  {
+    "_comment": "Use this shape ONLY where no ICS technique applies. Set mitre_ics_id to null, give the Enterprise ID, and explain in id_note why the ICS matrix has nothing for it.",
+    "actor": "...",
+    "aka": ["..."],
+    "capability_tier": "criminal",
+    "sector_targeting": ["..."],
+    "signature_ttp": {
+      "technique": "...",
+      "mitre_ics_id": null,
+      "mitre_enterprise_id": "TNNNN",
+      "id_note": "why no ICS technique applies"
+    },
     "first_observed": "...",
     "confidence": "documented | assessed | theoretical",
     "provenance": "named public source",

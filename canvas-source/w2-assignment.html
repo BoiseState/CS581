@@ -28,7 +28,7 @@
     {
       "tactic": "...",
       "technique": "...",
-      "mitre_ics_id": "T0XXX",
+      "mitre_ics_id": "TNNNN or TNNNN.NNN",
       "nuclear_relevance": "...",
       "system_relevance": "which interface on YOUR W1 map this technique would reach",
       "confidence": "documented | inferred | theoretical"
@@ -38,7 +38,8 @@
   "detection_opportunities": ["..."],
   "gaps_in_public_knowledge": ["..."]
 }</code></pre>
-<p>Six to ten entries in <code>primary_ttps</code>. Map each one to a MITRE ATT&amp;CK for ICS technique ID in <code>T0XXX</code> form. Enterprise IDs in <code>T1XXX</code> form are acceptable only where the technique has no ICS equivalent, and say so in that entry.</p>
+<p>Six to ten entries in <code>primary_ttps</code>. Map each one to a MITRE ATT&amp;CK for ICS technique ID.</p>
+<p><strong>A numbering trap worth knowing:</strong> the ICS matrix uses both <code>T0NNN</code> and newer <code>T1NNN.NNN</code> sub-technique numbering, so the prefix does not tell you which matrix an ID belongs to. Look the technique up in the matrix rather than inferring from the number. An Enterprise ID is acceptable only where no ICS technique applies, and you must say so in that entry.</p>
 <p>Three fields carry the most weight. <code>system_relevance</code> is where W2 connects to W1: for each technique, name the specific interface on your own attack surface map that the technique would reach. <code>gaps_in_public_knowledge</code> is where you record the attribution claims that exist but cannot be verified from open sources. Professional threat intelligence always separates what is known from what is assessed, and an empty gaps array means the analysis was not finished. <code>pivot_path</code> is new: every one of you now has two systems in play, your W1 system and your W2 system. Name the interface this actor would use to move between them. If there is no path, say so and say why. That answer is worth as much as a path.</p>
 
 <h3>Deliverable 2 — threat-cards/</h3>
@@ -53,7 +54,7 @@
   "aka": ["..."],
   "capability_tier": "...",
   "sector_targeting": ["..."],
-  "signature_ttp": { "technique": "...", "mitre_ics_id": "T0XXX" },
+  "signature_ttp": { "technique": "...", "mitre_ics_id": "TNNNN or TNNNN.NNN" },
   "first_observed": "...",
   "confidence": "documented | assessed | theoretical",
   "provenance": "named public source",

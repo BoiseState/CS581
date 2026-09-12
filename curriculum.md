@@ -370,7 +370,7 @@ The divergence to look for: nation-state threat analysts think in terms of exter
     {
       "tactic": "...",
       "technique": "...",
-      "mitre_ics_id": "T0XXX",
+      "mitre_ics_id": "TNNNN or TNNNN.NNN",
       "nuclear_relevance": "...",
       "system_relevance": "which interface on YOUR W1 map this technique would reach",
       "confidence": "documented | inferred | theoretical"
@@ -389,7 +389,7 @@ Note the `gaps_in_public_knowledge` field — this is where you document what at
 
 **Output files:** `/workshops/week-02/adversary-profile.json` + `/workshops/week-02/threat-cards/` (five stat-line cards plus `cards.json`) + `/workshops/week-02/session-log.md`
 
-**Threat actor cards.** Five actors beyond the one profiled in depth. The five must span **at least three different capability tiers**, so the set covers the course adversary taxonomy rather than five variations on nation-state. Independent operators and small collectives belong here. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, capability tier, signature TTP with MITRE ICS ID, a provenance line, and a `what_this_card_cannot_tell_you` field. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
+**Threat actor cards.** Five actors beyond the one profiled in depth. The five must span **at least three different capability tiers**, so the set covers the course adversary taxonomy rather than five variations on nation-state. Independent operators and small collectives belong here. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, capability tier, signature TTP with its MITRE ICS technique ID, a provenance line, and a `what_this_card_cannot_tell_you` field. Note that the ICS matrix uses both `T0NNN` and newer `T1NNN.NNN` sub-technique numbering, so the prefix does not identify the matrix; students should look the technique up rather than infer from the number. Where no ICS technique applies, the card sets `mitre_ics_id` to null, gives `mitre_enterprise_id`, and explains the choice in `id_note`. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
 
 ---
 

@@ -197,7 +197,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
     <tr><td><code>gaps_in_public_knowledge</code></td><td>Attribution claims that exist but cannot be verified from open sources. An empty array means the analysis was not finished.</td></tr>
     </table>
     <div class="note">
-      <b>Six to ten TTP entries.</b> Map each to a MITRE ATT&amp;CK for ICS ID in <code>T0XXX</code> form. Enterprise <code>T1XXX</code> IDs are acceptable only where no ICS equivalent exists, and say so in that entry.
+      <b>Six to ten TTP entries.</b> Map each to a MITRE ATT&amp;CK for ICS technique ID. Note that the ICS matrix now uses both <code>T0NNN</code> and newer <code>T1NNN.NNN</code> sub-technique numbering, so the prefix alone does not tell you which matrix an ID belongs to. Check the technique in the matrix rather than inferring from the number. An Enterprise ID is acceptable only where no ICS technique applies, and you must say so in that entry.
     </div>
   </div>
 
@@ -404,8 +404,10 @@ Using ONLY publicly available information and named open-source reporting, produ
 adversary profile for ${actor} as it relates to the energy and nuclear sector.
 
 Requirements:
-- Map 6 to 10 TTPs to MITRE ATT&CK for ICS technique IDs (T0XXX form).
-  Use an Enterprise T1XXX ID only where no ICS equivalent exists, and say so in that entry.
+- Map 6 to 10 TTPs to MITRE ATT&CK for ICS technique IDs.
+  The ICS matrix uses both T0NNN and newer T1NNN.NNN numbering, so do not infer the
+  matrix from the prefix. Look each technique up. Use an Enterprise ID only where no
+  ICS technique applies, and say so in that entry.
 - Every claim carries a confidence value: documented, assessed, or theoretical.
 - Every claim carries a provenance string naming a specific report plus section or page.
 - Populate gaps_in_public_knowledge with attribution claims that exist but cannot be
@@ -480,8 +482,7 @@ function validate(){
     if(n>10) warns.push(n+' TTP entries. The assignment asks for 6 to 10.');
     o.primary_ttps.forEach((t,i)=>{
       TTPREQ.forEach(k=>{ if(!(k in t)) errs.push('primary_ttps['+i+'] missing: '+k); });
-      if(t.mitre_ics_id && !/^T\d{4}(\.\d{3})?$/.test(t.mitre_ics_id)) warns.push('primary_ttps['+i+'] mitre_ics_id "'+t.mitre_ics_id+'" is not in T0XXX form.');
-      if(t.mitre_ics_id && /^T1/.test(t.mitre_ics_id)) warns.push('primary_ttps['+i+'] uses an Enterprise T1XXX ID. Allowed only where no ICS equivalent exists, and you must say so in that entry.');
+      if(t.mitre_ics_id && !/^T\d{4}(\.\d{3})?$/.test(t.mitre_ics_id)) warns.push('primary_ttps['+i+'] mitre_ics_id "'+t.mitre_ics_id+'" is not a valid technique ID (expected TNNNN or TNNNN.NNN).');
       if(t.system_relevance!==undefined && String(t.system_relevance).trim()==='') errs.push('primary_ttps['+i+'] system_relevance is empty. This is the field that connects W2 to your W1 map.');
     });
   } else if('primary_ttps' in o) errs.push('primary_ttps must be an array.');
@@ -504,7 +505,12 @@ function validateCards(){
   a.forEach((c,i)=>{
     if('_comment' in c) warns.push('card['+i+'] still has _comment. Delete it.');
     CARDREQ.forEach(k=>{ if(!(k in c)) errs.push('card['+i+'] missing: '+k); });
-    if(c.signature_ttp && !c.signature_ttp.mitre_ics_id) errs.push('card['+i+'] signature_ttp missing mitre_ics_id.');
+    if(c.signature_ttp){
+      const sig=c.signature_ttp, ics=sig.mitre_ics_id, ent=sig.mitre_enterprise_id;
+      if(!ics && !ent) errs.push('card['+i+'] signature_ttp needs either mitre_ics_id or, where no ICS technique applies, mitre_enterprise_id.');
+      if(!ics && ent && !String(sig.id_note||'').trim()) errs.push('card['+i+'] uses an Enterprise ID without an id_note. Say why no ICS technique applies.');
+      [ics,ent].forEach(v=>{ if(v && !/^T\d{4}(\.\d{3})?$/.test(v)) warns.push('card['+i+'] technique ID "'+v+'" is not a valid ID (expected TNNNN or TNNNN.NNN).'); });
+    }
     if(c.what_this_card_cannot_tell_you!==undefined && String(c.what_this_card_cannot_tell_you).trim()==='') warns.push('card['+i+'] what_this_card_cannot_tell_you is empty.');
   });
   const tiers=[...new Set(a.map(c=>String(c.capability_tier||'').trim().toLowerCase()).filter(Boolean))];
@@ -521,7 +527,7 @@ function renderCheck(){
     ['adversary-profile.json parses as valid JSON', null],
     ['target_system matches my sequencing plan'+(d?' ('+d.label+')':''), null],
     ['w1_map_reference points at a file that exists in my repo', null],
-    ['6 to 10 TTPs, each with a T0XXX MITRE ICS ID', null],
+    ['6 to 10 TTPs, each with a MITRE ICS technique ID I looked up rather than inferred from the prefix', null],
     ['every system_relevance names a specific row on my own W1 map', null],
     ['gaps_in_public_knowledge is not empty', null],
     ['pivot_path names how the actor moves from my W1 system to my W2 system, or why they cannot', null],

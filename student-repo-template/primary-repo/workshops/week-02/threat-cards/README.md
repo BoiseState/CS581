@@ -25,6 +25,13 @@ Every card must legibly show:
 - actor name
 - capability tier
 - signature TTP with its MITRE ATT&CK for ICS ID
+
+The ICS matrix uses both `T0NNN` and newer `T1NNN.NNN` sub-technique numbering, so the prefix does not
+tell you which matrix an ID belongs to. Look the technique up rather than inferring from the number.
+
+If a card's signature technique genuinely has no ICS equivalent, set `mitre_ics_id` to `null`, put the
+Enterprise ID in `mitre_enterprise_id`, and explain in `id_note` why the ICS matrix has nothing for it.
+That case is rare and it needs a reason, not just a different field.
 - a provenance line naming a public source
 
 ## How to make them

@@ -1,9 +1,17 @@
 {
-  "target_system": ["TCS"],
+  "target_system": [
+    "TCS"
+  ],
   "w1_map_reference": "workshops/week-01/attack-surface-map-ot.md",
   "pivot_path": "DCS (my W1 system, Level 2) to TCS (my W2 system, Level 1) via the Modbus TCP/serial links in row 4 of my W1 OT map. The DCS supervises balance-of-plant equipment including turbine auxiliaries, so an actor holding DCS controller nodes or an engineering workstation already sits upstream of TCS on the same control network with no boundary device between them. This is the opposite of the DCS-to-RPS path in row 5 of the same map, which is a one-way data diode: outbound telemetry only, no inbound command path, so an actor on the DCS cannot reach RPS through it at all. That asymmetry is why I changed my W2 system from RPS to TCS. The interesting pivot is the one that exists.",
   "actor": "Sandworm Team",
-  "also_known_as": ["ELECTRUM (Dragos, overlapping activity)", "IRIDIUM", "TeleBots", "Voodoo Bear", "APT44 (Mandiant)"],
+  "also_known_as": [
+    "ELECTRUM (Dragos, overlapping activity)",
+    "IRIDIUM",
+    "TeleBots",
+    "Voodoo Bear",
+    "APT44 (Mandiant)"
+  ],
   "attributed_to": "Russian Federation. US DOJ indictment of October 2020 names six officers of GRU Unit 74455, the Main Centre for Special Technologies (GTsST).",
   "confidence": "documented",
   "provenance": "US DOJ indictment, October 19 2020, US v. Andrienko et al. (W.D. Pa.); MITRE ATT&CK for ICS, Sandworm Team (G0034); ESET, Industroyer analysis (2017) and Industroyer2 with CERT-UA (April 2022).",
@@ -27,7 +35,7 @@
       "confidence": "documented"
     },
     {
-      "tactic": "Initial Access / Lateral Movement",
+      "tactic": "Persistence / Lateral Movement",
       "technique": "Valid Accounts",
       "mitre_ics_id": "T0859",
       "nuclear_relevance": "Credential reuse between corporate and control networks is the specific practice CISA guidance warns against, and 10 CFR 73.56 account revocation timelines create a window after personnel changes.",
@@ -44,14 +52,14 @@
     },
     {
       "tactic": "Impair Process Control",
-      "technique": "Unauthorized Command Message",
-      "mitre_ics_id": "T0855",
+      "technique": "Unauthorized Message: Command Message",
+      "mitre_ics_id": "T1692.001",
       "nuclear_relevance": "Turbine control accepts setpoint and trip commands over protocols with no native authentication. A valid-looking command is indistinguishable from a legitimate one at the protocol layer.",
       "system_relevance": "Row 4 of my W1 OT map, Modbus TCP and serial links to Level 1 devices. This is the same row that carries my pivot path, which is not a coincidence: the link that lets an actor reach TCS is the link that lets them command it.",
       "confidence": "documented"
     },
     {
-      "tactic": "Inhibit Response Function",
+      "tactic": "Impact",
       "technique": "Manipulation of Control",
       "mitre_ics_id": "T0831",
       "nuclear_relevance": "Turbine overspeed and vibration protection are the trip functions that prevent mechanical destruction of rotating machinery. Manipulating control while protection is degraded is the scenario that turns a cyber event into a plant equipment event.",
@@ -75,7 +83,7 @@
       "confidence": "documented"
     },
     {
-      "tactic": "Impact",
+      "tactic": "Inhibit Response Function",
       "technique": "Data Destruction",
       "mitre_ics_id": "T0809",
       "nuclear_relevance": "Wiping engineering workstations destroys the configuration baselines needed to restore the system and to determine what was changed. It attacks the investigation as much as the plant.",

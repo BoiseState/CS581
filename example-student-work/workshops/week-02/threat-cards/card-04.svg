@@ -23,14 +23,17 @@
 <text x="42" y="590" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SIGNATURE TTP</text>
 <text x="42" y="616" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">Data Encrypted for Impact against IT systems, with</text>
 <text x="42" y="640" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">OT consequences arising indirectly</text>
-<rect x="42" y="654" width="420" height="26" rx="4" fill="#9b6bd6" opacity="0.2"/>
-<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="#c79bf0">T1486 (Enterprise; no ICS equivalent, because the technique never touched OT)</text>
+<rect x="42" y="654" width="153" height="26" rx="4" fill="#9b6bd6" opacity="0.2"/>
+<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="#c79bf0">T1486</text>
+<text x="107" y="672" font-family="monospace" font-size="10" fill="#7a8fa6">ENTERPRISE</text>
+<text x="42" y="698" font-family="monospace" font-size="10" fill="#7a8fa6" opacity="0.9">No ICS equivalent applies. The technique never touched operational technology; the OT</text>
+<text x="42" y="713" font-family="monospace" font-size="10" fill="#7a8fa6" opacity="0.9">consequence came from a business-process dependency, not from a control-system effect.</text>
 
-<text x="42" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SECTOR TARGETING</text>
-<text x="42" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Opportunistic across sectors · Selected by</text>
-<text x="42" y="761" font-family="Georgia,serif" font-size="15" fill="#dce8f4">ability to pay, not by sector</text>
-<text x="430" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">FIRST OBSERVED</text>
-<text x="430" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">2020; Colonial Pipeline 2021</text>
+<text x="42" y="740" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SECTOR TARGETING</text>
+<text x="42" y="762" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Opportunistic across sectors · Selected by</text>
+<text x="42" y="783" font-family="Georgia,serif" font-size="15" fill="#dce8f4">ability to pay, not by sector</text>
+<text x="430" y="740" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">FIRST OBSERVED</text>
+<text x="430" y="762" font-family="Georgia,serif" font-size="15" fill="#dce8f4">2020; Colonial Pipeline 2021</text>
 
 <line x1="42" y1="800" x2="708" y2="800" stroke="#c79bf0" stroke-width="1" opacity="0.4"/>
 <text x="42" y="828" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">WHAT THIS CARD CANNOT TELL YOU</text>

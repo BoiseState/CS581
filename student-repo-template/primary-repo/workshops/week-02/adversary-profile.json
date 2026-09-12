@@ -18,7 +18,7 @@
     {
       "tactic": "...",
       "technique": "...",
-      "mitre_ics_id": "T0XXX",
+      "mitre_ics_id": "TNNNN or TNNNN.NNN",
       "nuclear_relevance": "...",
       "system_relevance": "which interface on YOUR W1 map this technique would reach",
       "confidence": "documented | inferred | theoretical"

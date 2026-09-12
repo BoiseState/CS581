@@ -45,6 +45,11 @@ cards.forEach((c, idx) => {
   const aka = c.aka.slice(0,2).join(' · ');
   const cannot = wrap(c.what_this_card_cannot_tell_you, 64).slice(0,6);
   const sectors = wrap(c.sector_targeting.join(' · '), 46).slice(0,2);
+  // A card may carry an ICS id, or an Enterprise id where no ICS technique applies.
+  const sig = c.signature_ttp;
+  const isEnt = !sig.mitre_ics_id && !!sig.mitre_enterprise_id;
+  const ident = sig.mitre_ics_id || sig.mitre_enterprise_id || 'UNMAPPED';
+  const idNote = sig.id_note ? wrap(sig.id_note, 88).slice(0,2) : [];
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 1050" width="750" height="1050" role="img" aria-label="Threat actor card: ${esc(c.actor)}">
 <defs>
@@ -71,13 +76,15 @@ cards.forEach((c, idx) => {
 <text x="42" y="590" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SIGNATURE TTP</text>
 <text x="42" y="616" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">${esc(wrap(c.signature_ttp.technique,52)[0])}</text>
 ${wrap(c.signature_ttp.technique,52)[1] ? `<text x="42" y="640" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">${esc(wrap(c.signature_ttp.technique,52)[1])}</text>` : ''}
-<rect x="42" y="654" width="${Math.min(420, 18+String(c.signature_ttp.mitre_ics_id).length*8.6)}" height="26" rx="4" fill="${t.ink}" opacity="0.2"/>
-<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="${t.accent}">${esc(c.signature_ttp.mitre_ics_id)}</text>
+<rect x="42" y="654" width="${Math.min(420, 18+ident.length*8.6 + (isEnt?92:0))}" height="26" rx="4" fill="${t.ink}" opacity="0.2"/>
+<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="${t.accent}">${esc(ident)}</text>
+${isEnt ? `<text x="${64+ident.length*8.6}" y="672" font-family="monospace" font-size="10" fill="#7a8fa6">ENTERPRISE</text>` : ''}
+${idNote.map((l,i)=>`<text x="42" y="${698+i*15}" font-family="monospace" font-size="10" fill="#7a8fa6" opacity="0.9">${esc(l)}</text>`).join('\n')}
 
-<text x="42" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SECTOR TARGETING</text>
-${sectors.map((l,i)=>`<text x="42" y="${740+i*21}" font-family="Georgia,serif" font-size="15" fill="#dce8f4">${esc(l)}</text>`).join('\n')}
-<text x="430" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">FIRST OBSERVED</text>
-${wrap(c.first_observed,32).slice(0,3).map((l,i)=>`<text x="430" y="${740+i*21}" font-family="Georgia,serif" font-size="15" fill="#dce8f4">${esc(l)}</text>`).join('\n')}
+<text x="42" y="${idNote.length?740:718}" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SECTOR TARGETING</text>
+${sectors.map((l,i)=>`<text x="42" y="${(idNote.length?762:740)+i*21}" font-family="Georgia,serif" font-size="15" fill="#dce8f4">${esc(l)}</text>`).join('\n')}
+<text x="430" y="${idNote.length?740:718}" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">FIRST OBSERVED</text>
+${wrap(c.first_observed,32).slice(0,3).map((l,i)=>`<text x="430" y="${(idNote.length?762:740)+i*21}" font-family="Georgia,serif" font-size="15" fill="#dce8f4">${esc(l)}</text>`).join('\n')}
 
 <line x1="42" y1="800" x2="708" y2="800" stroke="${t.accent}" stroke-width="1" opacity="0.4"/>
 <text x="42" y="828" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">WHAT THIS CARD CANNOT TELL YOU</text>

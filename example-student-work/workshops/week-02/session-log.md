@@ -79,6 +79,12 @@ I opened the ATT&CK for ICS matrix and checked all eight by hand against the tec
 
 Seven matched. One did not: I had a supply-chain technique carrying an ID whose actual name was something else, so I removed that TTP rather than guess at the right number. The ID that ended up on the BERSERK BEAR card (T0862, Supply Chain Compromise) I verified separately when I built the cards.
 
+**The thing that nearly caught me out.** I had been treating the number prefix as the matrix indicator: `T0` for ICS, `T1` for Enterprise. That is wrong. The ICS matrix now carries techniques in the `T1NNN.NNN` sub-technique space as well, so `T1692.001` (Unauthorized Message: Command Message) is an ICS technique despite the `T1` prefix. I had originally written `T0855` for the command-message TTP, which is the older numbering for roughly the same behaviour.
+
+This matters beyond getting one number right. My working rule for spotting a hallucinated ID was "does the prefix match the matrix I asked for," and that rule was never valid. It would have passed a wrong `T1` ID as an intentional Enterprise citation and flagged a correct ICS one as a mistake. The only check that works is looking the technique up.
+
+DarkSide is the one card that genuinely does carry an Enterprise ID, `T1486`, and I have marked it as such in its own field with a note saying why no ICS technique applies. The card shows it labelled ENTERPRISE rather than silently mixing it in with the ICS IDs, because a reader scanning five cards should not have to know the numbering history to tell them apart.
+
 **If you are reading this as an example: verify the IDs in my files too.** I checked them in September 2026 against the matrix as it stood then. Do not inherit my numbers on my say-so, which is the entire habit this course is trying to build and it applies to my work as much as to the model's.
 
 ---
