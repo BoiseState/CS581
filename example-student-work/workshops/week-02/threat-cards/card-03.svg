@@ -32,20 +32,20 @@
 <text x="42" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Energy · Water · Aviation · Government</text>
 <text x="42" y="761" font-family="Georgia,serif" font-size="15" fill="#dce8f4">facilities</text>
 <text x="430" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">FIRST OBSERVED</text>
-<text x="430" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">2013, campaigns through 2020</text>
+<text x="430" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Active since at least 2010;</text>
+<text x="430" y="761" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Havex 2013-2014</text>
 
 <line x1="42" y1="800" x2="708" y2="800" stroke="#ffab5e" stroke-width="1" opacity="0.4"/>
 <text x="42" y="828" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">WHAT THIS CARD CANNOT TELL YOU</text>
 <text x="42" y="850" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">What the access was for. Public reporting describes years of</text>
 <text x="42" y="869" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">persistent presence in energy sector networks with no</text>
 <text x="42" y="888" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">destructive effect, which reads either as patient</text>
-<text x="42" y="907" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">pre-positioning or as intelligence collection that never had an</text>
-<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">effect phase. The card has to pick a capability tier and the</text>
-<text x="42" y="945" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">honest answer is that intent is unresolved.</text>
+<text x="42" y="907" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">pre-positioning or as collection that never had an effect phase.</text>
+<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">The card picks a tier; intent is unresolved.</text>
 
 <line x1="42" y1="958" x2="708" y2="958" stroke="#ffab5e" stroke-width="0.8" opacity="0.3"/>
 <text x="42" y="980" font-family="monospace" font-size="10.5" fill="#7a8fa6">CONFIDENCE: DOCUMENTED</text>
-<text x="42" y="998" font-family="monospace" font-size="9.5" fill="#5f7a90">PROVENANCE: CISA advisory AA20-296A, October 2020; US DOJ indictment of March 2022 naming FSB</text>
-<text x="42" y="1013" font-family="monospace" font-size="9.5" fill="#5f7a90">Center 16 officers; CISA alert TA18-074A on energy sector intrusions.</text>
+<text x="42" y="998" font-family="monospace" font-size="9.5" fill="#5f7a90">PROVENANCE: CISA AA22-083A (Mar 2022), 2011-2018 energy campaign; CISA TA18-074A (Mar 2018); DOJ</text>
+<text x="42" y="1013" font-family="monospace" font-size="9.5" fill="#5f7a90">indictment returned Aug 26 2021, unsealed Mar 24 2022, three FSB Center 16 officers.</text>
 <text x="708" y="1010" text-anchor="end" font-family="monospace" font-size="9.5" fill="#4a6070">CS 581 · W2 · J. REYES</text>
 </svg>

@@ -28,7 +28,7 @@ Five actors across four capability tiers: XENOTIME, CHERNOVITE, BERSERK BEAR, Da
 
 The two non-nation-state cards are the ones Jordan learned from, and he only added them because the tier rule forced it.
 
-- **DarkSide** never touched operational technology. Colonial Pipeline stopped because the company could not bill with its IT encrypted. A criminal group with no ICS capability caused a national fuel disruption through an accounting dependency.
+- **DarkSide** encrypted IT systems only. Colonial halted the pipeline to contain the incident while assessing how far the compromise reached, and CISA and FBI reported no indication the ransomware directly affected OT. A criminal group with no ICS capability still produced a national fuel disruption, because the consequence came from an operator's containment decision rather than from a control-system effect.
 - **CyberAv3ngers** broke the schema productively. It presents as hacktivist, CISA attributes it to IRGC-affiliated actors, and a `capability_tier` field holds one token. Jordan filed it as hacktivist, set confidence to `assessed`, and used `what_this_card_cannot_tell_you` to say the label does not survive the attribution.
 
 `make-cards.js` generates the SVGs from `cards.json`, so fixing a fact and regenerating keeps the art and the data in sync. The sigils are procedural, seeded from a hash of the actor name, and every card carries a line stating that the sigil is not a likeness. No card depicts a person.

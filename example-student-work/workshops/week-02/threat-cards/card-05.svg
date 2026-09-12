@@ -44,7 +44,7 @@
 
 <line x1="42" y1="958" x2="708" y2="958" stroke="#6bc7ff" stroke-width="0.8" opacity="0.3"/>
 <text x="42" y="980" font-family="monospace" font-size="10.5" fill="#7a8fa6">CONFIDENCE: ASSESSED</text>
-<text x="42" y="998" font-family="monospace" font-size="9.5" fill="#5f7a90">PROVENANCE: CISA advisory of December 2023 on IRGC-affiliated actors exploiting Unitronics PLCs,</text>
-<text x="42" y="1013" font-family="monospace" font-size="9.5" fill="#5f7a90">issued with FBI, NSA, EPA and INCD.</text>
+<text x="42" y="998" font-family="monospace" font-size="9.5" fill="#5f7a90">PROVENANCE: CISA advisory AA23-335A, December 1 2023, on IRGC-affiliated actors exploiting</text>
+<text x="42" y="1013" font-family="monospace" font-size="9.5" fill="#5f7a90">Unitronics PLCs, issued with FBI, NSA, EPA and INCD.</text>
 <text x="708" y="1010" text-anchor="end" font-family="monospace" font-size="9.5" fill="#4a6070">CS 581 · W2 · J. REYES</text>
 </svg>

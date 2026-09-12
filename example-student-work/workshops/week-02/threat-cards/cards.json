@@ -17,8 +17,8 @@
     },
     "first_observed": "2017, via the TRITON incident",
     "confidence": "documented",
-    "provenance": "US Treasury sanctions action of October 2018 naming a Russian government research institute (TsNIIKhM); Dragos activity group reporting; MITRE ATT&CK for ICS.",
-    "what_this_card_cannot_tell_you": "That the TRITON intrusion succeeded. It did not. The safety system tripped the plant because the attacker's code was wrong, which is how anyone found out. The most famous safety-system attack on record is also a story about an attacker failing."
+    "provenance": "US Treasury sanctions October 23 2020 (sm1162) naming TsNIIKhM in connection with TRITON; Mandiant attribution reporting October 2018; MITRE ATT&CK for ICS.",
+    "what_this_card_cannot_tell_you": "That the intrusion failed. It did not. The attackers reached and modified the safety controllers. A fault during deployment triggered a fail-safe shutdown, which is how the malware was found. Mandiant assessed that shutdown as inadvertent, at moderate confidence."
   },
   {
     "actor": "CHERNOVITE",
@@ -60,10 +60,10 @@
       "technique": "Supply Chain Compromise, trojanised ICS vendor software downloads",
       "mitre_ics_id": "T0862"
     },
-    "first_observed": "2013, campaigns through 2020",
+    "first_observed": "Active since at least 2010; Havex 2013-2014",
     "confidence": "documented",
-    "provenance": "CISA advisory AA20-296A, October 2020; US DOJ indictment of March 2022 naming FSB Center 16 officers; CISA alert TA18-074A on energy sector intrusions.",
-    "what_this_card_cannot_tell_you": "What the access was for. Public reporting describes years of persistent presence in energy sector networks with no destructive effect, which reads either as patient pre-positioning or as intelligence collection that never had an effect phase. The card has to pick a capability tier and the honest answer is that intent is unresolved."
+    "provenance": "CISA AA22-083A (Mar 2022), 2011-2018 energy campaign; CISA TA18-074A (Mar 2018); DOJ indictment returned Aug 26 2021, unsealed Mar 24 2022, three FSB Center 16 officers.",
+    "what_this_card_cannot_tell_you": "What the access was for. Public reporting describes years of persistent presence in energy sector networks with no destructive effect, which reads either as patient pre-positioning or as collection that never had an effect phase. The card picks a tier; intent is unresolved."
   },
   {
     "actor": "DarkSide",
@@ -79,12 +79,12 @@
       "technique": "Data Encrypted for Impact against IT systems, with OT consequences arising indirectly",
       "mitre_ics_id": null,
       "mitre_enterprise_id": "T1486",
-      "id_note": "No ICS equivalent applies. The technique never touched operational technology; the OT consequence came from a business-process dependency, not from a control-system effect."
+      "id_note": "No ICS technique applies: the encryption hit IT systems only. The OT consequence followed from an operator containment decision, not from a control-system effect."
     },
     "first_observed": "2020; Colonial Pipeline 2021",
     "confidence": "documented",
     "provenance": "CISA and FBI joint advisory AA21-131A, May 2021; Colonial Pipeline public statements and subsequent congressional testimony.",
-    "what_this_card_cannot_tell_you": "The most important thing here: the OT was never touched. The pipeline stopped because the operator could not bill with IT encrypted. A criminal group with no ICS capability caused a fuel disruption through a business-process dependency."
+    "what_this_card_cannot_tell_you": "That this was an OT attack. It was not. DarkSide encrypted IT systems; Colonial halted the pipeline to contain the incident while assessing how far the compromise reached. CISA and FBI reported no indication the ransomware directly affected OT, which is a finding at the time, not a guarantee."
   },
   {
     "actor": "CyberAv3ngers",
@@ -102,7 +102,7 @@
     },
     "first_observed": "2023, Unitronics campaign",
     "confidence": "assessed",
-    "provenance": "CISA advisory of December 2023 on IRGC-affiliated actors exploiting Unitronics PLCs, issued with FBI, NSA, EPA and INCD.",
+    "provenance": "CISA advisory AA23-335A, December 1 2023, on IRGC-affiliated actors exploiting Unitronics PLCs, issued with FBI, NSA, EPA and INCD.",
     "what_this_card_cannot_tell_you": "Which tier this actor really belongs in. It brands itself hacktivist and the bar was low: exposed PLCs with default passwords. But CISA attributes the campaign to IRGC-affiliated actors. A capability tier is one field and this actor needs a paragraph."
   }
 ]

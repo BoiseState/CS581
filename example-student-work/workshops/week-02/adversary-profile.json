@@ -12,9 +12,9 @@
     "Voodoo Bear",
     "APT44 (Mandiant)"
   ],
-  "attributed_to": "Russian Federation. US DOJ indictment of October 2020 names six officers of GRU Unit 74455, the Main Centre for Special Technologies (GTsST).",
+  "attributed_to": "Russian Federation. US DOJ indictment returned October 15 2020, announced October 19 2020, names six officers of GRU Unit 74455, the Main Centre for Special Technologies (GTsST).",
   "confidence": "documented",
-  "provenance": "US DOJ indictment, October 19 2020, US v. Andrienko et al. (W.D. Pa.); MITRE ATT&CK for ICS, Sandworm Team (G0034); ESET, Industroyer analysis (2017) and Industroyer2 with CERT-UA (April 2022).",
+  "provenance": "US DOJ indictment returned October 15 2020 and announced October 19 2020, US v. Andrienko et al., No. 20-316 (W.D. Pa.); MITRE ATT&CK for ICS, Sandworm Team (G0034); ESET, Industroyer analysis (2017) and Industroyer2 with CERT-UA (April 2022).",
   "motivation": {
     "primary": "State-directed disruption of critical infrastructure in support of Russian geopolitical and military objectives",
     "secondary": [
@@ -92,7 +92,7 @@
     }
   ],
   "historical_precedent": [
-    "December 23 2015, Ukraine: coordinated intrusion at three distribution companies interrupted power to roughly 225,000 customers. Breakers were operated through hijacked HMIs, KillDisk wiped hosts, and a telephony denial of service degraded the utilities' ability to receive outage calls.",
+    "December 23 2015, Ukraine: coordinated intrusion at three distribution companies interrupted power to roughly 225,000 customers. Breakers were operated through hijacked HMIs, KillDisk wiped hosts, and a telephony denial of service degraded at least one utility's ability to receive outage calls.",
     "December 2016, Kyiv: Industroyer / CRASHOVERRIDE, the first known malware framework written with modular payloads for electric grid protocols, including IEC 60870-5-101, IEC 60870-5-104, IEC 61850 and OPC DA.",
     "June 2017: NotPetya, a destructive wiper delivered through a compromised Ukrainian accounting software update, which spread globally and caused collateral damage far outside its apparent target set.",
     "April 2022, Ukraine: Industroyer2, reported jointly by CERT-UA and ESET, a narrower variant targeting IEC 60870-5-104 in an attempted substation attack that was disrupted before it achieved its effect."

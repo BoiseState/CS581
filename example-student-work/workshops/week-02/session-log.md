@@ -98,7 +98,11 @@ The requirement to span three capability tiers is doing more work than it looks 
 
 My instinct was five nation-state groups, because those are the ones with the good reporting and the memorable names. The tier rule blocked that, and the two cards I added to satisfy it are the two I learned the most from.
 
-**DarkSide** is a criminal operation with no ICS capability whatsoever. It never touched operational technology. Colonial Pipeline shut down because the company could not bill customers with its IT systems encrypted, and chose to stop delivering product it could not account for. A group with zero control-system skill produced a national fuel disruption through an accounting dependency. Nothing in my nation-state cards teaches that, and it is probably the most transferable lesson in the set for a plant that has a business office attached to it.
+**DarkSide** is a criminal operation with no ICS capability whatsoever, and its ransomware encrypted IT systems only. Colonial halted the pipeline to contain the incident while assessing how far the compromise had reached. CISA and FBI reported no indication the ransomware directly affected OT.
+
+I want to be careful about how I state that, because my first draft of this card got it wrong. I wrote that the OT was "never touched" and that the shutdown happened because the company could not bill. The billing detail is widely repeated and it is not what the CEO's congressional testimony says: the testimony gives containment as the reason. And "no indication of OT effects" is a finding at the time of reporting, not a guarantee that nothing was reached. I had turned a qualified observation into an absolute, which is the exact move I criticised the model for in Session 2.
+
+The lesson survives the correction and is arguably better for it. A group with zero control-system skill produced a national fuel disruption without a control-system effect, because the operator stopped the pipeline to protect it. Nothing in my nation-state cards teaches that, and it is probably the most transferable item in the set for a plant with a business office attached.
 
 **CyberAv3ngers** broke my schema, productively. The group presents as hacktivist and the technical bar was near zero: internet-exposed Unitronics PLCs with default credentials. But CISA attributes the campaign to actors affiliated with the IRGC Cyber-Electronic Command. So which tier is it?
 
