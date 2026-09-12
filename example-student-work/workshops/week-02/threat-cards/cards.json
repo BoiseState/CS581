@@ -30,7 +30,7 @@
     "sector_targeting": [
       "Electric",
       "Liquefied natural gas",
-      "Industrial control generally, by protocol rather than by sector"
+      "Targeted by protocol, not by sector"
     ],
     "signature_ttp": {
       "technique": "Unauthorized Command Message via native industrial protocols",
@@ -101,6 +101,6 @@
     "first_observed": "2023, Unitronics campaign",
     "confidence": "assessed",
     "provenance": "CISA advisory of December 2023 on IRGC-affiliated actors exploiting Unitronics PLCs, issued with FBI, NSA, EPA and INCD.",
-    "what_this_card_cannot_tell_you": "Which tier this actor really belongs in, and that ambiguity is why I included it. The group brands itself as hacktivist, and the technical bar was low: internet-exposed controllers with unchanged default passwords. But CISA attributes the campaign to actors affiliated with the IRGC Cyber-Electronic Command. I have filed it as hacktivist because that is its presentation, and the confidence is assessed rather than documented because I do not think the label survives the attribution. A capability tier is a single field and this actor needs a paragraph."
+    "what_this_card_cannot_tell_you": "Which tier this actor really belongs in. It brands itself hacktivist and the bar was low: exposed PLCs with default passwords. But CISA attributes the campaign to IRGC-affiliated actors. A capability tier is one field and this actor needs a paragraph."
   }
 ]

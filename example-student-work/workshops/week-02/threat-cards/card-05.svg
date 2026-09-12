@@ -34,12 +34,11 @@
 
 <line x1="42" y1="800" x2="708" y2="800" stroke="#6bc7ff" stroke-width="1" opacity="0.4"/>
 <text x="42" y="828" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">WHAT THIS CARD CANNOT TELL YOU</text>
-<text x="42" y="850" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">Which tier this actor really belongs in, and that ambiguity is</text>
-<text x="42" y="869" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">why I included it. The group brands itself as hacktivist, and</text>
-<text x="42" y="888" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">the technical bar was low: internet-exposed controllers with</text>
-<text x="42" y="907" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">unchanged default passwords. But CISA attributes the campaign to</text>
-<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">actors affiliated with the IRGC Cyber-Electronic Command. I have</text>
-<text x="42" y="945" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">filed it as hacktivist because that is its presentation, and the</text>
+<text x="42" y="850" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">Which tier this actor really belongs in. It brands itself</text>
+<text x="42" y="869" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">hacktivist and the bar was low: exposed PLCs with default</text>
+<text x="42" y="888" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">passwords. But CISA attributes the campaign to IRGC-affiliated</text>
+<text x="42" y="907" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">actors. A capability tier is one field and this actor needs a</text>
+<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">paragraph.</text>
 
 <line x1="42" y1="958" x2="708" y2="958" stroke="#6bc7ff" stroke-width="0.8" opacity="0.3"/>
 <text x="42" y="980" font-family="monospace" font-size="10.5" fill="#7a8fa6">CONFIDENCE: ASSESSED</text>
