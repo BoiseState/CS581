@@ -13,6 +13,7 @@
 <text x="42" y="104" font-family="monospace" font-size="14" fill="#c79bf0" opacity="0.9">the Colonial Pipeline ransomware affiliate operation</text>
 <rect x="42" y="118" width="87.2" height="24" rx="12" fill="#9b6bd6" opacity="0.22"/>
 <text x="54" y="135" font-family="monospace" font-size="12.5" font-weight="bold" fill="#c79bf0" letter-spacing="1.4">CRIMINAL</text>
+
 <text x="708" y="74" text-anchor="end" font-family="monospace" font-size="34" fill="#9b6bd6" opacity="0.5">#04</text>
 
 <rect x="42" y="150" width="666" height="380" rx="6" fill="#05070a" stroke="#c79bf0" stroke-width="0.8" opacity="0.95"/>

@@ -1,30 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 1050" width="750" height="1050" role="img" aria-label="Threat actor card: BERSERK BEAR">
 <defs>
   <linearGradient id="g03" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#1a140d"/><stop offset="1" stop-color="#07090c"/>
+    <stop offset="0" stop-color="#1a0d0d"/><stop offset="1" stop-color="#07090c"/>
   </linearGradient>
   <clipPath id="art03"><rect x="42" y="150" width="666" height="380" rx="6"/></clipPath>
 </defs>
 <rect width="750" height="1050" rx="22" fill="url(#g03)"/>
-<rect x="14" y="14" width="722" height="1022" rx="14" fill="none" stroke="#e8873c" stroke-width="2.5" opacity="0.75"/>
-<rect x="26" y="26" width="698" height="998" rx="9" fill="none" stroke="#ffab5e" stroke-width="0.8" opacity="0.3"/>
+<rect x="14" y="14" width="722" height="1022" rx="14" fill="none" stroke="#e8453c" stroke-width="2.5" opacity="0.75"/>
+<rect x="26" y="26" width="698" height="998" rx="9" fill="none" stroke="#ff6b5e" stroke-width="0.8" opacity="0.3"/>
 
 <text x="42" y="74" font-family="Georgia,serif" font-size="40" font-weight="bold" fill="#f2f6fa">BERSERK BEAR</text>
-<text x="42" y="104" font-family="monospace" font-size="14" fill="#ffab5e" opacity="0.9">Dragonfly · Energetic Bear</text>
-<rect x="42" y="118" width="209.4" height="24" rx="12" fill="#e8873c" opacity="0.22"/>
-<text x="54" y="135" font-family="monospace" font-size="12.5" font-weight="bold" fill="#ffab5e" letter-spacing="1.4">NATION-STATE · TIER 2</text>
-<text x="708" y="74" text-anchor="end" font-family="monospace" font-size="34" fill="#e8873c" opacity="0.5">#03</text>
+<text x="42" y="104" font-family="monospace" font-size="14" fill="#ff6b5e" opacity="0.9">Dragonfly · Energetic Bear</text>
+<rect x="42" y="118" width="124.80000000000001" height="24" rx="12" fill="#e8453c" opacity="0.22"/>
+<text x="54" y="135" font-family="monospace" font-size="12.5" font-weight="bold" fill="#ff6b5e" letter-spacing="1.4">NATION-STATE</text>
 
-<rect x="42" y="150" width="666" height="380" rx="6" fill="#05070a" stroke="#ffab5e" stroke-width="0.8" opacity="0.95"/>
-<g clip-path="url(#art03)"><g transform="translate(375 340) scale(1.55)"><g transform="rotate(0.0 0 0)"><path d="M -12.774437466170639 -68.53497677389532 L 0 -100.3789842184633 L 12.774437466170639 -68.53497677389532 Z" fill="#ffab5e" opacity="0.67"/></g><g transform="rotate(45.0 0 0)"><path d="M -14.409081899095327 -61.17035513417795 L 0 -93.09391194488853 L 14.409081899095327 -61.17035513417795 Z" fill="#ffab5e" opacity="0.74"/></g><g transform="rotate(90.0 0 0)"><path d="M -15.900559238390997 -46.41753597790375 L 0 -109.41353409271687 L 15.900559238390997 -46.41753597790375 Z" fill="#ffab5e" opacity="0.63"/></g><g transform="rotate(135.0 0 0)"><path d="M -16.76111443876289 -71.38429631618783 L 0 -87.61753983795643 L 16.76111443876289 -71.38429631618783 Z" fill="#ffab5e" opacity="0.40"/></g><g transform="rotate(180.0 0 0)"><path d="M -13.96256964514032 -60.10129788797349 L 0 -114.38084798585624 L 13.96256964514032 -60.10129788797349 Z" fill="#ffab5e" opacity="0.49"/></g><g transform="rotate(225.0 0 0)"><path d="M -13.635168556822464 -64.19759644102305 L 0 -116.55016263574362 L 13.635168556822464 -64.19759644102305 Z" fill="#ffab5e" opacity="0.77"/></g><g transform="rotate(270.0 0 0)"><path d="M -14.646408410044387 -66.13350639725104 L 0 -110.38975320663303 L 14.646408410044387 -66.13350639725104 Z" fill="#ffab5e" opacity="0.34"/></g><g transform="rotate(315.0 0 0)"><path d="M -17.04107605922036 -48.06609290558845 L 0 -113.47374415770173 L 17.04107605922036 -48.06609290558845 Z" fill="#ffab5e" opacity="0.64"/></g><circle r="26" fill="none" stroke="#ffab5e" stroke-width="1.0" opacity="0.5"/><circle r="43" fill="none" stroke="#ffab5e" stroke-width="1.9" opacity="0.5"/><circle r="60" fill="none" stroke="#ffab5e" stroke-width="2.1" opacity="0.5"/><circle r="9" fill="#ffab5e" opacity="0.85"/></g></g>
-<text x="56" y="518" font-family="monospace" font-size="10" fill="#ffab5e" opacity="0.45">SIGIL: PROCEDURAL · NOT A LIKENESS · NO PERSON DEPICTED</text>
+<text x="708" y="74" text-anchor="end" font-family="monospace" font-size="34" fill="#e8453c" opacity="0.5">#03</text>
 
-<line x1="42" y1="558" x2="708" y2="558" stroke="#ffab5e" stroke-width="1" opacity="0.4"/>
+<rect x="42" y="150" width="666" height="380" rx="6" fill="#05070a" stroke="#ff6b5e" stroke-width="0.8" opacity="0.95"/>
+<g clip-path="url(#art03)"><g transform="translate(375 340) scale(1.55)"><g transform="rotate(0.0 0 0)"><path d="M -12.774437466170639 -68.53497677389532 L 0 -100.3789842184633 L 12.774437466170639 -68.53497677389532 Z" fill="#ff6b5e" opacity="0.67"/></g><g transform="rotate(45.0 0 0)"><path d="M -14.409081899095327 -61.17035513417795 L 0 -93.09391194488853 L 14.409081899095327 -61.17035513417795 Z" fill="#ff6b5e" opacity="0.74"/></g><g transform="rotate(90.0 0 0)"><path d="M -15.900559238390997 -46.41753597790375 L 0 -109.41353409271687 L 15.900559238390997 -46.41753597790375 Z" fill="#ff6b5e" opacity="0.63"/></g><g transform="rotate(135.0 0 0)"><path d="M -16.76111443876289 -71.38429631618783 L 0 -87.61753983795643 L 16.76111443876289 -71.38429631618783 Z" fill="#ff6b5e" opacity="0.40"/></g><g transform="rotate(180.0 0 0)"><path d="M -13.96256964514032 -60.10129788797349 L 0 -114.38084798585624 L 13.96256964514032 -60.10129788797349 Z" fill="#ff6b5e" opacity="0.49"/></g><g transform="rotate(225.0 0 0)"><path d="M -13.635168556822464 -64.19759644102305 L 0 -116.55016263574362 L 13.635168556822464 -64.19759644102305 Z" fill="#ff6b5e" opacity="0.77"/></g><g transform="rotate(270.0 0 0)"><path d="M -14.646408410044387 -66.13350639725104 L 0 -110.38975320663303 L 14.646408410044387 -66.13350639725104 Z" fill="#ff6b5e" opacity="0.34"/></g><g transform="rotate(315.0 0 0)"><path d="M -17.04107605922036 -48.06609290558845 L 0 -113.47374415770173 L 17.04107605922036 -48.06609290558845 Z" fill="#ff6b5e" opacity="0.64"/></g><circle r="26" fill="none" stroke="#ff6b5e" stroke-width="1.0" opacity="0.5"/><circle r="43" fill="none" stroke="#ff6b5e" stroke-width="1.9" opacity="0.5"/><circle r="60" fill="none" stroke="#ff6b5e" stroke-width="2.1" opacity="0.5"/><circle r="9" fill="#ff6b5e" opacity="0.85"/></g></g>
+<text x="56" y="518" font-family="monospace" font-size="10" fill="#ff6b5e" opacity="0.45">SIGIL: PROCEDURAL · NOT A LIKENESS · NO PERSON DEPICTED</text>
+
+<line x1="42" y1="558" x2="708" y2="558" stroke="#ff6b5e" stroke-width="1" opacity="0.4"/>
 <text x="42" y="590" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SIGNATURE TTP</text>
 <text x="42" y="616" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">Supply Chain Compromise, trojanised ICS vendor</text>
 <text x="42" y="640" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">software downloads</text>
-<rect x="42" y="654" width="61" height="26" rx="4" fill="#e8873c" opacity="0.2"/>
-<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="#ffab5e">T0862</text>
+<rect x="42" y="654" width="61" height="26" rx="4" fill="#e8453c" opacity="0.2"/>
+<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="#ff6b5e">T0862</text>
 
 
 
@@ -35,15 +36,15 @@
 <text x="430" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Active since at least 2010;</text>
 <text x="430" y="761" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Havex 2013-2014</text>
 
-<line x1="42" y1="800" x2="708" y2="800" stroke="#ffab5e" stroke-width="1" opacity="0.4"/>
+<line x1="42" y1="800" x2="708" y2="800" stroke="#ff6b5e" stroke-width="1" opacity="0.4"/>
 <text x="42" y="828" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">WHAT THIS CARD CANNOT TELL YOU</text>
 <text x="42" y="850" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">What the access was for. Public reporting describes years of</text>
 <text x="42" y="869" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">persistent presence in energy sector networks with no</text>
 <text x="42" y="888" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">destructive effect, which reads either as patient</text>
 <text x="42" y="907" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">pre-positioning or as collection that never had an effect phase.</text>
-<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">The card picks a tier; intent is unresolved.</text>
+<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">Intent is unresolved.</text>
 
-<line x1="42" y1="958" x2="708" y2="958" stroke="#ffab5e" stroke-width="0.8" opacity="0.3"/>
+<line x1="42" y1="958" x2="708" y2="958" stroke="#ff6b5e" stroke-width="0.8" opacity="0.3"/>
 <text x="42" y="980" font-family="monospace" font-size="10.5" fill="#7a8fa6">CONFIDENCE: DOCUMENTED</text>
 <text x="42" y="998" font-family="monospace" font-size="9.5" fill="#5f7a90">PROVENANCE: CISA AA22-083A (Mar 2022), 2011-2018 energy campaign; CISA TA18-074A (Mar 2018); DOJ</text>
 <text x="42" y="1013" font-family="monospace" font-size="9.5" fill="#5f7a90">indictment returned Aug 26 2021, unsealed Mar 24 2022, three FSB Center 16 officers.</text>

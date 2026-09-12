@@ -5,7 +5,7 @@
       "TEMP.Veles",
       "the TRITON actor"
     ],
-    "capability_tier": "nation-state-tier-1",
+    "actor_type": "nation-state",
     "sector_targeting": [
       "Oil and gas",
       "Petrochemical",
@@ -26,7 +26,7 @@
       "the PIPEDREAM developer",
       "INCONTROLLER (Mandiant naming)"
     ],
-    "capability_tier": "nation-state-tier-1",
+    "actor_type": "nation-state",
     "sector_targeting": [
       "Electric",
       "Liquefied natural gas",
@@ -49,7 +49,7 @@
       "Havex actor",
       "TEMP.Isotope"
     ],
-    "capability_tier": "nation-state-tier-2",
+    "actor_type": "nation-state",
     "sector_targeting": [
       "Energy",
       "Water",
@@ -63,14 +63,14 @@
     "first_observed": "Active since at least 2010; Havex 2013-2014",
     "confidence": "documented",
     "provenance": "CISA AA22-083A (Mar 2022), 2011-2018 energy campaign; CISA TA18-074A (Mar 2018); DOJ indictment returned Aug 26 2021, unsealed Mar 24 2022, three FSB Center 16 officers.",
-    "what_this_card_cannot_tell_you": "What the access was for. Public reporting describes years of persistent presence in energy sector networks with no destructive effect, which reads either as patient pre-positioning or as collection that never had an effect phase. The card picks a tier; intent is unresolved."
+    "what_this_card_cannot_tell_you": "What the access was for. Public reporting describes years of persistent presence in energy sector networks with no destructive effect, which reads either as patient pre-positioning or as collection that never had an effect phase. Intent is unresolved."
   },
   {
     "actor": "DarkSide",
     "aka": [
       "the Colonial Pipeline ransomware affiliate operation"
     ],
-    "capability_tier": "criminal",
+    "actor_type": "criminal",
     "sector_targeting": [
       "Opportunistic across sectors",
       "Selected by ability to pay, not by sector"
@@ -91,7 +91,8 @@
     "aka": [
       "the Unitronics defacement actor"
     ],
-    "capability_tier": "hacktivist",
+    "actor_type": "hacktivist",
+    "assessed_affiliation": "IRGC-affiliated per CISA AA23-335A; MITRE tracks the group as G1027",
     "sector_targeting": [
       "Water and wastewater",
       "Any facility running internet-exposed Unitronics PLCs"
@@ -103,6 +104,6 @@
     "first_observed": "2023, Unitronics campaign",
     "confidence": "assessed",
     "provenance": "CISA advisory AA23-335A, December 1 2023, on IRGC-affiliated actors exploiting Unitronics PLCs, issued with FBI, NSA, EPA and INCD.",
-    "what_this_card_cannot_tell_you": "Which tier this actor really belongs in. It brands itself hacktivist and the bar was low: exposed PLCs with default passwords. But CISA attributes the campaign to IRGC-affiliated actors. A capability tier is one field and this actor needs a paragraph."
+    "what_this_card_cannot_tell_you": "How much this group can actually do. The Unitronics operation exploited exposed controllers with default passwords, which is a low bar, but that bounds the observed campaign and not the group. The hacktivist label describes how it presents itself, not who is behind it, which is why the affiliation is a separate line."
   }
 ]

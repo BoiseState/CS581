@@ -24,12 +24,12 @@ A field in a JSON schema changed the plan. That is the sort of thing that only h
 
 ## On the cards
 
-Five actors across four capability tiers: XENOTIME, CHERNOVITE, BERSERK BEAR, DarkSide, CyberAv3ngers.
+Five actors across three `actor_type` values: XENOTIME, CHERNOVITE, BERSERK BEAR (nation-state), DarkSide (criminal), CyberAv3ngers (hacktivist).
 
-The two non-nation-state cards are the ones Jordan learned from, and he only added them because the tier rule forced it.
+The two non-nation-state cards are the ones Jordan learned from, and he only added them because the actor-type rule forced it.
 
 - **DarkSide** encrypted IT systems only. Colonial halted the pipeline to contain the incident while assessing how far the compromise reached, and CISA and FBI reported no indication the ransomware directly affected OT. A criminal group with no ICS capability still produced a national fuel disruption, because the consequence came from an operator's containment decision rather than from a control-system effect.
-- **CyberAv3ngers** broke the schema productively. It presents as hacktivist, CISA attributes it to IRGC-affiliated actors, and a `capability_tier` field holds one token. Jordan filed it as hacktivist, set confidence to `assessed`, and used `what_this_card_cannot_tell_you` to say the label does not survive the attribution.
+- **CyberAv3ngers** presents as hacktivist while CISA attributes the campaign to IRGC-affiliated actors. Those are two different claims, so the card carries both: `hacktivist` in `actor_type`, and the attribution on its own `assessed_affiliation` line. Collapsing them into one field would have buried the more interesting one.
 
 `make-cards.js` generates the SVGs from `cards.json`, so fixing a fact and regenerating keeps the art and the data in sync. The sigils are procedural, seeded from a hash of the actor name, and every card carries a line stating that the sigil is not a likeness. No card depicts a person.
 
@@ -55,4 +55,4 @@ Jordan notes in the log that an image generator would have produced better-looki
 | `threat-cards/cards.json` | Five actors, four tiers. |
 | `threat-cards/card-01..05.svg` | Generated cards. |
 | `threat-cards/make-cards.js` | The generator. |
-| `../../role-analyses/week-02/synthesis.md` | Nation-State Threat Analyst vs Insider Threat Investigator, grounded in Anderson Ch. 2. |
+| `../../role-analyses/week-02/synthesis.md` | Nation-State Threat Analyst vs Insider Threat Investigator, grounded in Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2). |

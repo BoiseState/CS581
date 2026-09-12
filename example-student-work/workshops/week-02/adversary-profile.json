@@ -23,7 +23,7 @@
       "Intelligence collection on operational technology environments as preparation for later effects"
     ]
   },
-  "capability_tier": "nation-state-tier-1",
+  "actor_type": "nation-state",
   "nuclear_targeting_evidence": "None that I can find in public reporting, and I want to be direct about that rather than imply otherwise. Sandworm's documented ICS operations targeted electricity transmission and distribution in Ukraine, not nuclear generating stations. I found no public, named source placing this actor inside a nuclear plant's I&C environment. Its relevance to my TCS analysis is by architectural analogy: a turbine control system is rotating-machinery control with protective trip logic and electrical switchgear interfaces, which is the same class of equipment Industroyer's protocol modules were written against. That analogy is a reason to study the actor. It is not evidence of nuclear targeting, and any claim that Sandworm 'threatens nuclear plants' is an inference I am making, not a finding I am reporting.",
   "primary_ttps": [
     {

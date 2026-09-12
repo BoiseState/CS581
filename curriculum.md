@@ -198,8 +198,8 @@ Your Week 1 primary repo includes two additional files:
 ## Required Reading
 
 **Anderson, *Security Engineering* (2nd or 3rd ed.)**
-- Chapter 1: *What is Security Engineering?* — CIA triad, threat surfaces, security vs. safety, failure modes
-- Chapter 2: *Psychology and Usability* — cognitive biases in security decisions, social engineering, why humans are the attack surface
+- **What is Security Engineering?** — 3rd ed. Ch. 1 · 2nd ed. Ch. 1 — CIA triad, threat surfaces, security vs. safety, failure modes
+- **Psychology and Usability** — **3rd ed. Ch. 3** · 2nd ed. Ch. 2 (titled *Usability and Psychology*) — cognitive biases in security decisions, social engineering, why humans are the attack surface
 
 Both chapters are freely available at [https://www.cl.cam.ac.uk/~rja14/book.html](https://www.cl.cam.ac.uk/~rja14/book.html)
 
@@ -279,7 +279,7 @@ Commit to `/workshops/week-01/tool-selection.json` in your primary repo.
 
 **Knowledge**
 - Security engineering fundamentals (CIA triad, threat surfaces, failure modes)
-- Why human cognition is a security attack surface (Anderson Ch. 2)
+- Why human cognition is a security attack surface (Anderson, *Psychology and Usability*: 3rd ed. Ch. 3, 2nd ed. Ch. 2)
 - The regulatory framework governing nuclear cybersecurity (RG 5.71, NEI 08-09) and why it exists separately from NIST/FISMA
 - The three-layer architecture of a nuclear facility (IT / OT / physical)
 
@@ -318,8 +318,8 @@ Commit to `/workshops/week-01/tool-selection.json` in your primary repo.
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- Chapter 2: *Psychology and Usability* (continued) — social engineering as cognitive exploitation; authority compliance; the insider threat as a psychology problem, not just an access control problem
-- Check 3rd edition for the updated chapter on nuclear and utilities threats; 2nd edition readers should supplement with the MITRE and NRC material below
+- **Who Is the Opponent?** — **3rd ed. Ch. 2** · *no direct 2nd ed. equivalent* — Anderson's own adversary taxonomy: state actors, crooks, hacktivists, insiders. This is the chapter this module is built on, and it went unassigned in earlier versions of this curriculum. 2nd edition readers should substitute the MITRE ATT&CK for ICS group listings and CISA advisory AA22-083A below, which cover the same ground with different examples.
+- **Psychology and Usability** (continued) — **3rd ed. Ch. 3** · 2nd ed. Ch. 2 — social engineering as cognitive exploitation; authority compliance; the insider threat as a psychology problem, not just an access control problem
 
 **Supplemental Primary Sources**
 1. **MITRE ATT&CK for ICS** — Technique matrix (publicly available at attack.mitre.org/matrices/ics/). Read the full technique list and filter for the energy/nuclear sector. Focus on: Initial Access, Execution, Persistence, and Impact technique categories. This is the closest thing the field has to a standardized adversary behavior taxonomy.
@@ -336,7 +336,7 @@ These roles are chosen because they represent the two fundamentally different ad
 
 **Deliverable:** One-page synthesis note committed to `/role-analyses/week-02/synthesis.md`.
 
-**Anderson grounding (Module 2).** The Insider Threat Investigator lens must ground its behavioural-indicator claims in Anderson Ch. 2, citing at least two specific concepts from the chapter rather than gesturing at it. The chapter is about cognitive exploitation, authority compliance, and the psychology of insider risk, which is precisely what that role is for. W1 showed the textbook going largely unused: three of eight students never cited Anderson once, against dozens of NIST and RG 5.71 references each. This requirement exists to close that gap.
+**Anderson grounding (Module 2).** The Insider Threat Investigator lens must ground its behavioural-indicator claims in Anderson’s *Psychology and Usability* chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2), citing at least two specific concepts from the chapter rather than gesturing at it. The chapter is about cognitive exploitation, authority compliance, and the psychology of insider risk, which is precisely what that role is for. W1 showed the textbook going largely unused: three of eight students never cited Anderson once, against dozens of NIST and RG 5.71 references each. This requirement exists to close that gap.
 
 The divergence to look for: nation-state threat analysts think in terms of external actors, technical TTPs, and attribution. Insider threat investigators think in terms of organizational psychology, behavioral baselines, and the limits of technical detection. The same Anderson chapter on cognitive biases is read by each role through a completely different lens — and the defensive implications are entirely different.
 
@@ -364,7 +364,7 @@ The divergence to look for: nation-state threat analysts think in terms of exter
     "primary": "...",
     "secondary": ["..."]
   },
-  "capability_tier": "nation-state-tier-1 | nation-state-tier-2 | criminal | hacktivist",
+  "actor_type": "nation-state | criminal | hacktivist | insider | accidental",
   "nuclear_targeting_evidence": "...",
   "primary_ttps": [
     {
@@ -389,7 +389,7 @@ Note the `gaps_in_public_knowledge` field — this is where you document what at
 
 **Output files:** `/workshops/week-02/adversary-profile.json` + `/workshops/week-02/threat-cards/` (five stat-line cards plus `cards.json`) + `/workshops/week-02/session-log.md`
 
-**Threat actor cards.** Five actors beyond the one profiled in depth. The five must span **at least three different capability tiers**, so the set covers the course adversary taxonomy rather than five variations on nation-state. Independent operators and small collectives belong here. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, capability tier, signature TTP with its MITRE ICS technique ID, a provenance line, and a `what_this_card_cannot_tell_you` field. Note that the ICS matrix uses both `T0NNN` and newer `T1NNN.NNN` sub-technique numbering, so the prefix does not identify the matrix; students should look the technique up rather than infer from the number. Where no ICS technique applies, the card sets `mitre_ics_id` to null, gives `mitre_enterprise_id`, and explains the choice in `id_note`. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
+**Threat actor cards.** Five actors beyond the one profiled in depth. The five must span **at least three different `actor_type` values**, so the set covers the course adversary taxonomy rather than five variations on nation-state. The field is `actor_type` rather than a capability rating deliberately: what kind of adversary this is and how capable it is are different questions, and one field cannot answer both. Where a group's public presentation and its assessed attribution disagree, the presentation goes in `actor_type` and the attribution in an `assessed_affiliation` field. Independent operators and small collectives belong here. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, actor type, signature TTP with its MITRE ICS technique ID, a provenance line, and a `what_this_card_cannot_tell_you` field. Note that the ICS matrix uses both `T0NNN` and newer `T1NNN.NNN` sub-technique numbering, so the prefix does not identify the matrix; students should look the technique up rather than infer from the number. Where no ICS technique applies, the card sets `mitre_ics_id` to null, gives `mitre_enterprise_id`, and explains the choice in `id_note`. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
 
 ---
 
@@ -436,8 +436,8 @@ Note the `gaps_in_public_knowledge` field — this is where you document what at
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- Chapter 5: *Cryptography* — symmetric and asymmetric encryption, hashing, PKI, key management; focus on where each primitive is appropriate and what breaks when it is misapplied
-- Chapter 3: *Protocols* — authentication protocols, session management, where cryptographic primitives fail at the protocol level even when the primitives themselves are correct
+- **Cryptography** — 3rd ed. Ch. 5 · 2nd ed. Ch. 5 — symmetric and asymmetric encryption, hashing, PKI, key management; focus on where each primitive is appropriate and what breaks when it is misapplied
+- **Protocols** — **3rd ed. Ch. 4** · 2nd ed. Ch. 3 — authentication protocols, session management, where cryptographic primitives fail at the protocol level even when the primitives themselves are correct
 
 **Supplemental Primary Sources**
 1. **Modbus Application Protocol Specification V1.1b3** (public, modbus.org) — Sections 1–2 (architecture and framing) and the function code table. Read for what is present: a reliable, simple request-response protocol. Read for what is absent: authentication, encryption, session integrity. The absence is the security finding.
@@ -530,7 +530,7 @@ Sections:
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- Chapter 4: *Access Control* — DAC, MAC, RBAC, ABAC; the Bell-LaPadula model and its safety-critical implications; access control matrices; separation of duties; the reference monitor concept
+- **Access Control** — **3rd ed. Ch. 6** · 2nd ed. Ch. 4 — DAC, MAC, RBAC, ABAC; the Bell-LaPadula model and its safety-critical implications; access control matrices; separation of duties; the reference monitor concept
 
 **Supplemental Primary Sources**
 1. **IEC 62443-3-3** — *System Security Requirements and Security Levels* — read the publicly available NIST and ISA summaries (the standard itself is paywalled). Focus on Security Levels 1–4 and the concept of zones and conduits. This is the international ICS security standard that NRC guidance references.
@@ -628,7 +628,7 @@ This module is the conceptual core of the course. Every other module builds tech
 ## Required Reading
 
 **Anderson, *Security Engineering***
-- Chapter 8: *Economics of Security* — cost-benefit analysis of security investment; why regulated entities need external pressure to invest in security; incentive structures between operators, vendors, and regulators
+- **Economics of Security** — 3rd ed. Ch. 8 · **2nd ed. Ch. 7** (titled *Economics*) — cost-benefit analysis of security investment; why regulated entities need external pressure to invest in security; incentive structures between operators, vendors, and regulators
 - Chapter on physical protection (check edition) — the intersection of physical and electronic security; why physical security assumptions underpin cyber security controls
 
 **Supplemental Primary Sources**

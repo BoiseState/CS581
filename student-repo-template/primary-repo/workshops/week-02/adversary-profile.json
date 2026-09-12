@@ -12,7 +12,7 @@
     "primary": "...",
     "secondary": ["..."]
   },
-  "capability_tier": "nation-state-tier-1 | nation-state-tier-2 | criminal | hacktivist",
+  "actor_type": "nation-state | criminal | hacktivist | insider | accidental",
   "nuclear_targeting_evidence": "...",
   "primary_ttps": [
     {

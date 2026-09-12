@@ -5,11 +5,12 @@
 const fs = require('fs');
 const cards = JSON.parse(fs.readFileSync('cards.json', 'utf8'));
 
-const TIER = {
-  'nation-state-tier-1': { ink:'#e8453c', name:'NATION-STATE · TIER 1', bg:'#1a0d0d', accent:'#ff6b5e' },
-  'nation-state-tier-2': { ink:'#e8873c', name:'NATION-STATE · TIER 2', bg:'#1a140d', accent:'#ffab5e' },
-  'criminal':            { ink:'#9b6bd6', name:'CRIMINAL',             bg:'#140d1a', accent:'#c79bf0' },
-  'hacktivist':          { ink:'#3ca8e8', name:'HACKTIVIST (claimed)', bg:'#0d151a', accent:'#6bc7ff' },
+const TYPE = {
+  'nation-state': { ink:'#e8453c', name:'NATION-STATE', bg:'#1a0d0d', accent:'#ff6b5e' },
+  'criminal':     { ink:'#9b6bd6', name:'CRIMINAL',     bg:'#140d1a', accent:'#c79bf0' },
+  'hacktivist':   { ink:'#3ca8e8', name:'HACKTIVIST',   bg:'#0d151a', accent:'#6bc7ff' },
+  'insider':      { ink:'#3cc98a', name:'INSIDER',      bg:'#0a1a14', accent:'#5fe3aa' },
+  'accidental':   { ink:'#8a94a0', name:'ACCIDENTAL',   bg:'#111418', accent:'#b3bdc9' },
 };
 
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -40,7 +41,7 @@ function wrap(text, max){
 }
 
 cards.forEach((c, idx) => {
-  const t = TIER[c.capability_tier] || TIER['criminal'];
+  const t = TYPE[c.actor_type] || TYPE['accidental'];
   const n = String(idx+1).padStart(2,'0');
   const aka = c.aka.slice(0,2).join(' · ');
   const cannot = wrap(c.what_this_card_cannot_tell_you, 64).slice(0,6);
@@ -50,13 +51,17 @@ cards.forEach((c, idx) => {
   const isEnt = !sig.mitre_ics_id && !!sig.mitre_enterprise_id;
   const ident = sig.mitre_ics_id || sig.mitre_enterprise_id || 'UNMAPPED';
   const idNote = sig.id_note ? wrap(sig.id_note, 88).slice(0,2) : [];
+  // Where a group's public presentation and its assessed attribution differ, show both.
+  const affil = c.assessed_affiliation ? wrap('ASSESSED AFFILIATION: '+c.assessed_affiliation, 92).slice(0,2) : [];
+  const artY = affil.length ? 150 + 14*affil.length + 6 : 150;
+  const artH = 530 - artY;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 1050" width="750" height="1050" role="img" aria-label="Threat actor card: ${esc(c.actor)}">
 <defs>
   <linearGradient id="g${n}" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0" stop-color="${t.bg}"/><stop offset="1" stop-color="#07090c"/>
   </linearGradient>
-  <clipPath id="art${n}"><rect x="42" y="150" width="666" height="380" rx="6"/></clipPath>
+  <clipPath id="art${n}"><rect x="42" y="${artY}" width="666" height="${artH}" rx="6"/></clipPath>
 </defs>
 <rect width="750" height="1050" rx="22" fill="url(#g${n})"/>
 <rect x="14" y="14" width="722" height="1022" rx="14" fill="none" stroke="${t.ink}" stroke-width="2.5" opacity="0.75"/>
@@ -66,10 +71,11 @@ cards.forEach((c, idx) => {
 <text x="42" y="104" font-family="monospace" font-size="14" fill="${t.accent}" opacity="0.9">${esc(aka)}</text>
 <rect x="42" y="118" width="${Math.min(560, 12+t.name.length*9.4)}" height="24" rx="12" fill="${t.ink}" opacity="0.22"/>
 <text x="54" y="135" font-family="monospace" font-size="12.5" font-weight="bold" fill="${t.accent}" letter-spacing="1.4">${esc(t.name)}</text>
+${affil.map((l,i)=>`<text x="42" y="${159+i*14}" font-family="monospace" font-size="10.5" fill="#7a8fa6">${esc(l)}</text>`).join('\n')}
 <text x="708" y="74" text-anchor="end" font-family="monospace" font-size="34" fill="${t.ink}" opacity="0.5">#${n}</text>
 
-<rect x="42" y="150" width="666" height="380" rx="6" fill="#05070a" stroke="${t.accent}" stroke-width="0.8" opacity="0.95"/>
-<g clip-path="url(#art${n})"><g transform="translate(375 340) scale(1.55)">${sigil(hash(c.actor), t.accent)}</g></g>
+<rect x="42" y="${artY}" width="666" height="${artH}" rx="6" fill="#05070a" stroke="${t.accent}" stroke-width="0.8" opacity="0.95"/>
+<g clip-path="url(#art${n})"><g transform="translate(375 ${artY + artH/2}) scale(1.55)">${sigil(hash(c.actor), t.accent)}</g></g>
 <text x="56" y="518" font-family="monospace" font-size="10" fill="${t.accent}" opacity="0.45">SIGIL: PROCEDURAL · NOT A LIKENESS · NO PERSON DEPICTED</text>
 
 <line x1="42" y1="558" x2="708" y2="558" stroke="${t.accent}" stroke-width="1" opacity="0.4"/>
@@ -96,5 +102,5 @@ ${wrap('PROVENANCE: '+c.provenance, 96).slice(0,2).map((l,i)=>`<text x="42" y="$
 <text x="708" y="1010" text-anchor="end" font-family="monospace" font-size="9.5" fill="#4a6070">CS 581 · W2 · J. REYES</text>
 </svg>`;
   fs.writeFileSync(`card-${n}.svg`, svg);
-  console.log(`card-${n}.svg  ${c.actor}  (${c.capability_tier})`);
+  console.log(`card-${n}.svg  ${c.actor}  (${c.actor_type})`);
 });

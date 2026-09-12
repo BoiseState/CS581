@@ -14,7 +14,9 @@ This role reads my profile and asks one question before any other: what is sourc
 
 It approves of the `gaps_in_public_knowledge` array and would extend it. The entry it cares about most is the first one, that no public source places Sandworm in a nuclear generating station. An analyst writing for a customer who has to make a resourcing decision cannot let an architectural analogy stand in for a targeting finding, because the customer will act on the finding and not on the reasoning behind it.
 
-It would push back on my `capability_tier` field. Tier is a summary judgement that compresses resourcing, sophistication, operational security, and demonstrated effect into one token. Sandworm and XENOTIME both carry `nation-state-tier-1` on my cards, but XENOTIME's known operation failed on a coding error and Sandworm's succeeded twice against live infrastructure. The field cannot hold that difference.
+It would push back on my `actor_type` field, though not for the reason I first expected. The field is honest about what it is: a category, not a capability rating. What it cannot do is tell you how dangerous the actor in that category is. Sandworm, XENOTIME and BERSERK BEAR all read `nation-state` on my cards, and behind that single token sit an actor that has twice cut power to a live grid, an actor whose one known operation tripped a plant by accident, and an actor with years of access and no observed effect at all. An analyst briefing a customer cannot hand over a card set where those three look interchangeable.
+
+The honest fix is a separate assessed-capability field with a defined rubric, which I do not have. Naming the gap is better than inventing a scale and pretending it means something.
 
 What this role would do with my work: build the collection requirement. Given what I cannot answer from open sources, what would I need to task? For my TCS question that is turbine control vendor identity, firmware revision, and whether the balance-of-plant network is separated from supervisory control by anything more than convention. None of that is answerable from where I am sitting, and naming it is the deliverable.
 
@@ -30,7 +32,7 @@ My detection opportunities list is five entries long and four of them assume an 
 
 The role would also challenge my entire framing of `pivot_path`. I traced a network route because network routes are what I know how to think about. The insider does not pivot. They are already positioned, and what changes is intent rather than location. My W1 map has a row for "DCS cabinet physical access" that I rated a lower concern precisely because it requires being inside the protected area, which I treated as a barrier. This role treats it as a description of the workforce.
 
-**Anderson Ch. 2 grounding.**
+**Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) grounding.**
 
 This role has no MITRE matrix. Its evidentiary basis is the psychology chapter, and two concepts from it do the work.
 

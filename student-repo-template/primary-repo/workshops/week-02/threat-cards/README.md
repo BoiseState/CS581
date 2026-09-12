@@ -2,14 +2,19 @@
 
 Five actors beyond the one in `adversary-profile.json`. Stat-line depth, not full depth.
 
-## Spread the tiers
+## Spread the types
 
-The five must span **at least three different capability tiers**. Five nation-state groups is not a
-landscape, it is one tier five times.
+The five must span **at least three different `actor_type` values**. Five nation-state groups is not a
+landscape, it is one type five times.
 
 The course adversary taxonomy is nation-state, insider, hacktivist, criminal, and accidental. Independent
 operators and small collectives belong on these cards. They have different motivations, different
-resources, different time horizons, and they fail in different ways than a state programme does. A set
+resources, different time horizons, and they fail in different ways than a state programme does.
+
+`actor_type` describes **what kind of adversary this is**, not how capable it is. Those are different
+questions and one field cannot answer both. If a group's public presentation and its assessed attribution
+disagree, put the presentation in `actor_type` and the attribution in `assessed_affiliation`, and say so
+on the card. That disagreement is usually the most interesting thing about the actor. A set
 that only contains tier-1 actors misses most of what actually reaches a plant.
 
 ## What goes here
@@ -23,7 +28,7 @@ Yours. Baseball card, Pokemon card, tarot, trading card, anime, whatever you fin
 
 Every card must legibly show:
 - actor name
-- capability tier
+- actor type
 - signature TTP with its MITRE ATT&CK for ICS ID
 
 The ICS matrix uses both `T0NNN` and newer `T1NNN.NNN` sub-technique numbering, so the prefix does not

@@ -128,7 +128,8 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
     <b>Two corrections before you start.</b>
     <ul>
       <li>If your repo has <code>workshops/week-02/threat-profile.md</code> from the original template, that file is retired. Run <code>git rm workshops/week-02/threat-profile.md</code>, then commit and push. You cannot pull this fix: your repo and the course repo share no common ancestor commit. See <b>Repo Cleanup, Before You Start W2</b> in Canvas Module 2 for why, and for how to fetch single template files without merging.</li>
-      <li>The course reference list linked <b>RG 5.71 Revision 0</b> (2010). <b>Revision 1</b> (Feb 2023) is current and section numbering changed. Use Rev. 1 from here on. Also, C.3.1, C.3.2 and C.3.4 each appear twice in RG 5.71, once in the main body and once in Appendix C. Say which one you mean.</li>
+      <li><b>Anderson chapter numbers were wrong for the 3rd edition.</b> The reference list gave 2nd edition numbers with 3rd edition titles. <b>Psychology and Usability is Ch. 3 in the 3rd edition</b> (Ch. 2 in the 2nd, titled <i>Usability and Psychology</i>), and that is the chapter the Anderson requirements refer to. Separately, <b>3rd ed. Ch. 2 is <i>Who Is the Opponent?</i></b>, Anderson’s adversary taxonomy, which is now assigned for this module and is the most directly useful chapter in the book for your profile and cards.</li>
+<li>The course reference list linked <b>RG 5.71 Revision 0</b> (2010). <b>Revision 1</b> (Feb 2023) is current and section numbering changed. Use Rev. 1 from here on. Also, C.3.1, C.3.2 and C.3.4 each appear twice in RG 5.71, once in the main body and once in Appendix C. Say which one you mean.</li>
     </ul>
   </div>
 
@@ -242,7 +243,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
       <span class="chip">trading card</span><span class="chip">anime</span><span class="chip">vaporwave</span>
       <span class="chip">field guide</span><span class="chip">your call</span>
     </div>
-    <p>Every card must legibly show four things: actor name, capability tier, signature TTP with its MITRE ICS ID, and a provenance line naming a public source.</p><div class="note warn"><b>Spread the tiers.</b> Your five cards must span <b>at least three different capability tiers</b>. Five nation-state groups is one tier five times, not a landscape. The course taxonomy is nation-state, insider, hacktivist, criminal, and accidental. Independent operators and small collectives belong here: different motivations, different resources, different time horizons, and they fail differently than a state programme does.</div>
+    <p>Every card must legibly show four things: actor name, actor type, signature TTP with its MITRE ICS ID, and a provenance line naming a public source.</p><div class="note warn"><b>Spread the types.</b> Your five cards must span <b>at least three different <code>actor_type</code> values</b>. Five nation-state groups is one type five times, not a landscape. The taxonomy is nation-state, insider, hacktivist, criminal, and accidental. Independent operators and small collectives belong here: different motivations, different resources, different time horizons, and they fail differently than a state programme does.<p style="margin-bottom:0"><code>actor_type</code> asks what kind of adversary this is, not how capable it is. Those are different questions and one field cannot answer both. Where a group's public presentation and its assessed attribution disagree, put the presentation in <code>actor_type</code>, the attribution in <code>assessed_affiliation</code>, and say so on the card. That disagreement is usually the most interesting thing about the actor.</p></div>
     <p>Cards are graded on whether the stat lines are accurate and sourced, not on artistic quality. A hand-drawn card photographed with your phone scores the same as a polished render if the data is right.</p>
   </div>
 
@@ -284,7 +285,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
   <div class="card">
     <h2>The reflection</h2>
     <p>A short section at the end of the log. You have just asked a generative tool to produce confident, attractive artifacts about actors whose attribution is contested, and in some cases disputed by the people accused.</p>
-    <p>Write down what that felt like, and what you would want a reader of those cards to know that the cards themselves do not say.</p><div class="note"><b>Ground this in Anderson Ch. 2.</b> The chapter is about cognitive exploitation, authority compliance, and why people believe things that are presented well. Your cards are a specimen of exactly that: a polished card with a stat line and a MITRE ID reads as more authoritative than the same claim in a sentence, even though the evidence behind it has not changed.<p style="margin-bottom:0">Address at least: what did the card format add that the source did not support, and which Anderson concepts explain why it persuades past its evidence?</p></div>
+    <p>Write down what that felt like, and what you would want a reader of those cards to know that the cards themselves do not say.</p><div class="note"><b>Ground this in Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2).</b> The chapter is about cognitive exploitation, authority compliance, and why people believe things that are presented well. Your cards are a specimen of exactly that: a polished card with a stat line and a MITRE ID reads as more authoritative than the same claim in a sentence, even though the evidence behind it has not changed.<p style="margin-bottom:0">Address at least: what did the card format add that the source did not support, and which Anderson concepts explain why it persuades past its evidence?</p></div>
     <div class="note">Module 9 returns to this question about AI in nuclear operations. Your answer here is the start of that thread, so write it honestly rather than tidily.</div>
     <label for="reflNote">Scratch space (saved locally in your browser, not submitted)</label>
     <textarea id="reflNote" rows="5" placeholder="what did the card exercise feel like?"></textarea>
@@ -312,7 +313,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
     <div class="note">
       <b>Use the assigned roles.</b> Several W1 submissions substituted different roles because the old template listed its examples with "e.g." That template has been corrected. For W2 the roles are the two above.
     </div>
-    <p>Apply both to <b>your own profile and cards</b>, not to the reading in general. The divergence to look for is not about facts. Both roles read the same reporting. It is about what each would actually do with it.</p><div class="note warn"><b>Anderson grounding, required.</b> The Insider Threat Investigator lens must ground its behavioural-indicator claims in <b>Anderson Ch. 2</b>, citing at least two specific concepts from the chapter. Name them. "Anderson discusses psychology" is not a citation.<p>That chapter is the investigator's entire evidentiary basis: what conditions create insider risk, and which indicators are actually observable rather than merely plausible. The threat analyst works from technical TTPs and attribution. The investigator works from this. That difference in evidence base is where the two roles genuinely diverge.</p><p style="margin-bottom:0" class="mut">Being straight with you about why this is here: across all eight W1 submissions, three of you never cited Anderson once, against dozens of NIST and RG 5.71 references each. The textbook is carrying no weight yet.</p></div>
+    <p>Apply both to <b>your own profile and cards</b>, not to the reading in general. The divergence to look for is not about facts. Both roles read the same reporting. It is about what each would actually do with it.</p><div class="note warn"><b>Anderson grounding, required.</b> The Insider Threat Investigator lens must ground its behavioural-indicator claims in <b>Psychology and Usability</b> (3rd ed. Ch. 3, 2nd ed. Ch. 2), citing at least two specific concepts from the chapter. Name them. "Anderson discusses psychology" is not a citation.<p>That chapter is the investigator's entire evidentiary basis: what conditions create insider risk, and which indicators are actually observable rather than merely plausible. The threat analyst works from technical TTPs and attribution. The investigator works from this. That difference in evidence base is where the two roles genuinely diverge.</p><p style="margin-bottom:0" class="mut">Being straight with you about why this is here: across all eight W1 submissions, three of you never cited Anderson once, against dozens of NIST and RG 5.71 references each. The textbook is carrying no weight yet.</p></div>
   </div>
 </section>
 
@@ -438,7 +439,7 @@ Dimensions: roughly 750 x 1050, readable at half size.
 
 The card must legibly show:
 - actor name
-- capability tier
+- actor type
 - signature TTP with its MITRE ATT&CK for ICS ID
 - a provenance line naming the public source
 
@@ -464,9 +465,9 @@ function renderSys(){
   prompts();
 }
 
-const REQ=["target_system","w1_map_reference","pivot_path","actor","also_known_as","attributed_to","confidence","provenance","motivation","capability_tier","nuclear_targeting_evidence","primary_ttps","historical_precedent","detection_opportunities","gaps_in_public_knowledge"];
+const REQ=["target_system","w1_map_reference","pivot_path","actor","also_known_as","attributed_to","confidence","provenance","motivation","actor_type","nuclear_targeting_evidence","primary_ttps","historical_precedent","detection_opportunities","gaps_in_public_knowledge"];
 const TTPREQ=["tactic","technique","mitre_ics_id","nuclear_relevance","system_relevance","confidence"];
-const CARDREQ=["actor","aka","capability_tier","sector_targeting","signature_ttp","first_observed","confidence","provenance","what_this_card_cannot_tell_you"];
+const CARDREQ=["actor","aka","actor_type","sector_targeting","signature_ttp","first_observed","confidence","provenance","what_this_card_cannot_tell_you"];
 
 function validate(){
   const raw=$('#jsonIn').value.trim(), out=$('#valOut');
@@ -513,8 +514,8 @@ function validateCards(){
     }
     if(c.what_this_card_cannot_tell_you!==undefined && String(c.what_this_card_cannot_tell_you).trim()==='') warns.push('card['+i+'] what_this_card_cannot_tell_you is empty.');
   });
-  const tiers=[...new Set(a.map(c=>String(c.capability_tier||'').trim().toLowerCase()).filter(Boolean))];
-  if(a.length && tiers.length<3) errs.push('only '+tiers.length+' distinct capability tier'+(tiers.length===1?'':'s')+' across your five cards ('+tiers.join(', ')+'). The assignment asks for at least three. Five nation-state groups is one tier five times, not a landscape.');
+  const types=[...new Set(a.map(c=>String(c.actor_type||'').trim().toLowerCase()).filter(Boolean))];
+  if(a.length && types.length<3) errs.push('only '+types.length+' distinct actor_type value'+(types.length===1?'':'s')+' across your five cards ('+types.join(', ')+'). The assignment asks for at least three. Five nation-state groups is one type five times, not a landscape.');
   if(!errs.length && !warns.length){ out.className='vout good'; out.textContent='PARSES. Five cards, all required keys present.'; return; }
   out.className = errs.length?'vout bad':'vout good';
   out.textContent = (errs.length? errs.length+' problem'+(errs.length>1?'s':'')+':\n'+errs.map(e=>'  - '+e).join('\n')+'\n\n':'Structure looks right.\n\n')
@@ -532,14 +533,14 @@ function renderCheck(){
     ['gaps_in_public_knowledge is not empty', null],
     ['pivot_path names how the actor moves from my W1 system to my W2 system, or why they cannot', null],
     ['cards.json parses and has exactly five actors', null],
-    ['my five cards span at least three different capability tiers', null],
+    ['my five cards span at least three different actor_type values', null],
     ['five card files committed, card-01 through card-05', null],
     ['no card depicts a real person', null],
     ['every card shows name, tier, signature TTP with MITRE ID, and provenance', null],
     ['session-log.md includes the reflection on the card exercise', null],
     ['role-analyses/week-02/synthesis.md uses the two assigned roles', null],
-    ['the Insider Threat Investigator lens cites at least two Anderson Ch. 2 concepts', null],
-    ['the card reflection connects to Anderson Ch. 2 on why polished artifacts persuade', null],
+    ['the Insider Threat Investigator lens cites at least two Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) concepts', null],
+    ['the card reflection connects to Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) on why polished artifacts persuade', null],
     ['the retired threat-profile.md is deleted from my repo', null],
     ['RG 5.71 citations name Revision 1, and say main body or Appendix C', null],
     ['I committed as I worked, not all at once', null]

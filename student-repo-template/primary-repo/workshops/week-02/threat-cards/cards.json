@@ -3,7 +3,8 @@
     "_comment": "Five actors, NOT the one in adversary-profile.json. Delete _comment before committing. Must parse as valid JSON.",
     "actor": "...",
     "aka": ["..."],
-    "capability_tier": "nation-state-tier-1 | nation-state-tier-2 | criminal | hacktivist | insider",
+    "actor_type": "nation-state | criminal | hacktivist | insider | accidental",
+    "assessed_affiliation": "OPTIONAL. Use only when a group's public presentation and its assessed attribution differ. Delete this key otherwise.",
     "sector_targeting": ["..."],
     "signature_ttp": {
       "technique": "...",
@@ -18,7 +19,7 @@
     "_comment": "Use this shape ONLY where no ICS technique applies. Set mitre_ics_id to null, give the Enterprise ID, and explain in id_note why the ICS matrix has nothing for it.",
     "actor": "...",
     "aka": ["..."],
-    "capability_tier": "criminal",
+    "actor_type": "criminal",
     "sector_targeting": ["..."],
     "signature_ttp": {
       "technique": "...",

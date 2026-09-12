@@ -94,9 +94,9 @@ DarkSide is the one card that genuinely does carry an Enterprise ID, `T1486`, an
 **Duration:** ~2.5 hours
 **Outcome:** cards.json plus a generator script
 
-The requirement to span three capability tiers is doing more work than it looks like.
+The requirement to span three `actor_type` values is doing more work than it looks like.
 
-My instinct was five nation-state groups, because those are the ones with the good reporting and the memorable names. The tier rule blocked that, and the two cards I added to satisfy it are the two I learned the most from.
+My instinct was five nation-state groups, because those are the ones with the good reporting and the memorable names. The rule blocked that, and the two cards I added to satisfy it are the two I learned the most from.
 
 **DarkSide** is a criminal operation with no ICS capability whatsoever, and its ransomware encrypted IT systems only. Colonial halted the pipeline to contain the incident while assessing how far the compromise had reached. CISA and FBI reported no indication the ransomware directly affected OT.
 
@@ -106,7 +106,9 @@ The lesson survives the correction and is arguably better for it. A group with z
 
 **CyberAv3ngers** broke my schema, productively. The group presents as hacktivist and the technical bar was near zero: internet-exposed Unitronics PLCs with default credentials. But CISA attributes the campaign to actors affiliated with the IRGC Cyber-Electronic Command. So which tier is it?
 
-I filed it as `hacktivist` because that is its self-presentation, set `confidence` to `assessed` rather than `documented`, and used `what_this_card_cannot_tell_you` to say the label does not survive the attribution. A capability tier is one field and this actor needs a paragraph. That mismatch is the card doing its job by failing visibly.
+I put `hacktivist` in `actor_type`, because that is how the group presents and operates, and put the attribution in a separate `assessed_affiliation` line so both appear on the card. Those are genuinely two different claims and collapsing them into one field would have buried the more interesting one.
+
+I also had to stop myself inferring capability from the technique. Exposed controllers with default passwords is a low bar, but it bounds the campaign I can see, not the group. The card says that now.
 
 **On the art.** I wrote `make-cards.js` rather than generating images, partly because I wanted the cards to regenerate from `cards.json` when I fix a fact, and partly because I did not want to think about what a threat actor "looks like." The sigils are procedural, seeded from a hash of the actor name, so the artwork is a function of the data and nothing else. Every card carries a line saying the sigil is not a likeness.
 
@@ -129,7 +131,7 @@ What changed my synthesis was the material on authority and compliance. My detec
 
 ## Reflection — The Card Exercise
 
-Required section. Grounding it in Anderson Ch. 2 as the assignment asks.
+Required section. Grounding it in Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) as the assignment asks.
 
 **What the card format added that the sources did not support.**
 
@@ -137,7 +139,7 @@ Certainty, mostly, and a kind of parity. Five actors rendered at identical dimen
 
 The MITRE ID does the heaviest lifting. `T0889` in a monospace box next to an actor name looks like a measurement. It is a category label from a framework that is itself a model of adversary behaviour, applied by me, in September, from public reporting of variable quality. Everything upstream of that box is judgement, and the box makes it look like a reading off an instrument.
 
-**Which Anderson Ch. 2 concepts explain why the card persuades past its evidence.**
+**Which Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) concepts explain why the card persuades past its evidence.**
 
 Two, specifically.
 
