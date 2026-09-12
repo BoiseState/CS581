@@ -127,7 +127,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
   <div class="note warn">
     <b>Two corrections before you start.</b>
     <ul>
-      <li>If your repo has <code>workshops/week-02/threat-profile.md</code> from the original template, that file is retired. It is not a W2 deliverable. Delete it.</li>
+      <li>If your repo has <code>workshops/week-02/threat-profile.md</code> from the original template, that file is retired. Run <code>git rm workshops/week-02/threat-profile.md</code>, then commit and push. You cannot pull this fix: your repo and the course repo share no common ancestor commit. See <b>Repo Cleanup, Before You Start W2</b> in Canvas Module 2 for why, and for how to fetch single template files without merging.</li>
       <li>The course reference list linked <b>RG 5.71 Revision 0</b> (2010). <b>Revision 1</b> (Feb 2023) is current and section numbering changed. Use Rev. 1 from here on. Also, C.3.1, C.3.2 and C.3.4 each appear twice in RG 5.71, once in the main body and once in Appendix C. Say which one you mean.</li>
     </ul>
   </div>
@@ -255,7 +255,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
 
   <div class="card">
     <h2>Making them</h2>
-    <p>Ask your assistant to emit each card as SVG or HTML. It costs nothing, the files stay small and diffable, and getting an agent to produce clean SVG is a useful exercise in its own right. If you already have an image generator you may use it instead, subject to the course rule on AI providers. <b>Do not buy a subscription for this.</b></p>
+    <p><b>Option A.</b> Ask your assistant to emit each card as SVG or HTML. Costs nothing, files stay small and diffable, and getting an agent to produce clean SVG is a useful exercise in its own right.</p><p><b>Option B.</b> Use an image generator. You are welcome to, and several produce very good card art:</p><div class="chips"><span class="chip">ChatGPT</span><span class="chip">Nano Banana (Gemini)</span><span class="chip">Copilot / Designer</span><span class="chip">Adobe Firefly</span><span class="chip">Midjourney</span></div><p class="mut">Stick to US-based providers with clear data handling practices, consistent with the course policy on AI tools.</p><div class="note"><b>Do not buy a subscription for this.</b> Free tiers are more than enough and Option A costs nothing. Nobody gets a better grade for having paid for a tool.</div><p>Mixing the two usually gives the most readable card: generate the artwork as an image, then have your coding assistant lay the stat line and provenance text around it. Generated images tend to mangle small text.</p>
     <div class="prompt" id="pr3"><button class="copy" data-t="pr3">Copy</button><span id="pr3t"></span></div>
   </div>
 

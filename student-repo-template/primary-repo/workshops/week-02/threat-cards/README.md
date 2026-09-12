@@ -19,9 +19,29 @@ Every card must legibly show:
 
 ## How to make them
 
-Ask your coding assistant to emit each card as SVG or HTML. Costs nothing, keeps files small and diffable,
-and getting an agent to produce clean SVG is itself a useful exercise. If you already have access to an
-image generator you may use it instead. Do not buy a subscription for this assignment.
+Either approach is fine. Pick whichever you will actually enjoy.
+
+**Option A: have your coding assistant emit SVG or HTML.** Costs nothing, keeps the files small and
+diffable, works with the tools you already have for this course, and getting an agent to produce clean
+SVG is a useful exercise in its own right.
+
+**Option B: use an image generator.** You are welcome to, and several produce very good card art:
+
+- ChatGPT (OpenAI)
+- Nano Banana, in Google Gemini
+- Microsoft Copilot / Designer
+- Adobe Firefly
+- Midjourney
+
+Use a provider with clear data handling practices. Consistent with the course policy on AI tools, stick
+to US-based providers for this course and do not route coursework through platforms outside that scope.
+
+**Do not buy a subscription for this assignment.** The free tier of any of the above is more than enough,
+and Option A costs nothing at all. Nobody gets a better grade for having paid for a tool.
+
+You can also mix the two: generate the artwork as an image, then have your coding assistant lay out the
+stat line and provenance text around it in HTML or SVG. That usually produces the most readable card,
+since generated images tend to mangle small text.
 
 ## One hard rule
 

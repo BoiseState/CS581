@@ -61,7 +61,11 @@
 <li>Five card files, one per actor, named <code>card-01</code> through <code>card-05</code> with whatever extension your format uses.</li>
 </ul>
 <p><strong>Style is yours.</strong> Baseball card, Pokemon card, tarot, trading card, anime, whatever you find fun. The format is deliberately loose. Every card must legibly show the actor name, capability tier, signature TTP with its MITRE ID, and a provenance line naming a public source.</p>
-<p><strong>How to make them.</strong> Ask your coding assistant to emit each card as SVG or HTML. That costs nothing, keeps the files small and diffable, and is itself a coding-agent exercise. If you have access to an image generator you may use it instead, subject to the course rule on AI providers. Do not buy a subscription for this.</p>
+<p><strong>How to make them.</strong> Either approach is fine, pick whichever you will actually enjoy.</p>
+<p><strong>Option A:</strong> ask your coding assistant to emit each card as SVG or HTML. Costs nothing, keeps the files small and diffable, and getting an agent to produce clean SVG is a useful exercise in its own right.</p>
+<p><strong>Option B:</strong> use an image generator. You are welcome to, and several produce very good card art: ChatGPT, Nano Banana in Google Gemini, Microsoft Copilot or Designer, Adobe Firefly, Midjourney. Stick to US-based providers with clear data handling practices, consistent with the course policy on AI tools.</p>
+<p><strong>Do not buy a subscription for this assignment.</strong> Free tiers are more than enough and Option A costs nothing at all. Nobody gets a better grade for having paid for a tool.</p>
+<p>Mixing the two usually produces the most readable card: generate the artwork as an image, then have your coding assistant lay the stat line and provenance text around it in HTML or SVG. Generated images tend to mangle small text.</p>
 <p><strong>One hard rule: no card may depict a real person.</strong> Original characters, mascots, creatures, emblems, and abstract art are all fine. What is not fine is art that presents itself as showing what a real operator looks like. Several of the actors you will profile are tied to named individuals under federal indictment, including in the CISA advisory on this module's reading list. Inventing faces for them is the one thing this assignment will not accept.</p>
 <p>Cards are graded on whether the stat lines are accurate and sourced, not on artistic quality. A hand-drawn card photographed with your phone scores the same as a polished render if the data is right.</p>
 
@@ -73,8 +77,12 @@
 <p>Commit to <code>role-analyses/week-02/synthesis.md</code> in your secondary repo. One page, read through two lenses: <strong>Nation-State Threat Analyst</strong> and <strong>Insider Threat Investigator</strong>.</p>
 <p>The divergence to look for: the threat analyst thinks in external actors, technical TTPs, and attribution. The investigator thinks in organizational psychology, behavioral baselines, and the limits of technical detection. Apply both to your own profile and cards, not to the reading in general.</p>
 
-<h3>A note on the template</h3>
-<p>If your repo contains <code>workshops/week-02/threat-profile.md</code> from the original template, that file is retired and is not a W2 deliverable. Delete it. The template has been corrected in the course repo.</p>
+<h3>First: clean up your repo</h3>
+<p>If your repo contains <code>workshops/week-02/threat-profile.md</code> from the original template, that file is retired and is not a W2 deliverable. Remove it before you start:</p>
+<pre><code>git rm workshops/week-02/threat-profile.md
+git commit -m "Remove retired W2 template file"
+git push</code></pre>
+<p>You cannot pull this fix from the course repo, because your repository and the course repository share no common ancestor commit. <strong><a href="/courses/48925/pages/repo-cleanup-before-you-start-w2">Read Repo Cleanup, Before You Start W2</a></strong> for why that is, what would go wrong if you forced a merge, and how to fetch individual template files if you want them.</p>
 
 <h3>A correction to the course reference list</h3>
 <p>The course materials link <strong>RG 5.71 Revision 0</strong> from January 2010. <strong>Revision 1</strong> from February 2023 is the current version and the section numbering changed between them. Use Rev. 1 from W2 forward. Also note that sections C.3.1, C.3.2, and C.3.4 each appear twice in RG 5.71, once in the main body and once in Appendix C, with different content. Say which one you mean when you cite them.</p>

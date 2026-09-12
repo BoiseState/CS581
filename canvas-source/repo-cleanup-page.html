@@ -1,0 +1,49 @@
+<h2>Repo Cleanup — Before You Start W2</h2>
+<p>I changed the student repo template. Your repo does not get those changes automatically, and there is a specific reason why. Five minutes of work, and the reason is worth understanding.</p>
+
+<h3>What changed</h3>
+<p>The template shipped <code>workshops/week-02/threat-profile.md</code>, a markdown file. The actual W2 deliverable is <code>workshops/week-02/adversary-profile.json</code>. Those are different artifacts in different formats. If you had opened your repo and filled in the file sitting there, you would have produced the wrong thing through no fault of your own.</p>
+<p>The same mismatch existed for W3 through W9. Those weeks now carry a <code>README.md</code> naming the correct deliverables instead of a mis-named placeholder file.</p>
+
+<h3>Why you cannot just pull the fix</h3>
+<p>This is the part worth reading.</p>
+<p>When you set up your repos, you copied the template files into a fresh <code>git init</code>. You did not fork or clone the course repo. That means your repository and the course repository share <strong>no common ancestor commit</strong>. Git has no way to reason about what changed between them, because as far as Git is concerned they are two unrelated projects that happen to contain similar files.</p>
+<p>You can verify this yourself:</p>
+<pre><code>git log --reverse --format="%h %ad %s" --date=short | head -1</code></pre>
+<p>That is your repo's root commit. It will not match the course repo's root commit, and no <code>git pull</code> or <code>git merge</code> can bridge that gap cleanly.</p>
+<p>You could force it:</p>
+<pre><code>git remote add upstream https://github.com/BoiseState/CS581.git
+git fetch upstream
+git merge upstream/main --allow-unrelated-histories</code></pre>
+<p><strong>Do not do this.</strong> That <code>--allow-unrelated-histories</code> flag is Git telling you the operation does not make sense. It would succeed, and it would dump the entire course repository into yours: the syllabus source, the full curriculum file, the workflow guides, the example student work, everything. The template files would land under <code>student-repo-template/primary-repo/</code> rather than at the paths your repo uses, so you would end up with two copies of everything at different paths and a large mess to clean up.</p>
+
+<h3>What to actually do</h3>
+<p>Two commands. From your <strong>primary</strong> repo:</p>
+<pre><code>git rm workshops/week-02/threat-profile.md
+git commit -m "Remove retired W2 template file"
+git push</code></pre>
+<p>If you already wrote notes in that file and want to keep them, move the content somewhere first. It is not a graded artifact, so your session log or a scratch file is fine.</p>
+<p>If <code>git rm</code> says the file is not tracked, it was never committed. Delete it normally and move on.</p>
+
+<h3>Getting the new scaffolding, if you want it</h3>
+<p>Optional. The assignment and the W2 guide both contain the full schema, so you can simply create the files yourself. If you would rather start from the template versions, download the individual files rather than merging anything:</p>
+<pre><code>mkdir -p workshops/week-02/threat-cards
+
+curl -o workshops/week-02/adversary-profile.json \
+  https://raw.githubusercontent.com/BoiseState/CS581/main/student-repo-template/primary-repo/workshops/week-02/adversary-profile.json
+
+curl -o workshops/week-02/threat-cards/cards.json \
+  https://raw.githubusercontent.com/BoiseState/CS581/main/student-repo-template/primary-repo/workshops/week-02/threat-cards/cards.json</code></pre>
+<p>Both files contain a <code>_comment</code> key explaining what they are. <strong>Delete that key before you commit</strong>, and remember both files must parse as valid JSON when you are done.</p>
+<p>This is the honest answer to "how do I get one file from another repository." Not a merge. You fetch the file you want.</p>
+
+<h3>Confirm you are clean</h3>
+<pre><code>ls workshops/week-02/
+git status</code></pre>
+<p>You should see no <code>threat-profile.md</code>, and a clean working tree once you have committed and pushed.</p>
+
+<h3>The actual lesson</h3>
+<p>This situation is common in real work, and it is a design problem rather than a Git problem.</p>
+<p>Copying files out of a template gives you a clean history and full control, and it permanently severs you from upstream fixes. Forking keeps the upstream relationship and lets you pull changes, at the cost of carrying the upstream's history and structure. Neither is wrong. What is wrong is choosing one without knowing you chose it, and then discovering the consequence when the upstream changes.</p>
+<p>We chose copy. I then changed the upstream. That is on me, and the cost is one <code>git rm</code>, which is about the cheapest possible version of this lesson. It is worth remembering the next time you set up a repository from someone else's scaffolding and have to decide whether you will ever want their updates.</p>
+<p>If you want practice with real merges and conflict resolution, we will do that deliberately later in the semester inside your own repo, where the conflicts are controlled and nothing is at risk.</p>
