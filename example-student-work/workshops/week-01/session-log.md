@@ -45,7 +45,7 @@ Key things: NEI 08-09 is the industry's answer to RG 5.71 — how to actually im
 
 Anderson, Chapters 1–2. Two hours.
 
-The psychology chapter (Ch. 2) hit differently after reading the regulatory documents. Anderson talks about how humans systematically underestimate low-probability, high-consequence events. Nuclear regulation exists precisely because of this bias — the NRC does not trust operators to correctly weight the probability of rare events, so it mandates defense in depth regardless of anyone's probability assessment. That is a designed-in response to a known cognitive failure mode. I had not thought about regulation that way before.
+The psychology chapter (Ch. 3 in my third edition) hit differently after reading the regulatory documents. Anderson talks about how humans systematically underestimate low-probability, high-consequence events. Nuclear regulation exists precisely because of this bias — the NRC does not trust operators to correctly weight the probability of rare events, so it mandates defense in depth regardless of anyone's probability assessment. That is a designed-in response to a known cognitive failure mode. I had not thought about regulation that way before.
 
 After the reading I had a much clearer sense of what I was trying to map and why. I also had specific terminology I could use in prompts.
 

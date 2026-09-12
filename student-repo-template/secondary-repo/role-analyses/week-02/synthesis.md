@@ -55,10 +55,11 @@ What would a decision look like that is impossible to satisfy both roles simulta
 
 <!--
 The Insider Threat Investigator lens must ground its behavioural-indicator claims in
-Anderson Ch. 2, citing at least two specific concepts from the chapter. Name them.
+Anderson's Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2), citing at
+least two specific concepts from it. Name them.
 "Anderson discusses psychology" is not a citation.
 
-Ch. 2 is about cognitive exploitation, authority compliance, and the psychology of insider
+That chapter is about cognitive exploitation, authority compliance, and the psychology of insider
 risk. That is the investigator's entire evidentiary basis: what conditions create insider
 risk, and which behavioural indicators are actually observable rather than merely plausible.
 

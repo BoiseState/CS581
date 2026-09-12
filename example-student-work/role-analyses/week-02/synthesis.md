@@ -32,9 +32,9 @@ My detection opportunities list is five entries long and four of them assume an 
 
 The role would also challenge my entire framing of `pivot_path`. I traced a network route because network routes are what I know how to think about. The insider does not pivot. They are already positioned, and what changes is intent rather than location. My W1 map has a row for "DCS cabinet physical access" that I rated a lower concern precisely because it requires being inside the protected area, which I treated as a barrier. This role treats it as a description of the workforce.
 
-**Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) grounding.**
+**Anderson grounding.** *Psychology and Usability*, Ch. 3 in the third edition and Ch. 2 in the second.
 
-This role has no MITRE matrix. Its evidentiary basis is the psychology chapter, and two concepts from it do the work.
+This role has no MITRE matrix. Its evidentiary basis is that chapter, and two concepts from it do the work.
 
 The first is Anderson's treatment of **authority and deference to it**. The chapter's argument is that people comply with the markers of authority rather than with verified authority, and that this is ordinary rather than foolish. Applied to my detection list: an analyst who sees a vendor remote-access session outside a maintenance window and assumes a ticket exists somewhere is doing the normal thing. My control does not fail technically. It fails because a person behaves the way people behave. That reframes the control from a technical measure into an organisational one, and the fix is procedural, requiring the ticket reference at session initiation, rather than more logging.
 

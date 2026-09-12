@@ -123,7 +123,7 @@ I could have used an image generator and the cards would look better. I do not t
 
 I will admit this plainly: in W1 I cited Anderson once, in a sentence I could have written without opening the book.
 
-The Insider Threat Investigator lens forced me to actually use Chapter 2, because that role has no other evidentiary basis. A threat analyst has MITRE IDs and CISA advisories. An insider threat investigator has organisational psychology and a set of behavioural indicators that mostly are not observable. The chapter is the whole toolkit for that role.
+The Insider Threat Investigator lens forced me to actually use Ch. 3, because that role has no other evidentiary basis. A threat analyst has MITRE IDs and CISA advisories. An insider threat investigator has organisational psychology and a set of behavioural indicators that mostly are not observable. The chapter is the whole toolkit for that role.
 
 What changed my synthesis was the material on authority and compliance. My detection opportunities list assumes an analyst who escalates an anomaly. Chapter 2's argument is that people defer to apparent authority and to the expected course of events, which means the analyst who sees a vendor remote-access session outside a maintenance window and assumes there is a ticket somewhere is behaving normally, not negligently. The control I wrote down does not fail technically. It fails because a human being does the reasonable thing.
 
@@ -131,7 +131,7 @@ What changed my synthesis was the material on authority and compliance. My detec
 
 ## Reflection — The Card Exercise
 
-Required section. Grounding it in Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) as the assignment asks.
+Required section. Grounding it in Anderson, *Psychology and Usability*, as the assignment asks. That is Ch. 3 in my third edition and Ch. 2 in the second, where it is titled *Usability and Psychology*.
 
 **What the card format added that the sources did not support.**
 
@@ -139,7 +139,7 @@ Certainty, mostly, and a kind of parity. Five actors rendered at identical dimen
 
 The MITRE ID does the heaviest lifting. `T0889` in a monospace box next to an actor name looks like a measurement. It is a category label from a framework that is itself a model of adversary behaviour, applied by me, in September, from public reporting of variable quality. Everything upstream of that box is judgement, and the box makes it look like a reading off an instrument.
 
-**Which Anderson’s Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2) concepts explain why the card persuades past its evidence.**
+**Which concepts from that chapter explain why the card persuades past its evidence.**
 
 Two, specifically.
 
