@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 1050" width="750" height="1050" role="img" aria-label="Threat actor card: CyberAv3ngers">
+<defs>
+  <linearGradient id="g05" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0d151a"/><stop offset="1" stop-color="#07090c"/>
+  </linearGradient>
+  <clipPath id="art05"><rect x="42" y="150" width="666" height="380" rx="6"/></clipPath>
+</defs>
+<rect width="750" height="1050" rx="22" fill="url(#g05)"/>
+<rect x="14" y="14" width="722" height="1022" rx="14" fill="none" stroke="#3ca8e8" stroke-width="2.5" opacity="0.75"/>
+<rect x="26" y="26" width="698" height="998" rx="9" fill="none" stroke="#6bc7ff" stroke-width="0.8" opacity="0.3"/>
+
+<text x="42" y="74" font-family="Georgia,serif" font-size="40" font-weight="bold" fill="#f2f6fa">CyberAv3ngers</text>
+<text x="42" y="104" font-family="monospace" font-size="14" fill="#6bc7ff" opacity="0.9">the Unitronics defacement actor</text>
+<rect x="42" y="118" width="200" height="24" rx="12" fill="#3ca8e8" opacity="0.22"/>
+<text x="54" y="135" font-family="monospace" font-size="12.5" font-weight="bold" fill="#6bc7ff" letter-spacing="1.4">HACKTIVIST (claimed)</text>
+<text x="708" y="74" text-anchor="end" font-family="monospace" font-size="34" fill="#3ca8e8" opacity="0.5">#05</text>
+
+<rect x="42" y="150" width="666" height="380" rx="6" fill="#05070a" stroke="#6bc7ff" stroke-width="0.8" opacity="0.95"/>
+<g clip-path="url(#art05)"><g transform="translate(375 340) scale(1.55)"><g transform="rotate(0.0 0 0)"><path d="M -16.993780539836735 -60.84350645216182 L 0 -112.6528744501993 L 16.993780539836735 -60.84350645216182 Z" fill="#6bc7ff" opacity="0.80"/></g><g transform="rotate(60.0 0 0)"><path d="M -10.82482204027474 -67.16593953222036 L 0 -93.31884382944554 L 10.82482204027474 -67.16593953222036 Z" fill="#6bc7ff" opacity="0.71"/></g><g transform="rotate(120.0 0 0)"><path d="M -17.188566549913958 -58.14079837547615 L 0 -86.42442831024528 L 17.188566549913958 -58.14079837547615 Z" fill="#6bc7ff" opacity="0.68"/></g><g transform="rotate(180.0 0 0)"><path d="M -11.930212548235431 -55.495926345698535 L 0 -87.99326739646494 L 11.930212548235431 -55.495926345698535 Z" fill="#6bc7ff" opacity="0.53"/></g><g transform="rotate(240.0 0 0)"><path d="M -10.689355291193351 -51.36766598932445 L 0 -120.1324580674991 L 10.689355291193351 -51.36766598932445 Z" fill="#6bc7ff" opacity="0.54"/></g><g transform="rotate(300.0 0 0)"><path d="M -17.292429150315 -69.93349640304223 L 0 -87.87177678570151 L 17.292429150315 -69.93349640304223 Z" fill="#6bc7ff" opacity="0.38"/></g><circle r="26" fill="none" stroke="#6bc7ff" stroke-width="2.1" opacity="0.5"/><circle r="43" fill="none" stroke="#6bc7ff" stroke-width="1.3" opacity="0.5"/><circle r="60" fill="none" stroke="#6bc7ff" stroke-width="1.5" opacity="0.5"/><circle r="9" fill="#6bc7ff" opacity="0.85"/></g></g>
+<text x="56" y="518" font-family="monospace" font-size="10" fill="#6bc7ff" opacity="0.45">SIGIL: PROCEDURAL · NOT A LIKENESS · NO PERSON DEPICTED</text>
+
+<line x1="42" y1="558" x2="708" y2="558" stroke="#6bc7ff" stroke-width="1" opacity="0.4"/>
+<text x="42" y="590" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SIGNATURE TTP</text>
+<text x="42" y="616" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">Internet Accessible Device, default credentials on</text>
+<text x="42" y="640" font-family="Georgia,serif" font-size="19" fill="#f2f6fa">exposed controllers</text>
+<rect x="42" y="654" width="61" height="26" rx="4" fill="#3ca8e8" opacity="0.2"/>
+<text x="53" y="672" font-family="monospace" font-size="13" font-weight="bold" fill="#6bc7ff">T0883</text>
+
+<text x="42" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">SECTOR TARGETING</text>
+<text x="42" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">Water and wastewater · Any facility running</text>
+<text x="42" y="761" font-family="Georgia,serif" font-size="15" fill="#dce8f4">internet-exposed Unitronics PLCs</text>
+<text x="430" y="718" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">FIRST OBSERVED</text>
+<text x="430" y="740" font-family="Georgia,serif" font-size="15" fill="#dce8f4">2023, Unitronics campaign</text>
+
+<line x1="42" y1="800" x2="708" y2="800" stroke="#6bc7ff" stroke-width="1" opacity="0.4"/>
+<text x="42" y="828" font-family="monospace" font-size="11" fill="#7a8fa6" letter-spacing="1.2">WHAT THIS CARD CANNOT TELL YOU</text>
+<text x="42" y="850" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">Which tier this actor really belongs in, and that ambiguity is</text>
+<text x="42" y="869" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">why I included it. The group brands itself as hacktivist, and</text>
+<text x="42" y="888" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">the technical bar was low: internet-exposed controllers with</text>
+<text x="42" y="907" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">unchanged default passwords. But CISA attributes the campaign to</text>
+<text x="42" y="926" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">actors affiliated with the IRGC Cyber-Electronic Command. I have</text>
+<text x="42" y="945" font-family="Georgia,serif" font-size="14" fill="#b9cbdd" opacity="0.95">filed it as hacktivist because that is its presentation, and the</text>
+
+<line x1="42" y1="958" x2="708" y2="958" stroke="#6bc7ff" stroke-width="0.8" opacity="0.3"/>
+<text x="42" y="980" font-family="monospace" font-size="10.5" fill="#7a8fa6">CONFIDENCE: ASSESSED</text>
+<text x="42" y="998" font-family="monospace" font-size="9.5" fill="#5f7a90">PROVENANCE: CISA advisory of December 2023 on IRGC-affiliated actors exploiting Unitronics PLCs,</text>
+<text x="42" y="1013" font-family="monospace" font-size="9.5" fill="#5f7a90">issued with FBI, NSA, EPA and INCD.</text>
+<text x="708" y="1010" text-anchor="end" font-family="monospace" font-size="9.5" fill="#4a6070">CS 581 · W2 · J. REYES</text>
+</svg>

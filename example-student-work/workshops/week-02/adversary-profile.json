@@ -1,0 +1,106 @@
+{
+  "target_system": ["TCS"],
+  "w1_map_reference": "workshops/week-01/attack-surface-map-ot.md",
+  "pivot_path": "DCS (my W1 system, Level 2) to TCS (my W2 system, Level 1) via the Modbus TCP/serial links in row 4 of my W1 OT map. The DCS supervises balance-of-plant equipment including turbine auxiliaries, so an actor holding DCS controller nodes or an engineering workstation already sits upstream of TCS on the same control network with no boundary device between them. This is the opposite of the DCS-to-RPS path in row 5 of the same map, which is a one-way data diode: outbound telemetry only, no inbound command path, so an actor on the DCS cannot reach RPS through it at all. That asymmetry is why I changed my W2 system from RPS to TCS. The interesting pivot is the one that exists.",
+  "actor": "Sandworm Team",
+  "also_known_as": ["ELECTRUM (Dragos, overlapping activity)", "IRIDIUM", "TeleBots", "Voodoo Bear", "APT44 (Mandiant)"],
+  "attributed_to": "Russian Federation. US DOJ indictment of October 2020 names six officers of GRU Unit 74455, the Main Centre for Special Technologies (GTsST).",
+  "confidence": "documented",
+  "provenance": "US DOJ indictment, October 19 2020, US v. Andrienko et al. (W.D. Pa.); MITRE ATT&CK for ICS, Sandworm Team (G0034); ESET, Industroyer analysis (2017) and Industroyer2 with CERT-UA (April 2022).",
+  "motivation": {
+    "primary": "State-directed disruption of critical infrastructure in support of Russian geopolitical and military objectives",
+    "secondary": [
+      "Demonstration of capability as strategic signalling",
+      "Degradation of adversary civil infrastructure during armed conflict",
+      "Intelligence collection on operational technology environments as preparation for later effects"
+    ]
+  },
+  "capability_tier": "nation-state-tier-1",
+  "nuclear_targeting_evidence": "None that I can find in public reporting, and I want to be direct about that rather than imply otherwise. Sandworm's documented ICS operations targeted electricity transmission and distribution in Ukraine, not nuclear generating stations. I found no public, named source placing this actor inside a nuclear plant's I&C environment. Its relevance to my TCS analysis is by architectural analogy: a turbine control system is rotating-machinery control with protective trip logic and electrical switchgear interfaces, which is the same class of equipment Industroyer's protocol modules were written against. That analogy is a reason to study the actor. It is not evidence of nuclear targeting, and any claim that Sandworm 'threatens nuclear plants' is an inference I am making, not a finding I am reporting.",
+  "primary_ttps": [
+    {
+      "tactic": "Initial Access",
+      "technique": "External Remote Services",
+      "mitre_ics_id": "T0822",
+      "nuclear_relevance": "Vendor and integrator remote access is a standing requirement in plant I&C, since turbine control vendors contract for diagnostic support. RG 5.71 Rev. 1 Appendix B addresses remote access controls precisely because the path is expected to exist.",
+      "system_relevance": "Row 1 of my W1 IT map, vendor remote access tunnels. That row is the same entry point regardless of whether the target is DCS or TCS, because the vendor support path lands on the control network before it lands on a specific system.",
+      "confidence": "documented"
+    },
+    {
+      "tactic": "Initial Access / Lateral Movement",
+      "technique": "Valid Accounts",
+      "mitre_ics_id": "T0859",
+      "nuclear_relevance": "Credential reuse between corporate and control networks is the specific practice CISA guidance warns against, and 10 CFR 73.56 account revocation timelines create a window after personnel changes.",
+      "system_relevance": "Row 2 of my W1 IT map, corporate Active Directory and identity federation. My W1 map rated this Medium confidence because I could not establish whether the plant federates control-network identity to corporate AD, and I still cannot.",
+      "confidence": "documented"
+    },
+    {
+      "tactic": "Execution",
+      "technique": "Graphical User Interface",
+      "mitre_ics_id": "T0823",
+      "nuclear_relevance": "Operating the plant through its own HMI rather than through malware is the technique that makes an intrusion look like an operator action in the logs, which directly complicates the 10 CFR 73.77 notification decision about whether an event occurred at all.",
+      "system_relevance": "Row 2 of my W1 OT map, HMI stations. In December 2015 the actor operated breakers through hijacked operator consoles rather than through custom code. The TCS equivalent is the turbine control HMI in the control room.",
+      "confidence": "documented"
+    },
+    {
+      "tactic": "Impair Process Control",
+      "technique": "Unauthorized Command Message",
+      "mitre_ics_id": "T0855",
+      "nuclear_relevance": "Turbine control accepts setpoint and trip commands over protocols with no native authentication. A valid-looking command is indistinguishable from a legitimate one at the protocol layer.",
+      "system_relevance": "Row 4 of my W1 OT map, Modbus TCP and serial links to Level 1 devices. This is the same row that carries my pivot path, which is not a coincidence: the link that lets an actor reach TCS is the link that lets them command it.",
+      "confidence": "documented"
+    },
+    {
+      "tactic": "Inhibit Response Function",
+      "technique": "Manipulation of Control",
+      "mitre_ics_id": "T0831",
+      "nuclear_relevance": "Turbine overspeed and vibration protection are the trip functions that prevent mechanical destruction of rotating machinery. Manipulating control while protection is degraded is the scenario that turns a cyber event into a plant equipment event.",
+      "system_relevance": "Row 1 of my W1 OT map, DCS controller nodes, as the upstream position. I cannot map this to a TCS-internal row because I have not built a TCS attack surface map. That is a real gap in this profile and I am recording it rather than papering over it.",
+      "confidence": "inferred"
+    },
+    {
+      "tactic": "Impact",
+      "technique": "Manipulation of View",
+      "mitre_ics_id": "T0832",
+      "nuclear_relevance": "If the control room display does not match plant reality, operator response is built on a false picture. This is the failure mode that the three-framework analysis in W5 has to account for, since safety, security and safeguards all read the same instrumentation.",
+      "system_relevance": "Rows 2 and 3 of my W1 OT map, HMI stations and engineering workstations. Industroyer included a module that reported false device states back to the HMI.",
+      "confidence": "documented"
+    },
+    {
+      "tactic": "Inhibit Response Function",
+      "technique": "Device Restart/Shutdown",
+      "mitre_ics_id": "T0816",
+      "nuclear_relevance": "A forced restart of protective relays or controllers creates a window in which protection is unavailable while the process continues. In a turbine context that window is measured against machinery inertia, not against IT recovery time objectives.",
+      "system_relevance": "Row 1 of my W1 OT map, DCS controller nodes. Industroyer carried a denial-of-service module against a specific protective relay family.",
+      "confidence": "documented"
+    },
+    {
+      "tactic": "Impact",
+      "technique": "Data Destruction",
+      "mitre_ics_id": "T0809",
+      "nuclear_relevance": "Wiping engineering workstations destroys the configuration baselines needed to restore the system and to determine what was changed. It attacks the investigation as much as the plant.",
+      "system_relevance": "Row 3 of my W1 OT map, engineering workstations. The 2015 Ukraine operation used KillDisk against operator and engineering hosts after the electrical effect, which is the sequencing detail I had missed on first read.",
+      "confidence": "documented"
+    }
+  ],
+  "historical_precedent": [
+    "December 23 2015, Ukraine: coordinated intrusion at three distribution companies interrupted power to roughly 225,000 customers. Breakers were operated through hijacked HMIs, KillDisk wiped hosts, and a telephony denial of service degraded the utilities' ability to receive outage calls.",
+    "December 2016, Kyiv: Industroyer / CRASHOVERRIDE, the first known malware framework written with modular payloads for electric grid protocols, including IEC 60870-5-101, IEC 60870-5-104, IEC 61850 and OPC DA.",
+    "June 2017: NotPetya, a destructive wiper delivered through a compromised Ukrainian accounting software update, which spread globally and caused collateral damage far outside its apparent target set.",
+    "April 2022, Ukraine: Industroyer2, reported jointly by CERT-UA and ESET, a narrower variant targeting IEC 60870-5-104 in an attempted substation attack that was disrupted before it achieved its effect."
+  ],
+  "detection_opportunities": [
+    "Command messages on control protocols originating from a host that is not the normal control source, which requires knowing what normal is before the event rather than reconstructing it afterward",
+    "Engineering workstation logons outside maintenance windows, correlated against the work order system rather than judged in isolation",
+    "Protective relay configuration reads and writes, which are rare in normal operation and therefore high signal when they occur",
+    "Vendor remote access sessions that do not correspond to an open support ticket",
+    "Divergence between the HMI-reported device state and an independent measurement of the same physical quantity, which is the only detection that survives manipulation of view"
+  ],
+  "gaps_in_public_knowledge": [
+    "No public source I found places this actor in a nuclear generating station's I&C environment. Every nuclear-relevant claim in this profile is my inference from architectural similarity, not a reported finding.",
+    "The relationship between the Dragos activity group ELECTRUM and the DOJ-indicted GRU unit is described in public reporting as overlapping, not identical. I cannot establish from open sources where one ends and the other begins, and vendor naming conventions do not resolve cleanly onto government attribution.",
+    "Initial access for the December 2015 operation is reported as spearphishing with a malicious document, but the specific path from corporate compromise to control network access is not fully described in public sources. The interesting part of that intrusion is the part I cannot read.",
+    "Current capability is unknown. The most recent public reporting I used is from 2022. Assuming the 2022 toolkit represents present capability is an assumption, and a poor one for an actor with continuous state funding.",
+    "The DOJ indictment names individuals and describes conduct, but an indictment is an allegation tested at trial, not an adjudicated finding. None of the named officers are in custody. I am treating attribution as documented because a government has formally asserted it under its own name, which is a stronger evidentiary posture than vendor attribution, but it is not the same as proof."
+  ]
+}

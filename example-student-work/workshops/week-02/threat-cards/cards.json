@@ -1,0 +1,106 @@
+[
+  {
+    "actor": "XENOTIME",
+    "aka": [
+      "TEMP.Veles",
+      "the TRITON actor"
+    ],
+    "capability_tier": "nation-state-tier-1",
+    "sector_targeting": [
+      "Oil and gas",
+      "Petrochemical",
+      "Electric utilities (reconnaissance reported)"
+    ],
+    "signature_ttp": {
+      "technique": "Modify Program, reprogramming safety controller logic",
+      "mitre_ics_id": "T0889"
+    },
+    "first_observed": "2017, via the TRITON incident",
+    "confidence": "documented",
+    "provenance": "US Treasury sanctions action of October 2018 naming a Russian government research institute (TsNIIKhM); Dragos activity group reporting; MITRE ATT&CK for ICS.",
+    "what_this_card_cannot_tell_you": "That the TRITON intrusion succeeded. It did not. The safety system tripped the plant because the attacker's code was wrong, which is how anyone found out. The most famous safety-system attack on record is also a story about an attacker failing."
+  },
+  {
+    "actor": "CHERNOVITE",
+    "aka": [
+      "the PIPEDREAM developer",
+      "INCONTROLLER (Mandiant naming)"
+    ],
+    "capability_tier": "nation-state-tier-1",
+    "sector_targeting": [
+      "Electric",
+      "Liquefied natural gas",
+      "Industrial control generally, by protocol rather than by sector"
+    ],
+    "signature_ttp": {
+      "technique": "Unauthorized Command Message via native industrial protocols",
+      "mitre_ics_id": "T0855"
+    },
+    "first_observed": "2022, before any observed use",
+    "confidence": "documented",
+    "provenance": "CISA advisory AA22-103A, April 2022, issued jointly with DOE, NSA and FBI; Dragos PIPEDREAM reporting.",
+    "what_this_card_cannot_tell_you": "Who this is. The toolkit was found before it was used, which is unusual and good, but it means attribution rests on capability analysis rather than on observed operations against a victim. This is the only card in my set where the tooling is better documented than the operator, and putting a confident name on the card would misrepresent that."
+  },
+  {
+    "actor": "BERSERK BEAR",
+    "aka": [
+      "Dragonfly",
+      "Energetic Bear",
+      "Havex actor",
+      "TEMP.Isotope"
+    ],
+    "capability_tier": "nation-state-tier-2",
+    "sector_targeting": [
+      "Energy",
+      "Water",
+      "Aviation",
+      "Government facilities"
+    ],
+    "signature_ttp": {
+      "technique": "Supply Chain Compromise, trojanised ICS vendor software downloads",
+      "mitre_ics_id": "T0862"
+    },
+    "first_observed": "2013, campaigns through 2020",
+    "confidence": "documented",
+    "provenance": "CISA advisory AA20-296A, October 2020; US DOJ indictment of March 2022 naming FSB Center 16 officers; CISA alert TA18-074A on energy sector intrusions.",
+    "what_this_card_cannot_tell_you": "What the access was for. Public reporting describes years of persistent presence in energy sector networks with no destructive effect, which reads either as patient pre-positioning or as intelligence collection that never had an effect phase. The card has to pick a capability tier and the honest answer is that intent is unresolved."
+  },
+  {
+    "actor": "DarkSide",
+    "aka": [
+      "the Colonial Pipeline ransomware affiliate operation"
+    ],
+    "capability_tier": "criminal",
+    "sector_targeting": [
+      "Opportunistic across sectors",
+      "Selected by ability to pay, not by sector"
+    ],
+    "signature_ttp": {
+      "technique": "Data Encrypted for Impact against IT systems, with OT consequences arising indirectly",
+      "mitre_ics_id": "T1486 (Enterprise; no ICS equivalent, because the technique never touched OT)"
+    },
+    "first_observed": "2020; Colonial Pipeline 2021",
+    "confidence": "documented",
+    "provenance": "CISA and FBI joint advisory AA21-131A, May 2021; Colonial Pipeline public statements and subsequent congressional testimony.",
+    "what_this_card_cannot_tell_you": "The most important thing here: the OT was never touched. The pipeline stopped because the operator could not bill with IT encrypted. A criminal group with no ICS capability caused a fuel disruption through a business-process dependency."
+  },
+  {
+    "actor": "CyberAv3ngers",
+    "aka": [
+      "the Unitronics defacement actor"
+    ],
+    "capability_tier": "hacktivist",
+    "sector_targeting": [
+      "Water and wastewater",
+      "Any facility running internet-exposed Unitronics PLCs"
+    ],
+    "signature_ttp": {
+      "technique": "Internet Accessible Device, default credentials on exposed controllers",
+      "mitre_ics_id": "T0883"
+    },
+    "first_observed": "2023, Unitronics campaign",
+    "confidence": "assessed",
+    "provenance": "CISA advisory of December 2023 on IRGC-affiliated actors exploiting Unitronics PLCs, issued with FBI, NSA, EPA and INCD.",
+    "what_this_card_cannot_tell_you": "Which tier this actor really belongs in, and that ambiguity is why I included it. The group brands itself as hacktivist, and the technical bar was low: internet-exposed controllers with unchanged default passwords. But CISA attributes the campaign to actors affiliated with the IRGC Cyber-Electronic Command. I have filed it as hacktivist because that is its presentation, and the confidence is assessed rather than documented because I do not think the label survives the attribution. A capability tier is a single field and this actor needs a paragraph."
+  }
+]
