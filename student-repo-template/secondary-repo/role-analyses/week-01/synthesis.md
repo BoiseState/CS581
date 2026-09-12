@@ -1,12 +1,12 @@
 # Role Analysis — Module 1
-## [Your Name] | Week 1–2
+## [Your Name] | Weeks 1–2
 
-**Role A:** <!-- e.g., NRC Security Inspector -->
-**Role B:** <!-- e.g., Plant Cybersecurity Manager -->
+**Role A:** NRC Regulator
+**Role B:** Plant Cybersecurity Manager
 
 ---
 
-## Role A Perspective: [Role Name]
+## Role A Perspective: NRC Regulator
 
 <!--
 How does this role read the Module 1 material?
@@ -19,7 +19,7 @@ What would this role flag, prioritize, or question in your attack surface map?
 
 ---
 
-## Role B Perspective: [Role Name]
+## Role B Perspective: Plant Cybersecurity Manager
 
 <!--
 Same exercise for the second role.

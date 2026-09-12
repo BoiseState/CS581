@@ -2,6 +2,7 @@
   "_comment": "W2 deliverable. Replace every ... with your own content. Delete this _comment key before committing. File MUST parse as valid JSON.",
   "target_system": ["<from your sequencing plan; array so a pair can name both>"],
   "w1_map_reference": "workshops/week-01/attack-surface-map-<it|ot|physical>.md",
+  "pivot_path": "How would this actor move from your W1 system to your W2 system? Name the interface. If there is no path, say so and say why.",
   "actor": "...",
   "also_known_as": ["..."],
   "attributed_to": "...",

@@ -1,12 +1,12 @@
 # Role Analysis — Module 6
-## [Your Name] | Week 6
+## [Your Name] | Weeks 11–12
 
-**Role A:** <!-- e.g., NRC Security Inspector -->
-**Role B:** <!-- e.g., Plant Cybersecurity Manager -->
+**Role A:** Emergency Response Coordinator
+**Role B:** Supply Chain Manager
 
 ---
 
-## Role A Perspective: [Role Name]
+## Role A Perspective: Emergency Response Coordinator
 
 <!--
 How does this role read the Module 6 material?
@@ -19,7 +19,7 @@ What would this role flag, prioritize, or question in your attack surface map?
 
 ---
 
-## Role B Perspective: [Role Name]
+## Role B Perspective: Supply Chain Manager
 
 <!--
 Same exercise for the second role.

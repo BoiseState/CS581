@@ -189,11 +189,12 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
   </div>
 
   <div class="card">
-    <h2>Two fields carry the most weight</h2>
+    <h2>Three fields carry the most weight</h2>
     <table>
       <tr><th>Field</th><th>What it is for</th></tr>
       <tr><td><code>system_relevance</code></td><td>On every TTP, name the specific interface on <b>your own W1 map</b> that the technique would reach. This is the field that connects W2 to W1. A generic answer here means the profile is about nuclear facilities in general, which is not the assignment.</td></tr>
-      <tr><td><code>gaps_in_public_knowledge</code></td><td>Attribution claims that exist but cannot be verified from open sources. An empty array means the analysis was not finished.</td></tr>
+      <tr><td><code>pivot_path</code></td><td>How this actor would move from your <b>W1</b> system to your <b>W2</b> system. Name the interface. If there is no path, say so and say why. Every one of you now has two systems in play, and this is where they connect.</td></tr>
+    <tr><td><code>gaps_in_public_knowledge</code></td><td>Attribution claims that exist but cannot be verified from open sources. An empty array means the analysis was not finished.</td></tr>
     </table>
     <div class="note">
       <b>Six to ten TTP entries.</b> Map each to a MITRE ATT&amp;CK for ICS ID in <code>T0XXX</code> form. Enterprise <code>T1XXX</code> IDs are acceptable only where no ICS equivalent exists, and say so in that entry.
@@ -241,7 +242,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
       <span class="chip">trading card</span><span class="chip">anime</span><span class="chip">vaporwave</span>
       <span class="chip">field guide</span><span class="chip">your call</span>
     </div>
-    <p>Every card must legibly show four things: actor name, capability tier, signature TTP with its MITRE ICS ID, and a provenance line naming a public source.</p>
+    <p>Every card must legibly show four things: actor name, capability tier, signature TTP with its MITRE ICS ID, and a provenance line naming a public source.</p><div class="note warn"><b>Spread the tiers.</b> Your five cards must span <b>at least three different capability tiers</b>. Five nation-state groups is one tier five times, not a landscape. The course taxonomy is nation-state, insider, hacktivist, criminal, and accidental. Independent operators and small collectives belong here: different motivations, different resources, different time horizons, and they fail differently than a state programme does.</div>
     <p>Cards are graded on whether the stat lines are accurate and sourced, not on artistic quality. A hand-drawn card photographed with your phone scores the same as a polished render if the data is right.</p>
   </div>
 
@@ -283,7 +284,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
   <div class="card">
     <h2>The reflection</h2>
     <p>A short section at the end of the log. You have just asked a generative tool to produce confident, attractive artifacts about actors whose attribution is contested, and in some cases disputed by the people accused.</p>
-    <p>Write down what that felt like, and what you would want a reader of those cards to know that the cards themselves do not say.</p>
+    <p>Write down what that felt like, and what you would want a reader of those cards to know that the cards themselves do not say.</p><div class="note"><b>Ground this in Anderson Ch. 2.</b> The chapter is about cognitive exploitation, authority compliance, and why people believe things that are presented well. Your cards are a specimen of exactly that: a polished card with a stat line and a MITRE ID reads as more authoritative than the same claim in a sentence, even though the evidence behind it has not changed.<p style="margin-bottom:0">Address at least: what did the card format add that the source did not support, and which Anderson concepts explain why it persuades past its evidence?</p></div>
     <div class="note">Module 9 returns to this question about AI in nuclear operations. Your answer here is the start of that thread, so write it honestly rather than tidily.</div>
     <label for="reflNote">Scratch space (saved locally in your browser, not submitted)</label>
     <textarea id="reflNote" rows="5" placeholder="what did the card exercise feel like?"></textarea>
@@ -311,7 +312,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
     <div class="note">
       <b>Use the assigned roles.</b> Several W1 submissions substituted different roles because the old template listed its examples with "e.g." That template has been corrected. For W2 the roles are the two above.
     </div>
-    <p>Apply both to <b>your own profile and cards</b>, not to the reading in general. The divergence to look for is not about facts. Both roles read the same reporting. It is about what each would actually do with it.</p>
+    <p>Apply both to <b>your own profile and cards</b>, not to the reading in general. The divergence to look for is not about facts. Both roles read the same reporting. It is about what each would actually do with it.</p><div class="note warn"><b>Anderson grounding, required.</b> The Insider Threat Investigator lens must ground its behavioural-indicator claims in <b>Anderson Ch. 2</b>, citing at least two specific concepts from the chapter. Name them. "Anderson discusses psychology" is not a citation.<p>That chapter is the investigator's entire evidentiary basis: what conditions create insider risk, and which indicators are actually observable rather than merely plausible. The threat analyst works from technical TTPs and attribution. The investigator works from this. That difference in evidence base is where the two roles genuinely diverge.</p><p style="margin-bottom:0" class="mut">Being straight with you about why this is here: across all eight W1 submissions, three of you never cited Anderson once, against dozens of NIST and RG 5.71 references each. The textbook is carrying no weight yet.</p></div>
   </div>
 </section>
 
@@ -461,7 +462,7 @@ function renderSys(){
   prompts();
 }
 
-const REQ=["target_system","w1_map_reference","actor","also_known_as","attributed_to","confidence","provenance","motivation","capability_tier","nuclear_targeting_evidence","primary_ttps","historical_precedent","detection_opportunities","gaps_in_public_knowledge"];
+const REQ=["target_system","w1_map_reference","pivot_path","actor","also_known_as","attributed_to","confidence","provenance","motivation","capability_tier","nuclear_targeting_evidence","primary_ttps","historical_precedent","detection_opportunities","gaps_in_public_knowledge"];
 const TTPREQ=["tactic","technique","mitre_ics_id","nuclear_relevance","system_relevance","confidence"];
 const CARDREQ=["actor","aka","capability_tier","sector_targeting","signature_ttp","first_observed","confidence","provenance","what_this_card_cannot_tell_you"];
 
@@ -485,6 +486,7 @@ function validate(){
     });
   } else if('primary_ttps' in o) errs.push('primary_ttps must be an array.');
   if(!Array.isArray(o.target_system) && 'target_system' in o) warns.push('target_system should be an array, even for a single system.');
+  if('pivot_path' in o && String(o.pivot_path||'').trim()==='') errs.push('pivot_path is empty. Say how this actor would move from your W1 system to your W2 system, or why they could not.');
   if(Array.isArray(o.gaps_in_public_knowledge) && o.gaps_in_public_knowledge.length===0) errs.push('gaps_in_public_knowledge is empty. An empty gaps array means the analysis is not finished.');
   if(!errs.length && !warns.length){ out.className='vout good'; out.textContent='PARSES, and all required keys are present.\n\nThis checks structure only. It says nothing about whether your content is sourced or accurate.'; return; }
   out.className = errs.length? 'vout bad':'vout good';
@@ -505,6 +507,8 @@ function validateCards(){
     if(c.signature_ttp && !c.signature_ttp.mitre_ics_id) errs.push('card['+i+'] signature_ttp missing mitre_ics_id.');
     if(c.what_this_card_cannot_tell_you!==undefined && String(c.what_this_card_cannot_tell_you).trim()==='') warns.push('card['+i+'] what_this_card_cannot_tell_you is empty.');
   });
+  const tiers=[...new Set(a.map(c=>String(c.capability_tier||'').trim().toLowerCase()).filter(Boolean))];
+  if(a.length && tiers.length<3) errs.push('only '+tiers.length+' distinct capability tier'+(tiers.length===1?'':'s')+' across your five cards ('+tiers.join(', ')+'). The assignment asks for at least three. Five nation-state groups is one tier five times, not a landscape.');
   if(!errs.length && !warns.length){ out.className='vout good'; out.textContent='PARSES. Five cards, all required keys present.'; return; }
   out.className = errs.length?'vout bad':'vout good';
   out.textContent = (errs.length? errs.length+' problem'+(errs.length>1?'s':'')+':\n'+errs.map(e=>'  - '+e).join('\n')+'\n\n':'Structure looks right.\n\n')
@@ -520,12 +524,16 @@ function renderCheck(){
     ['6 to 10 TTPs, each with a T0XXX MITRE ICS ID', null],
     ['every system_relevance names a specific row on my own W1 map', null],
     ['gaps_in_public_knowledge is not empty', null],
+    ['pivot_path names how the actor moves from my W1 system to my W2 system, or why they cannot', null],
     ['cards.json parses and has exactly five actors', null],
+    ['my five cards span at least three different capability tiers', null],
     ['five card files committed, card-01 through card-05', null],
     ['no card depicts a real person', null],
     ['every card shows name, tier, signature TTP with MITRE ID, and provenance', null],
     ['session-log.md includes the reflection on the card exercise', null],
     ['role-analyses/week-02/synthesis.md uses the two assigned roles', null],
+    ['the Insider Threat Investigator lens cites at least two Anderson Ch. 2 concepts', null],
+    ['the card reflection connects to Anderson Ch. 2 on why polished artifacts persuade', null],
     ['the retired threat-profile.md is deleted from my repo', null],
     ['RG 5.71 citations name Revision 1, and say main body or Appendix C', null],
     ['I committed as I worked, not all at once', null]

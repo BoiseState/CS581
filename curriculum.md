@@ -336,6 +336,8 @@ These roles are chosen because they represent the two fundamentally different ad
 
 **Deliverable:** One-page synthesis note committed to `/role-analyses/week-02/synthesis.md`.
 
+**Anderson grounding (Module 2).** The Insider Threat Investigator lens must ground its behavioural-indicator claims in Anderson Ch. 2, citing at least two specific concepts from the chapter rather than gesturing at it. The chapter is about cognitive exploitation, authority compliance, and the psychology of insider risk, which is precisely what that role is for. W1 showed the textbook going largely unused: three of eight students never cited Anderson once, against dozens of NIST and RG 5.71 references each. This requirement exists to close that gap.
+
 The divergence to look for: nation-state threat analysts think in terms of external actors, technical TTPs, and attribution. Insider threat investigators think in terms of organizational psychology, behavioral baselines, and the limits of technical detection. The same Anderson chapter on cognitive biases is read by each role through a completely different lens — and the defensive implications are entirely different.
 
 ---
@@ -352,6 +354,7 @@ The divergence to look for: nation-state threat analysts think in terms of exter
 {
   "target_system": ["PPC"],
   "w1_map_reference": "workshops/week-01/attack-surface-map-ot.md",
+  "pivot_path": "how this actor would move from the W1 system to the W2 system, or why they could not",
   "actor": "...",
   "also_known_as": ["..."],
   "attributed_to": "...",
@@ -386,7 +389,7 @@ Note the `gaps_in_public_knowledge` field — this is where you document what at
 
 **Output files:** `/workshops/week-02/adversary-profile.json` + `/workshops/week-02/threat-cards/` (five stat-line cards plus `cards.json`) + `/workshops/week-02/session-log.md`
 
-**Threat actor cards.** Five actors beyond the one profiled in depth. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, capability tier, signature TTP with MITRE ICS ID, a provenance line, and a `what_this_card_cannot_tell_you` field. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
+**Threat actor cards.** Five actors beyond the one profiled in depth. The five must span **at least three different capability tiers**, so the set covers the course adversary taxonomy rather than five variations on nation-state. Independent operators and small collectives belong here. Card style is the student's choice (baseball, Pokemon, tarot, anime). Cards are produced as SVG or HTML by the coding assistant, or with an image generator if the student already has access to one. Each card carries actor name, capability tier, signature TTP with MITRE ICS ID, a provenance line, and a `what_this_card_cannot_tell_you` field. **No card may depict a real person**, since several actors are tied to named individuals under federal indictment. Cards are graded on accuracy and sourcing of the stat lines, not artistic quality. The session log carries a short reflection on producing confident artifacts about contested attribution, which seeds the Module 9 AI risk discussion.
 
 ---
 

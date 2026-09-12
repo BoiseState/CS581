@@ -1,12 +1,12 @@
 # Role Analysis — Module 5
-## [Your Name] | Week 5
+## [Your Name] | Weeks 9–10
 
-**Role A:** <!-- e.g., NRC Security Inspector -->
-**Role B:** <!-- e.g., Plant Cybersecurity Manager -->
+**Role A:** NRC Security Inspector (10 CFR 73.54)
+**Role B:** IAEA Safeguards Inspector
 
 ---
 
-## Role A Perspective: [Role Name]
+## Role A Perspective: NRC Security Inspector (10 CFR 73.54)
 
 <!--
 How does this role read the Module 5 material?
@@ -19,7 +19,7 @@ What would this role flag, prioritize, or question in your attack surface map?
 
 ---
 
-## Role B Perspective: [Role Name]
+## Role B Perspective: IAEA Safeguards Inspector
 
 <!--
 Same exercise for the second role.

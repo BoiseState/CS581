@@ -2,6 +2,16 @@
 
 Five actors beyond the one in `adversary-profile.json`. Stat-line depth, not full depth.
 
+## Spread the tiers
+
+The five must span **at least three different capability tiers**. Five nation-state groups is not a
+landscape, it is one tier five times.
+
+The course adversary taxonomy is nation-state, insider, hacktivist, criminal, and accidental. Independent
+operators and small collectives belong on these cards. They have different motivations, different
+resources, different time horizons, and they fail in different ways than a state programme does. A set
+that only contains tier-1 actors misses most of what actually reaches a plant.
+
 ## What goes here
 
 - `cards.json` — the data behind the five cards. Must parse as valid JSON.

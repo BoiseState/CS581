@@ -1,12 +1,12 @@
 # Role Analysis — Module 8
-## [Your Name] | Week 8
+## [Your Name] | Weeks 15–16
 
-**Role A:** <!-- e.g., NRC Security Inspector -->
-**Role B:** <!-- e.g., Plant Cybersecurity Manager -->
+**Role A:** ICS/SCADA Engineer
+**Role B:** DOE Policy Analyst
 
 ---
 
-## Role A Perspective: [Role Name]
+## Role A Perspective: ICS/SCADA Engineer
 
 <!--
 How does this role read the Module 8 material?
@@ -19,7 +19,7 @@ What would this role flag, prioritize, or question in your attack surface map?
 
 ---
 
-## Role B Perspective: [Role Name]
+## Role B Perspective: DOE Policy Analyst
 
 <!--
 Same exercise for the second role.
