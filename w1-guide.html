@@ -259,7 +259,7 @@ code{font-family:var(--mono);font-size:12px;background:var(--raised);border:1px 
         <textarea id="sysRefl1" rows="3" placeholder="Specific things it produced correctly without follow-up — domain knowledge, structure, regulatory framing. Be concrete." oninput="save()"></textarea>
       </div>
       <div class="fg" style="margin-top:10px"><label>What did you correct or redirect?</label>
-        <textarea id="sysRefl2" rows="3" placeholder="The specific error or gap the verification found, and which source caught it — e.g. 'claimed RPS uses OPC-UA; RG 5.71 Appendix D shows this is incorrect for Level 1 systems.'" oninput="save()"></textarea>
+        <textarea id="sysRefl2" rows="3" placeholder="The specific error or gap the verification found, and which source caught it — e.g. 'claimed RPS uses OPC-UA; RG 5.71 Rev. 1 Appendix B shows this is incorrect for Level 1 systems.'" oninput="save()"></textarea>
       </div>
     </div>
   </div>
@@ -342,7 +342,7 @@ code{font-family:var(--mono);font-size:12px;background:var(--raised);border:1px 
   <div style="margin-top:16px" class="card">
     <div class="c-title">Session log observations — fill in after verification</div>
     <div class="fg"><label>Did the AI hallucinate any connections or protocols? How did you catch it?</label>
-      <textarea id="asmRefl1" rows="3" placeholder="Name the specific hallucination and the source that caught it — e.g. 'claimed DNP3 on RPS sensor bus; NIST 800-82r3 §5.2 and RG 5.71 Appendix D both show Level 1 I&amp;C uses hardwired or proprietary serial only.'" oninput="save()"></textarea>
+      <textarea id="asmRefl1" rows="3" placeholder="Name the specific hallucination and the source that caught it — e.g. 'claimed DNP3 on RPS sensor bus; NIST 800-82r3 §5.2 and RG 5.71 Rev. 1 Appendix B both show Level 1 I&amp;C uses hardwired or proprietary serial only.'" oninput="save()"></textarea>
     </div>
     <div class="fg" style="margin-top:10px"><label>Which row required the most verification? What settled it?</label>
       <textarea id="asmRefl2" rows="3" placeholder="The interface or threat vector hardest to confirm, and the primary source that finally resolved it." oninput="save()"></textarea>
@@ -1082,7 +1082,12 @@ function genAsmVerifyPrompt() {
 
 Select two sources from the course references (replace the placeholders below with your chosen sources):
 - Source A: [e.g., NIST SP 800-82r3 Section 5.X]
-- Source B: [e.g., NRC RG 5.71 Appendix D]
+- Source B: [e.g., NRC RG 5.71 Rev. 1 Appendix B, technical controls]
+
+[Correction, Sep 14 2026: an earlier version of this guide suggested "RG 5.71 Appendix D" here.
+RG 5.71 has Appendices A, B and C only. NEI 08-09 is the document with an Appendix D, which is
+where the crossover came from. If you cited Appendix D on the strength of this placeholder, that
+is on the guide, not on you.]
 
 Review the attack surface map I produced across all three layers. For each row, verify the protocol, threat vector, and confidence level against these two sources.
 
