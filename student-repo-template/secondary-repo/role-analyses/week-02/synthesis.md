@@ -54,17 +54,24 @@ What would a decision look like that is impossible to satisfy both roles simulta
 ## Anderson Grounding (required)
 
 <!--
-The Insider Threat Investigator lens must ground its behavioural-indicator claims in
-Anderson's Psychology and Usability chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2), citing at
-least two specific concepts from it. Name them.
-"Anderson discusses psychology" is not a citation.
+WHERE THIS GOES: here, as its own section at the end of the file, under this heading.
+Keep it as a separate section. You may also cite Anderson inside Role B above, but the
+named concepts have to appear here, because this is the section that gets checked.
 
-That chapter is about cognitive exploitation, authority compliance, and the psychology of insider
-risk. That is the investigator's entire evidentiary basis: what conditions create insider
-risk, and which behavioural indicators are actually observable rather than merely plausible.
+WHAT IT NEEDS: at least two specific concepts from Anderson's Psychology and Usability
+chapter (3rd ed. Ch. 3, 2nd ed. Ch. 2), named, each with what it means for an observable
+indicator. "Anderson discusses psychology" is not a citation. Section or page numbers are
+not required, but they make the citation checkable.
 
-The threat analyst works from technical TTPs and attribution. The investigator works from
-this. That difference in evidence base is where the two roles actually diverge, and it is
-what this section is for.
+WHY IT IS HERE: that chapter is about cognitive exploitation, authority compliance, and the
+psychology of insider risk. That is the Insider Threat Investigator's entire evidentiary
+basis: what conditions create insider risk, and which behavioural indicators are actually
+observable rather than merely plausible. The threat analyst works from technical TTPs and
+attribution. The investigator works from this. That difference in evidence base is where the
+two roles actually diverge.
+
+Delete this comment block once you have written the section. The same goes for every other
+comment block in this file: they are scaffolding, not part of your submission. GitHub hides
+them when it renders the page, so they are easy to leave behind by accident.
 -->
 

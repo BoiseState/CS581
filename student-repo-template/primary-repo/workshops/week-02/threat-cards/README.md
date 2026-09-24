@@ -67,12 +67,18 @@ since generated images tend to mangle small text.
 
 ## One hard rule
 
-**No card may depict a real person.** Original characters, mascots, creatures, emblems, and abstract art
-are all fine. Art that presents itself as showing what a real operator looks like is not.
+**No card may depict a real person, and no real person may be the subject of a card.** Original
+characters, mascots, creatures, emblems, and abstract art are all fine. Art that presents itself as
+showing what a real operator looks like is not.
 
 Several actors you will look at are tied to named individuals under federal indictment, including in
 CISA advisory AA22-083A on this module's reading list. Inventing faces for them is the one thing this
 assignment will not accept.
+
+A few incidents are publicly identified with one person rather than a group. Those cases belong in
+your set, so card the incident and not the individual: put the campaign or the breach in the
+`actor` field, not the name of the person convicted for it. You can make every analytical point the
+case offers without naming them.
 
 ## Grading
 

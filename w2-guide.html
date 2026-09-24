@@ -205,6 +205,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
   <div class="card">
     <h2>Validate before you commit</h2>
     <p>Paste your <code>adversary-profile.json</code> here. This checks that it parses and that the required keys are present. It does not check whether your content is any good.</p>
+    <div class="note warn"><b>Copy from the Raw view, not from the file page.</b> On GitHub, open the file and click <b>Raw</b>, then copy from there. Text copied from the ordinary file view or from a diff carries line numbers, <code>+</code> and <code>-</code> markers, or invisible markup, and it will never parse no matter how correct your JSON is. If the validator reports an error on a line that looks fine, this is almost always why.</div>
     <textarea id="jsonIn" rows="10" placeholder="paste adversary-profile.json"></textarea>
     <div style="margin-top:10px"><button class="primary" id="btnVal">Validate</button></div>
     <div id="valOut"></div>
@@ -250,8 +251,10 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
   <div class="card">
     <h2>One hard rule</h2>
     <div class="note hard">
-      <b>No card may depict a real person.</b> Original characters, mascots, creatures, emblems, and abstract art are all fine. What is not fine is art that presents itself as showing what a real operator looks like.
-      <p style="margin-bottom:0">Several of the actors you will look at are tied to named individuals under federal indictment, including in AA22-083A on this module's reading list. Inventing faces for them is the one thing this assignment will not accept.</p>
+      <b>No card may depict a real person, and no real person may be the subject of a card.</b> Original characters, mascots, creatures, emblems, and abstract art are all fine. What is not fine is art that presents itself as showing what a real operator looks like.
+      <p>Several of the actors you will look at are tied to named individuals under federal indictment, including in AA22-083A on this module's reading list. Inventing faces for them is the one thing this assignment will not accept.</p>
+      <p>A few incidents are publicly identified with one person rather than a group. Those cases belong in your set, so card the incident and not the individual: put the campaign or the breach in the <code>actor</code> field, not the name of the person convicted for it. You can make every analytical point the case offers without naming them.</p>
+      <p style="margin-bottom:0" class="mut">[Corrected Sep 24 2026: this rule previously barred only the image. It now covers the card's subject as well. If you named an individual in a submitted card on the strength of the earlier wording, that is on the guide, not on you, and nothing needs to change in your W2.]</p>
     </div>
   </div>
 
@@ -263,7 +266,7 @@ ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
 
   <div class="card">
     <h2>Validate cards.json</h2>
-    <p>Five objects, each with the required keys. Same gate as the profile: it must parse.</p>
+    <p>Five objects, each with the required keys. Same gate as the profile: it must parse. Copy from GitHub's <b>Raw</b> view here too.</p>
     <textarea id="cardsIn" rows="8" placeholder="paste cards.json"></textarea>
     <div style="margin-top:10px"><button class="primary" id="btnValC">Validate</button></div>
     <div id="valOutC"></div>
@@ -445,6 +448,8 @@ The card must legibly show:
 
 Hard constraint: do NOT depict a real person. No faces, no portraits, no likenesses.
 Use an emblem, an original mascot, a creature, or abstract shapes instead.
+Where an incident is publicly tied to one individual, title the card with the
+incident or campaign name, never the person's name.
 
 Use the data from cards.json entry [n]. Do not invent facts that are not in that entry.
 All text must be real SVG <text> elements, not paths, so the card stays searchable.`;
