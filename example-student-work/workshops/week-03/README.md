@@ -45,6 +45,26 @@ assistant will generate, target pymodbus 2.x and will not run.
   your values never move, and "values changing" is a graded check. That mistake
   is how this reference build failed its own check the first time.
 
+## Event volume, which is easy to get wrong
+
+The first version of this reference emitted a sampled read once a minute. Left
+running overnight that produced **707 events**, and it was the only system
+reporting. Nine systems doing the same would push roughly 13,000 events a day
+through a dashboard that shows 150 at a time, and the events anyone actually
+needs to see would be buried under a wall of "registers sampled".
+
+It now samples once every fifteen minutes. The rule of thumb:
+
+- **Always emit** state changes, writes, auth failures and alarms. Those are rare
+  and every one of them matters.
+- **Sample** routine polling. Once every ten to fifteen minutes is plenty to show
+  the system is alive and reading.
+- **Never** emit one event per protocol transaction. Your server may poll every
+  two seconds; the SIEM does not need to know that 30 times a minute.
+
+The ingest API rate-limits at 600 events per minute per system, but that is a
+backstop against a runaway loop, not a target.
+
 ## Try it
 
 From the lab host:

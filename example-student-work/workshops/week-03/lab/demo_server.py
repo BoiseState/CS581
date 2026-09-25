@@ -63,6 +63,9 @@ def emit(event_type, severity, message, **kw):
 def step(cmd1, cmd2, bypass):
     """One tick. Values must move; a static capture teaches nothing."""
     for k, cmd in (("p1", cmd1), ("p2", cmd2)):
+        if not cmd and st[k] < 20:
+            st[k] = 0.0          # a stopped pump reads zero, not sensor noise
+            continue
         st[k] += ((1750 if cmd else 0) - st[k]) * 0.25 + random.uniform(-8, 8)
         st[k] = max(0.0, min(1800.0, st[k]))
     running = (st["p1"] > 200) + (st["p2"] > 200)
@@ -119,7 +122,11 @@ async def main():
                 int(st["p1"]), int(st["p2"]), int(st["press"]),
                 int(st["supply"] * 10), int(st["ret"] * 10), int(st["flow"])])
             n += 1
-            if n % 30 == 0:          # sample reads; do not emit every poll
+            # Sample reads sparsely. One system emitting once a minute is fine;
+            # nine of them turn the dashboard into a scrolling wall of noise and
+            # bury the events anyone actually needs to see. Once every 15 minutes
+            # is enough to show the system is alive and reading.
+            if n % 450 == 0:
                 emit("protocol.read", "info",
                      "Holding registers 40001-40006 sampled",
                      target={"point": "40001", "name": "pump_1_speed",
