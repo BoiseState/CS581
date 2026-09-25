@@ -1,0 +1,15 @@
+[Unit]
+Description=CS581 DEMO HMI
+After=network.target plant-demo.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/lab
+Environment=HMI_USER=operator
+Environment=HMI_PASS=REPLACE_WITH_SOMETHING_YOU_CHOOSE
+ExecStart=%h/lab/.venv/bin/gunicorn -w 2 -b 127.0.0.1:5900 hmi.app:app
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

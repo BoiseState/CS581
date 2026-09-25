@@ -1,0 +1,14 @@
+[Unit]
+Description=CS581 DEMO service water system
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/lab
+Environment=SIEM_TOKEN=REPLACE_WITH_YOUR_TOKEN_FROM_ASSIGNMENT_TXT
+ExecStart=%h/lab/.venv/bin/python %h/lab/demo_server.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
