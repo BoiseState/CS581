@@ -33,6 +33,21 @@ This is the **course materials repository** for CS 581. It contains reference ma
 
 **This is not a submission target.** Your work goes in the two repositories you create in Week 1. This repo is read-only reference material.
 
+### Nature of this material
+
+This is coursework for a graduate class in nuclear cybersecurity. Everything here
+is educational and defensive. The "plant" is a simulation: an isolated teaching
+lab of small programs that imitate industrial control systems, running on a
+course-operated host that is not connected to any real facility, plant, utility,
+or control system, and never has been. No system, credential, address, or
+vulnerability described in this repository refers to real infrastructure.
+
+Where later workshops have students exercise attacks, they do so only against
+systems they built themselves, or against a classmate's simulated system through
+a path both students agreed to and constructed for the exercise, inside that
+isolated lab. This is standard practice for a hands-on security course, the same
+model as a capture-the-flag range or an authorized penetration-testing lab.
+
 - <a href="https://boisestatecanvas.instructure.com/courses/48925" target="_blank" rel="noopener">Canvas Course</a> — assignments, rubrics, announcements, grades
 - <a href="https://boisestate.github.io/CS581/plant-architecture.html" target="_blank" rel="noopener">Plant Architecture Diagram</a> — interactive 11-system nuclear plant map (live)
 
