@@ -1,0 +1,292 @@
+<title>W2 Workflow Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0c1117;--surface:#131b25;--raised:#1a2535;
+  --border:#1e2d3d;--border2:#263545;
+  --text:#dce8f4;--text2:#7a8fa6;--text3:#4a6070;
+  --accent:#3b9eff;--accent-dim:#0a1e36;--accent-border:#143258;
+  --ok:#22c55e;--ok-dim:#0a2018;
+  --warn:#f0b429;--err:#f04f4f;
+  --prompt:#060d14;--prompt-border:#1a2d45;
+  --sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Fira Code',monospace;
+  --r:8px;--r2:4px;--r3:12px;
+}
+:root[data-theme="light"] {
+  --bg:#f0f4f9;--surface:#ffffff;--raised:#f5f8fc;
+  --border:#d0dbe8;--border2:#e2eaf4;
+  --text:#0f1c2b;--text2:#4a5f75;--text3:#7d90a4;
+  --accent:#1d6fa5;--accent-dim:#eff8ff;--accent-border:#c3dff4;
+  --ok:#16a34a;--ok-dim:#f0fdf4;--err:#dc2626;
+  --prompt:#0c1117;--prompt-border:#1e2d3d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 120px}
+header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding-block:14px}
+.hrow{max-width:920px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.htitle{font-weight:700;font-size:15px;letter-spacing:-.2px}
+.hsub{color:var(--text3);font-size:12px;font-family:var(--mono)}
+.spacer{flex:1}
+button{font-family:var(--sans);font-size:13px;cursor:pointer;border-radius:var(--r2);border:1px solid var(--border2);background:var(--raised);color:var(--text);padding:7px 13px}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button.ghost{background:transparent}
+.bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:12px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+h1{font-size:24px;margin:28px 0 6px;letter-spacing:-.4px}
+h2{font-size:18px;margin:0 0 4px;letter-spacing:-.2px}
+h3{font-size:14px;margin:22px 0 8px;color:var(--text)}
+p{margin:8px 0}
+.lede{color:var(--text2);margin-bottom:22px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:20px;margin:16px 0}
+.step{display:none}
+.step.on{display:block}
+.stepno{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+label{display:block;font-size:12px;color:var(--text2);margin:14px 0 5px;font-weight:500}
+select,input[type=text],textarea{width:100%;padding:9px 11px;border-radius:var(--r2);border:1px solid var(--border2);background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px}
+textarea{font-family:var(--mono);font-size:12px;line-height:1.55;resize:vertical}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.prompt{background:var(--prompt);border:1px solid var(--prompt-border);border-radius:var(--r);padding:14px 15px;font-family:var(--mono);font-size:12px;line-height:1.6;color:#c8dcf0;white-space:pre-wrap;position:relative;margin:10px 0}
+.copy{position:absolute;top:8px;right:8px;font-size:11px;padding:4px 9px;background:#16324d}
+.copy{border:1px solid #24476b;color:#9fc8ea;background:#122a41}
+.note{border-left:3px solid var(--accent);background:var(--accent-dim);padding:11px 14px;border-radius:0 var(--r2) var(--r2) 0;margin:12px 0;font-size:13px}
+.warn{border-left-color:var(--warn);background:rgba(240,180,41,.09)}
+.hard{border-left-color:var(--err);background:rgba(240,79,79,.09)}
+.okbox{border-left-color:var(--ok);background:var(--ok-dim)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.chip{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--raised);color:var(--text2)}
+.chip.hl{border-color:var(--accent-border);background:var(--accent-dim);color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+code{font-family:var(--mono);font-size:12px;background:var(--raised);padding:1.5px 5px;border-radius:3px;color:var(--accent)}
+.files{font-family:var(--mono);font-size:12px}
+.files div{padding:5px 0;color:var(--text2)}
+.files b{color:var(--text);font-weight:500}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 0;z-index:60}
+.navin{max-width:920px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px}
+.navlbl{font-size:12px;color:var(--text3);font-family:var(--mono)}
+.vout{font-family:var(--mono);font-size:12px;padding:12px 14px;border-radius:var(--r);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.vout.good{background:var(--ok-dim);border:1px solid var(--ok);color:var(--ok)}
+.vout.bad{background:rgba(240,79,79,.09);border:1px solid var(--err);color:var(--err)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}.wrap{padding:0 14px 130px}}
+ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
+.mut{color:var(--text3);font-size:12px}
+
+/* W3 is a reference you jump around in, not a wizard. Show every section. */
+.step{display:block !important}
+.step+.step{margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+a.chip{text-decoration:none}
+.files code{display:block;margin:3px 0}
+textarea{width:100%;font-family:var(--mono);font-size:12px;background:var(--prompt);
+color:var(--text);border:1px solid var(--prompt-border);border-radius:var(--r2);padding:10px}
+.vout{white-space:pre-wrap;font-family:var(--mono);font-size:12px;margin-top:10px;
+padding:10px 12px;border-radius:var(--r2);border:1px solid var(--border2)}
+.vout.good{border-color:var(--ok);background:var(--ok-dim)}
+.vout.bad{border-color:var(--err);background:#2a1216}
+</style><header><div class="hrow">
+  <span class="htitle">CS 581 &middot; W3 Workflow Guide</span>
+  <span class="hsub">Protocol Security &amp; the Plant Lab</span>
+  <span class="spacer"></span>
+  <button class="ghost" id="theme">theme</button>
+</div><div class="hrow"><div class="bar" style="flex:1"><i id="prog"></i></div></div></header>
+
+<div class="wrap">
+<h1>Build a system, capture its traffic, analyse the protocol</h1>
+<p class="lede">Two deadlines. <b>W3 Lab Build, 10 points, Wednesday Oct 1.</b>
+<b>Workshop 3 analysis, 30 points, Monday Oct 6.</b> This guide is the order to do things in,
+plus the things that will cost you an hour if nobody tells you.</p>
+
+<div class="note warn"><b>Before anything else: submit your SSH public key.</b>
+Commit it to <code>infra/ssh-key.pub</code> in your primary repo. No account exists until you do,
+and nothing else on this page can start. The <code>.pub</code> file, never the private key.</div>
+
+<section class="step on" data-step="0"><div class="card">
+<h2><span class="stepno">1</span> Find your system</h2>
+<p>Your system, role account, port block, hostname and peer links are in
+<code>workshops/week-03/README.md</code> in your primary repo. Everyone has a different one.</p>
+<p>You log in as the <b>system</b>, not as yourself: <code>ssh dcs@plant.sanctumsec.com</code>,
+not your name. That account's <code>~/.ssh/authorized_keys</code> is an access control list, and
+it is the thing W4 asks you to reason about.</p>
+</div></section>
+
+<section class="step" data-step="1"><div class="card">
+<h2><span class="stepno">2</span> Read the reference build first</h2>
+<p>There is a complete worked example running on the lab host as the <code>demo</code> system, a
+service water system with six holding registers and three coils. It does everything the Lab Build
+is graded on. It is not anyone's assigned system, so read it rather than copying it.</p>
+<div class="files">
+<code>example-student-work/workshops/week-03/lab/demo_server.py</code>
+<code>example-student-work/workshops/week-03/lab/hmi/app.py</code>
+<code>example-student-work/workshops/week-03/points.md</code>
+</div>
+<p>You can point a client at it while you build yours. It is always up, so it is the one peer
+that cannot be down when you need it.</p>
+</div></section>
+
+<section class="step" data-step="2"><div class="card">
+<h2><span class="stepno">3</span> The pymodbus traps</h2>
+<p>The lab host gives you <b>pymodbus 3.15</b>. Almost every example on the internet, and almost
+everything an AI assistant will generate, targets 2.x and <b>will not run</b>. These five cost
+real time to find:</p>
+<div class="note hard">
+<p style="margin-top:0"><b>1. <code>ModbusSlaveContext</code> does not exist.</b> Renamed to
+<code>ModbusDeviceContext</code>, and that whole datastore API is deprecated and disappears in
+pymodbus 4. Use <code>SimData</code> / <code>SimDevice</code>.</p>
+<p><b>2. <code>ModbusSequentialDataBlock(0, ...)</code> raises</b>
+<code>TypeError: 0 &lt;= address &lt; 65535</code>, despite what the message says. Do not fight the
+legacy path.</p>
+<p><b>3. <code>SimDevice</code> wants a tuple, not a list of lists</b>, in the order
+<code>(di, co, hr, ir)</code>. A list raises
+<code>simdata=list[0] is not a SimData entry</code>.</p>
+<p><b>4. <code>srv.context</code> is a <code>SimCore</code>.</b> Its only accessors are
+<code>async_getValues</code> and <code>async_setValues</code>, both coroutines, and the order is
+<code>(device_id, func_code, address, ...)</code>. <code>device_id</code> must match your
+<code>SimDevice</code> id.</p>
+<p style="margin-bottom:0"><b>5. Do not wrap those accessors in a bare <code>except</code>.</b>
+A silent failure there means your values never move, and that is a graded check. The reference
+build made exactly this mistake and failed its own grading the first time.</p>
+</div>
+</div></section>
+
+<section class="step" data-step="3"><div class="card">
+<h2><span class="stepno">4</span> Write your point map</h2>
+<p>Six to twelve points. Address, name, type, units, range, read or write, and what it physically
+represents. Your W1 attack surface map already names the interfaces; this is that map made
+concrete.</p>
+<div class="note"><b>Two things people get wrong.</b> Modbus registers are 16-bit integers with no
+decimal point, so a temperature is stored scaled (274 means 27.4 &deg;C) and the scale factor lives
+only in your documentation. And wire addresses are zero-based while the conventional
+<code>40001</code> numbering is one-based. State both explicitly or your own client will misread
+your own system.</div>
+<p>Paste your <code>points.md</code> table to check its shape:</p>
+<textarea id="pmIn" rows="7" placeholder="paste the table rows from points.md"></textarea>
+<div style="margin-top:10px"><button class="primary" id="btnPm">Check point map</button></div>
+<div id="pmOut"></div>
+</div></section>
+
+<section class="step" data-step="4"><div class="card">
+<h2><span class="stepno">5</span> Make the values move</h2>
+<p>A server that answers correctly but returns the same number every time passes every other check
+and fails this one. It is worth two of the ten Lab Build points, and it is the check most people
+will fail.</p>
+<p>Give the process a reason to change. In the reference build, commanding a pump raises flow,
+flow raises header pressure, and higher flow drops the supply temperature until it crosses an alarm
+limit. That coupling means a two-minute capture contains a causal chain rather than a set of
+unrelated readings, which is what makes the protocol analysis writable.</p>
+</div></section>
+
+<section class="step" data-step="5"><div class="card">
+<h2><span class="stepno">6</span> Put basic auth on your HMI</h2>
+<p>Required. An unauthenticated request must return <b>401</b>, and the probe checks exactly that.
+Use <code>hmac.compare_digest</code>, not <code>==</code>: string comparison leaks timing.</p>
+<div class="note okbox"><b>Notice the asymmetry while you do it.</b> Your HMI can have a password
+because HTTP can carry one. Your Modbus service cannot, because the protocol has nowhere to put a
+credential. That is the finding of the week, and W4 is where you design what sits around it.</div>
+</div></section>
+
+<section class="step" data-step="6"><div class="card">
+<h2><span class="stepno">7</span> Emit events to the OT-SIEM</h2>
+<p>Minimum: <code>service.state</code> on start and stop, every <code>protocol.write</code>,
+sampled <code>protocol.read</code>, <code>auth.success</code> and <code>auth.failure</code> from
+your HMI, and a <code>process.alarm</code>.</p>
+<div class="note warn"><b>One requirement worth reading twice.</b> At least one event you emit must
+correspond to a <code>detection_opportunity</code> you wrote in your own W2 adversary profile. Say
+which one in <code>network-analysis.md</code>. In W2 you said what you would detect. This week you
+make it emit.</div>
+<p>Paste one event to validate it against the spec:</p>
+<textarea id="evIn" rows="8" placeholder='{"ts":"...","system":"...","purdue_level":2,"event_type":"...","severity":"...","message":"..."}'></textarea>
+<div style="margin-top:10px"><button class="primary" id="btnEv">Validate event</button></div>
+<div id="evOut"></div>
+</div></section>
+
+<section class="step" data-step="7"><div class="card">
+<h2><span class="stepno">8</span> Run it under systemd, then capture</h2>
+<div class="prompt"><pre>mkdir -p ~/.config/systemd/user
+cp workshops/week-03/lab/units/*.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now plant-&lt;yoursystem&gt; plant-&lt;yoursystem&gt;-hmi
+systemctl --user status plant-&lt;yoursystem&gt;</pre></div>
+<p>Lingering is already on for your account, so services survive logout and reboot. The probe
+checks that they come back.</p>
+<p>Then capture your own traffic:</p>
+<div class="prompt"><pre>sudo tcpdump -i lo -w ~/capture.pcap port 5051
+# from your laptop, to view an HMI:
+ssh -N -L 5050:127.0.0.1:5050 dcs@plant.sanctumsec.com</pre></div>
+<div class="note"><b>Wireshark will not dissect Modbus on a non-standard port.</b> Your service is
+not on 502, so use <b>Decode As &rarr; Modbus/TCP</b>. Discovering that is a better lesson about
+port-based assumptions than any paragraph.</div>
+</div></section>
+
+<section class="step" data-step="8"><div class="card">
+<h2><span class="stepno">9</span> Watch it come up</h2>
+<div class="chips">
+<a class="chip" href="https://plant.sanctumsec.com" target="_blank">plant.sanctumsec.com &mdash; build status</a>
+<a class="chip" href="https://siem.plant.sanctumsec.com" target="_blank">siem.plant.sanctumsec.com &mdash; event stream</a>
+</div>
+<p>The status board is how the Lab Build is graded, and you can watch your score forming before
+the deadline. Systems appear by function, not by name.</p>
+</div></section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+$('#theme').onclick=()=>{const r=document.documentElement;
+ r.dataset.theme = r.dataset.theme==='light' ? '' : 'light';};
+const steps=[...document.querySelectorAll('.step')];
+function prog(){const seen=steps.filter(s=>s.getBoundingClientRect().top<innerHeight*0.7).length;
+ $('#prog').style.width=Math.round(seen/steps.length*100)+'%';}
+addEventListener('scroll',prog,{passive:true}); prog();
+
+const TYPES=["protocol.read","protocol.write","protocol.enumeration","protocol.anomaly",
+"discovery.scan","service.state","auth.success","auth.failure","integrity.change",
+"boundary.egress","process.alarm","log.gap"];
+const SEV=["info","low","medium","high","critical"];
+
+$('#btnPm').onclick=()=>{
+ const raw=$('#pmIn').value.trim(), out=$('#pmOut');
+ if(!raw){out.className='vout bad';out.textContent='Nothing pasted.';return;}
+ const rows=raw.split('\n').filter(l=>l.trim().startsWith('|')&&!/^\|[\s|:-]+\|$/.test(l.trim()));
+ const errs=[],warns=[];
+ const data=rows.filter(l=>!/\baddr\b|\bname\b|\bunits\b/i.test(l));
+ if(data.length<6) errs.push(`${data.length} point rows. The assignment asks for 6 to 12.`);
+ if(data.length>12) warns.push(`${data.length} point rows. The assignment asks for 6 to 12.`);
+ data.forEach((l,i)=>{
+  const c=l.split('|').map(x=>x.trim()).filter(Boolean);
+  if(c.length<4) errs.push(`row ${i+1} has ${c.length} columns; needs at least address, name, units and what it represents.`);
+  if(c.length>=2 && /^(tbd|todo|\.\.\.|xxx)$/i.test(c[1])) errs.push(`row ${i+1} name is a placeholder.`);
+ });
+ if(!/scal|x10|×10|decimal/i.test(raw)) warns.push('Nothing about scaling. If any value has a decimal point, say where the scale factor lives.');
+ if(!/cannot|does not represent|limits/i.test(raw)) warns.push('No "what this does not represent" section found in what you pasted.');
+ out.className='vout '+(errs.length?'bad':'good');
+ out.textContent=(errs.length?'PROBLEMS\n'+errs.map(e=>'  - '+e).join('\n')+'\n\n':'Shape looks right. '+data.length+' points.\n\n')
+  +(warns.length?'WORTH CHECKING\n'+warns.map(w=>'  - '+w).join('\n'):'');
+};
+
+$('#btnEv').onclick=()=>{
+ const raw=$('#evIn').value.trim(), out=$('#evOut');
+ if(!raw){out.className='vout bad';out.textContent='Nothing pasted.';return;}
+ let o; try{o=JSON.parse(raw);}catch(e){out.className='vout bad';
+  out.textContent='DOES NOT PARSE\n\n'+e.message+'\n\nThe SIEM returns 400 for this.';return;}
+ const errs=[],warns=[];
+ ['ts','system','purdue_level','event_type','severity','message'].forEach(k=>{
+  if(!(k in o)) errs.push('missing required key: '+k);});
+ if(o.ts && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(o.ts))
+  errs.push('ts must be ISO 8601 UTC ending in Z, e.g. 2026-10-03T14:22:11Z');
+ if(o.event_type && !TYPES.includes(o.event_type))
+  warns.push(`event_type "${o.event_type}" is not in the taxonomy; it is accepted but flagged.`);
+ if(o.severity && !SEV.includes(o.severity))
+  errs.push(`severity "${o.severity}" must be one of ${SEV.join(', ')}`);
+ if(typeof o.purdue_level!=='number') errs.push('purdue_level must be a number');
+ if(o.message && o.message.length>500) warns.push('message is over 500 chars and will be truncated.');
+ if(o.message && /^(test|asdf|hello|foo)/i.test(o.message)) warns.push('message looks like a placeholder. It is what appears on the dashboard.');
+ if(o.event_type==='protocol.write' && !o.target) warns.push('a protocol.write with no target does not say what was written.');
+ out.className='vout '+(errs.length?'bad':'good');
+ out.textContent=(errs.length?'THE SIEM WILL REJECT THIS\n'+errs.map(e=>'  - '+e).join('\n')+'\n\n':'Valid. The SIEM will accept it.\n\n')
+  +(warns.length?'FLAGS\n'+warns.map(w=>'  - '+w).join('\n'):'');
+};
+</script>
