@@ -1,4 +1,4 @@
-<title>W2 Workflow Guide</title>
+<title>W3 Workflow Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -213,10 +213,21 @@ systemctl --user enable --now plant-&lt;yoursystem&gt; plant-&lt;yoursystem&gt;-
 systemctl --user status plant-&lt;yoursystem&gt;</pre></div>
 <p>Lingering is already on for your account, so services survive logout and reboot. The probe
 checks that they come back.</p>
-<p>Then capture your own traffic:</p>
-<div class="prompt"><pre>sudo tcpdump -i lo -w ~/capture.pcap port 5051
-# from your laptop, to view an HMI:
-ssh -N -L 5050:127.0.0.1:5050 dcs@plant.sanctumsec.com</pre></div>
+<p>Then capture traffic. No <code>sudo</code>: <code>tcpdump</code> on the host has the
+capture capability, and you do not have sudo (that is deliberate). Capture on loopback,
+where the ICS traffic is:</p>
+<div class="prompt"><pre>tcpdump -i lo -w ~/capture.pcap
+# from your laptop, to view your HMI in a browser:
+ssh -N -L &lt;yourport&gt;:127.0.0.1:&lt;yourport&gt; &lt;yoursystem&gt;@plant.sanctumsec.com</pre></div>
+<div class="note warn"><b>Loopback on this host is shared, and that is the point.</b> Every
+system binds to <code>127.0.0.1</code> on the same machine, so a capture on <code>lo</code> shows
+the <em>whole plant's</em> loopback traffic, not only yours: your classmates' Modbus, their HMIs,
+the SIEM posts, all of it. Yours is just as visible to them. That is not a bug to filter out; it
+is the answer to "what does an observer on this network learn without sending a packet," which
+your <code>network-analysis.md</code> has to address. It is also why loopback on a shared host is
+not a security boundary, which is a W4 question. Filter to your own port with
+<code>port &lt;n&gt;</code> when you want a clean view; leave the filter off when you want to see
+what an eavesdropper would.</div>
 <div class="note"><b>Wireshark will not dissect Modbus on a non-standard port.</b> Your service is
 not on 502, so use <b>Decode As &rarr; Modbus/TCP</b>. Discovering that is a better lesson about
 port-based assumptions than any paragraph.</div>
