@@ -1,0 +1,80 @@
+<h3>Workshop 4 — Access Control Policy Design</h3>
+<p>W4 is worth 30 points and is due <strong>October 15, 11:59 PM MT</strong>. W3 showed you what the protocol cannot protect. W4 asks what you wrap around it: real roles, real zones, and a real adversary to test your design against. The sequence matters — design first, attack second, revise third. If you attack before you write the policy, you will write a policy that conveniently covers what already happened.</p>
+
+<p>After October 15, each system changes hands. The person who takes yours for W5 will respond to a real incident on it. <code>RUNBOOK.md</code> is the document they will have. Write it for a stranger who has never seen your system.</p>
+
+<h3>Your system</h3>
+<p>You are working on the same system you built for W3. All five primary deliverables describe that system and its real access control mechanisms on the lab host.</p>
+
+<h3>Pivot pairings for Attack C</h3>
+<p>Attack C requires a partner. Contact yours before you start — you build the path together, then each of you uses it.</p>
+<table>
+<tr><th>Pair</th><th>Systems</th><th>Boundary</th></tr>
+<tr><td>Tiffany Fuhrmann &amp; Sindi Banda</td><td>PSI ↔ EDGC</td><td>L3 → L1</td></tr>
+<tr><td>Jeremiah Robinson &amp; Dylan McCallum</td><td>SMR ↔ RPS</td><td>L2 → L1</td></tr>
+<tr><td>Santiago Vargas &amp; Dominick Wheeler</td><td>RMS ↔ SFPCM</td><td>L2 → L1</td></tr>
+<tr><td>Sarah McGuire &amp; Tamas Gyalay</td><td>DCS ↔ TCS</td><td>L2 → L2</td></tr>
+</table>
+<p>Each pair runs the pivot in both directions: you attack your partner's system once and your partner attacks yours once. You may only reach your partner's system through a path the two of you agreed to and built together — no scanning, no existing architecture links.</p>
+<p><strong>Fallback:</strong> if your partner's system is down when you need it, document the attempt and what you confirmed on your own side. A documented failed attempt earns the same credit as a success.</p>
+
+<h3>Rules of engagement</h3>
+<ul>
+<li><strong>DEMO is out of scope.</strong> Do not touch the DEMO system.</li>
+<li><strong>OT-SIEM is out of scope.</strong> Do not write to it, delete from it, or attempt to manipulate what it records.</li>
+<li><strong>The host itself is out of scope.</strong> No privilege escalation, no other users' home directories, no <code>/etc</code>, no installing packages outside your own account.</li>
+<li><strong>Only the path you built together.</strong> For the pivot, you may only use the connection you and your partner created.</li>
+<li><strong>Document everything.</strong> Every action that touches the plant goes in your session log and <code>adversary-test.md</code>. An undocumented action that affects another system is a course integrity issue.</li>
+</ul>
+
+<h3>Deliverable 1 — rbac-policy.md</h3>
+<p>Commit to <code>workshops/week-04/rbac-policy.md</code>. Seven roles: Plant Operator, Supervisor, Cybersecurity Manager, Maintenance Technician, Vendor/Contractor, Emergency Response, IT Administrator.</p>
+<p>For each role, state what they are allowed to do on your system, what they are not, and <strong>what the actual enforcement mechanism is on the lab host</strong>. Name the mechanism as it exists: <code>authorized_keys</code>, HMI authentication, loopback binding, no sudo. Do not describe an abstraction — describe what is actually there. A policy that names a control that does not exist on the host is a plan, not a policy.</p>
+<p>Close the document with a "What This Policy Cannot Enforce" section. The host has real limits — shared role accounts, loopback reachability, no zone separation. Name them. These limits become the inputs to your attacks and your revision table.</p>
+
+<h3>Deliverable 2 — purdue-annotated-description.md</h3>
+<p>Commit to <code>workshops/week-04/purdue-annotated-description.md</code>. Run the Purdue Model annotation against the real lab topology: the status board, the architecture page, and a screenshot of your own HMI or service interface.</p>
+<p>The status board displays systems by Purdue level. The plant host has no zone separation — all eight systems share the same machine and the same loopback interface. Describe that gap specifically for your system. A model asked to annotate the architecture diagram will probably not notice it; catching that failure is the point of this deliverable.</p>
+<p>Include a table of boundary crossings involving your system: connected peer, protocol, Purdue boundary crossed, what the RBAC policy says, what the host actually enforces.</p>
+
+<h3>Deliverable 3 — adversary-test.md</h3>
+<p>Commit to <code>workshops/week-04/adversary-test.md</code>. Three attacks drawn from your W2 threat cards, run in order after you write the policy. Each attack is one of three types:</p>
+
+<h4>Attack A — Insider, against your own system</h4>
+<p>You hold the role account. You cannot attack authentication — you are the authenticated party. The question is what would have detected you, not what would have stopped you. Use access you are entitled to in a way you should not: write a setpoint outside the band you documented, read points no client of yours has read, stop and restart a service, clear a log. Then check the SIEM: is any of it distinguishable from your normal operation?</p>
+
+<h4>Attack B — Supply chain, with impact on a connected system</h4>
+<p>Your system trusts something: a library, a vendor file, a config a peer sends, a value taken on faith from upstream. Undermine that trust and show the consequence landing on a connected system. A supply chain compromise that stops at your own service is a local bug. One that changes what a peer believes or does is a supply chain attack.</p>
+
+<h4>Attack C — Pivot, into your system from your partner's</h4>
+<p>You and your partner build a path from one system to the other that does not currently exist — then use it. Document what you built: the connection mechanism, the ports, the loopback addresses. Then answer the question the whole week is about: once the pivot lands, what did your RBAC policy do about it, and how would you have known?</p>
+
+<p>For each attack, state the result: <strong>Executable</strong> (completed as described), <strong>Blocked</strong> (stopped by a named control), or <strong>Untestable</strong> (with an explanation). Include the relevant SIEM output or capture evidence. Close the document with a revision table: which RBAC policy items you changed after the attacks, and which gaps you accepted and why.</p>
+
+<h3>Deliverable 4 — RUNBOOK.md</h3>
+<p>Commit to <code>workshops/week-04/RUNBOOK.md</code>. A handover document for the person who takes your system for W5. They have never seen it. Write it so they can bring it up, understand every point, know what normal looks like, and know what the three W4 attacks revealed.</p>
+<p>Required sections: system identity (account, hostname, ports, protocol), start and stop commands, a complete point map (every register and coil, normal range, what out-of-range means), what normal polling looks like, known peer connections, how events reach the SIEM and what the monitoring gaps are, and a summary of the W4 attack findings for an operator.</p>
+<p>Grade criterion: would this document actually survive its author leaving? If the person taking over your system cannot bring it up and understand it from this document alone, it is incomplete.</p>
+
+<h3>Deliverable 5 — session-log.md</h3>
+<p>Commit to <code>workshops/week-04/session-log.md</code>. Log sessions as they happen. The coordination with your pivot partner counts as a session. Include at least one moment where you verified a claim the AI made about your system's access controls — access controls are exactly the area where models confidently describe controls that are not there.</p>
+
+<h3>Secondary repo — synthesis.md</h3>
+<p>Commit to <code>role-analyses/week-04/synthesis.md</code>. Two roles: <strong>Plant Cybersecurity Manager</strong> and <strong>Physical Security Officer</strong>. Apply each role's lens to what W4 revealed: the RBAC gaps, the attack results, and the handover requirement.</p>
+<p>The interesting divergence here is about what "access control" means to each role. The Cybersecurity Manager reads it as authentication, authorization, and audit. The Physical Security Officer reads it as who can physically reach what. W4 puts those two definitions in direct contact — your pivot partner built a logical path that the physical layout would not have predicted. What does each role do with that?</p>
+
+<h3>Example student work</h3>
+<p>See <code>example-student-work/workshops/week-04/</code> in the course repo for a worked example using PSI and RMS as the pivot pair.</p>
+
+<h3>Repo cleanup</h3>
+<p>If your <code>workshops/week-04/</code> directory contains <code>ics-security-analysis.md</code>, delete it — that file is from an earlier template version. The new template files (<code>rbac-policy.md</code>, <code>purdue-annotated-description.md</code>, <code>adversary-test.md</code>, <code>RUNBOOK.md</code>) have been pushed directly to your repo. Run <code>git pull</code> to get them.</p>
+
+<h3>Point allocation (30 pts total)</h3>
+<table>
+<tr><th>Criterion</th><th>Points</th><th>What it measures</th></tr>
+<tr><td>Domain Accuracy</td><td>8</td><td>Policy mechanisms match the host; Purdue annotation names the real gap; attack evidence is specific</td></tr>
+<tr><td>AI Tool Use Quality</td><td>6</td><td>Session log shows verification of access control claims; AI errors caught and corrected</td></tr>
+<tr><td>Epistemic Integrity</td><td>6</td><td>Gaps accepted with stated reasons; attack results reported honestly including failures; RUNBOOK names monitoring gaps</td></tr>
+<tr><td>Analytical Depth</td><td>6</td><td>Revision table connects attack findings to policy changes; synthesis divergence goes beyond role labels</td></tr>
+<tr><td>Session Log Quality</td><td>4</td><td>Pivot coordination documented; AI claims about controls verified; reflection distinguishes what worked</td></tr>
+</table>
