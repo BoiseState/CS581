@@ -1,0 +1,43 @@
+{
+  "incident_summary": "",
+  "clock": {
+    "discovery_time": "",
+    "reconstructed_start": "",
+    "how_start_was_reconstructed": "",
+    "evidence_from_other_owners": []
+  },
+  "framework_analysis": {
+    "safety": {
+      "triggered": null,
+      "authority": "NRC-NRR / 10 CFR 50",
+      "notification_required": null,
+      "notification_deadline": "",
+      "notification_recipient": "",
+      "regulatory_basis": "",
+      "classification_basis": "adversely affected vs. could have affected a safety function; cite whose system evidence this rests on",
+      "open_questions": []
+    },
+    "security": {
+      "triggered": null,
+      "authority": "NRC-NSIR / 10 CFR 73.54",
+      "notification_required": null,
+      "notification_deadline": "",
+      "notification_recipient": "",
+      "regulatory_basis": "",
+      "clock_start_source": "which system's evidence sets the earliest adverse act, and who owns it",
+      "open_questions": []
+    },
+    "safeguards": {
+      "triggered": null,
+      "authority": "NRC-NMSS / 10 CFR 74 + IAEA",
+      "notification_required": null,
+      "notification_deadline": "",
+      "notification_recipient": "",
+      "regulatory_basis": "",
+      "open_questions": []
+    }
+  },
+  "coordination_gaps": [],
+  "immediate_actions": [],
+  "what_the_frameworks_do_not_resolve": ""
+}
