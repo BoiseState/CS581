@@ -1,20 +1,21 @@
 # Role Analysis — Module 6
 ## [Your Name] | Weeks 11–12
 
-**Role A:** Emergency Response Coordinator
+**Role A:** Incident Response Coordinator
 **Role B:** Supply Chain Manager
 
 ---
 
-## Role A Perspective: Emergency Response Coordinator
+## Role A Perspective: Incident Response Coordinator
 
 <!--
 How does this role read the Module 6 material?
-What does this role care most about — what is their primary concern,
-their authority, and their accountability?
+What does this role care most about: their primary concern, their authority, and their
+accountability?
 
-Apply that lens to the week's readings and to your W1 workshop artifact.
-What would this role flag, prioritize, or question in your attack surface map?
+Apply that lens to the system you inherited this week, the monitoring strategy you built for it, and
+your supply chain assessment. What would this role flag, prioritize, or question in how you are
+standing up and watching the new system?
 -->
 
 ---
