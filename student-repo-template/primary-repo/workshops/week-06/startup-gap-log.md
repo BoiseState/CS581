@@ -17,8 +17,11 @@ the live exposure the midterm incident left, what in the runbook not to trust, w
 
 ## Bringing it up
 
-<!-- Walk the startup using only the documentation you were given. Where did it carry you cleanly?
-Name the steps that worked and what you confirmed on the host. -->
+<!-- The system is already running on the host, so this is not a cold boot. Orient yourself and
+confirm its health using only the documentation you were given, and establish whether the changes
+described in runbook-update-received.md are actually live on the host or were only proposed on paper
+in the midterm. Where did the documentation carry you cleanly? Name the steps that worked and what you
+confirmed on the host. Do not restart shared services unless the documentation tells you to. -->
 
 ## Where the handoff held
 

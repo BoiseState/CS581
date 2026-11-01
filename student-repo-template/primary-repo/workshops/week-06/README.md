@@ -34,8 +34,10 @@ After the midterm closes, I place two files from the previous owner into this fo
 - `runbook-update-received.md`: the runbook changes they made because of the midterm incident
   (their midterm `runbook-update.md`).
 
-These two files plus the system's existing runbook are your starting point. Do not edit them; they
-are your input, the same way the midterm `scenario.md` was. Your access to the new system switches
+These two repo files, plus the system's existing runbook on the host, are your starting point. Do not
+edit `handoff-received.md` or `runbook-update-received.md`; they are your input, the same way the
+midterm `scenario.md` was. The existing runbook lives on the host, not in this folder, and as the new
+owner you keep it the way you kept your W5 system's runbook. Your access to the new system switches
 over on the host at the same time, so you can bring it up and confirm what the documents claim.
 
 ## The four deliverables
@@ -66,8 +68,10 @@ on GitHub, so they will not show in your submission. Leave them or delete them, 
 
 ## How to work
 
-- Read `handoff-received.md` and `runbook-update-received.md` before you touch the host, then bring
-  the system up and write the gap log as you go, not after.
+- Read `handoff-received.md` and `runbook-update-received.md` before you touch the host. The system is
+  already running, so bringing it up means orienting and verifying it against those docs, including
+  whether the runbook changes they describe are live on the host or only on paper, not a cold boot.
+  Write the gap log as you go, not after.
 - Keep occurrence, discovery, and verification distinct. A gap you confirmed on the host is not the
   same as one you suspect from reading.
 - Pull the CISA advisory live and cite it. Do not describe an advisory from memory.
