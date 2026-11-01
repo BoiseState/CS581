@@ -27,8 +27,10 @@ the assignment disagree, the assignment wins and please tell me so I can fix thi
 
 After the midterm closes, I place two files from the previous owner into this folder:
 
-- `handoff-received.md`: the handoff note the previous owner wrote you (their midterm
-  `stakeholder-comms.md`).
+- `handoff-received.md`: the previous owner's full midterm stakeholder notes (their
+  `stakeholder-comms.md`). It holds their coordination notes to other owners and, as its final
+  section, the handoff note written to you. The handoff section is the part written for you; the rest
+  is context on what the incident touched.
 - `runbook-update-received.md`: the runbook changes they made because of the midterm incident
   (their midterm `runbook-update.md`).
 
