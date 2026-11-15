@@ -10,10 +10,12 @@ Each paragraph names two things:
 - one thing you learned that is not in the course readings
 - one question you would ask the practitioner if you had more time
 
-Nine sessions are scheduled and **at least eight paragraphs are required**.
+Nine sessions are scheduled and **at least seven paragraphs are required**.
 
 **You do not have to attend live.** Every session is recorded and posted. Watching the recording
-earns the same credit as being on the call. Post by the Sunday following the session.
+earns the same credit as being on the call. Aim to post by the Sunday following the session.
+Late paragraphs earn the same credit. The final cutoff for all paragraphs is Thursday,
+December 10, 11:59 PM MT.
 
 ## 2. Practitioner Engagement, 100 points
 
