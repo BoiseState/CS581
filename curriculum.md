@@ -850,7 +850,9 @@ For the same nuclear plant, produce a supply chain threat assessment covering:
 # MODULE 7 — Incident Response
 ### Week 13 · Phase 6
 
-**Topics:** Incident Response in Nuclear Environments · Zimmerman's 10 Rules for Incident Response · NRC Notification Requirements
+**Topics:** Incident Response in Nuclear Environments · SOC Functional Areas (MITRE, *11 Strategies of a World-Class Cybersecurity Operations Center*) · NRC Notification Requirements
+
+> Correction (November 2026): earlier versions of this module named the source "Zimmerman's 10 Rules for Incident Response by Chris Zimmerman". The source is *11 Strategies of a World-Class Cybersecurity Operations Center* by Kathryn Knerler, Ingrid Parker and Carson Zimmerman (MITRE, 2022). The 2014 first edition had ten strategies; the 2022 edition has eleven. 10 CFR 73.71 was removed in 2023; security event notifications are now in 10 CFR 73.77 (cyber) and 73.1200 (physical).
 
 ---
 
@@ -860,10 +862,11 @@ For the same nuclear plant, produce a supply chain threat assessment covering:
 - Chapter 1 revisited through an IR lens: when security controls fail, what does the failure look like? What evidence survives? What does an attacker erase first? Anderson's failure mode taxonomy becomes an IR checklist when read backward.
 
 **Supplemental Primary Sources**
-1. **Zimmerman's 10 Rules for Incident Response** — the primary source document by Chris Zimmerman (Microsoft). Publicly available. Read all 10 rules carefully; they were written for enterprise IT but the tensions they surface are amplified in nuclear OT.
-2. **10 CFR 50.72** — *Immediate Notification Requirements for Operating Nuclear Power Reactors*. Read the triggering conditions and timing requirements. This is the Safety framework notification obligation.
-3. **10 CFR 73.71** — *Reporting of Safeguards Events*. The Security framework notification obligation. Compare the triggering conditions and timing to 50.72 — they are different, they may be triggered simultaneously, and they report to different recipients.
-4. **NIST SP 800-61 Rev. 2** — *Computer Security Incident Handling Guide* — Sections 1–3 (overview and detection/analysis phase). The foundational IT IR framework. Read it to understand what Zimmerman's rules are responding to — and where the nuclear OT context diverges from it.
+1. ***11 Strategies of a World-Class Cybersecurity Operations Center*** — Knerler, Parker and Zimmerman (MITRE, 2022), free from MITRE. About 50 of its 452 pages: Table 1, SOC Functional Categories and Functional Areas (pp. 14–16); Executive Summary (pp. 1–2); Strategy 5, Prioritize Incident Response (pp. 125–150); 7.7 Monitoring Operational Technology (pp. 231–234); 4.4 Pre-Plan for Staff Turn-Over (pp. 113–114); 2.1 Written Authorities (pp. 41–44); 10.3 Example Metrics (pp. 308–315); and the Summary page of each other strategy chapter.
+2. **10 CFR 50.72** — *Immediate Notification Requirements for Operating Nuclear Power Reactors*. The Safety framework notification obligation.
+3. **10 CFR 73.77** — *Cyber security event notifications*, and **10 CFR 73.1200** — *Notification of physical security events*. The Security framework notification obligations. Compare their triggering conditions and timing to 50.72: they differ, they may be triggered together, and they report to different recipients.
+4. **NIST SP 800-61 Rev. 2** — *Computer Security Incident Handling Guide* — Sections 1–3. The foundational IT incident handling framework, and the one Strategy 5 of the MITRE book builds on.
+5. **NUREG-1431** — *Standard Technical Specifications, Westinghouse Plants*. Used to find the limiting condition for operation that a containment action would enter.
 
 ---
 
@@ -873,74 +876,54 @@ For the same nuclear plant, produce a supply chain threat assessment covering:
 
 The Plant Cybersecurity Manager reads IR through the lens of: *"What do I actually do in the first four hours — preserve evidence, maintain plant operations, notify the NRC on the right timelines, manage my team, and not make the situation worse by taking an action I can't reverse?"* The NRC Security Inspector reads the same material asking: *"What documentation will I need to see to verify this incident was handled properly, and what would tell me the response was inadequate or that the licensee delayed notification?"*
 
-The divergence to look for: the plant manager is operating in real time with incomplete information and competing priorities. The inspector will review the response retrospectively with complete information. Zimmerman's rules were written for the person in the chair during the incident — but every rule has a documentation implication that the inspector will scrutinize later. Those two perspectives must both be held simultaneously during an actual response.
+The divergence to look for: the plant manager is operating in real time with incomplete information and competing priorities. The inspector will review the response retrospectively with complete information. The MITRE book is written for the people in the chair during the incident — but every response action has a documentation implication that the inspector will scrutinize later. Those two perspectives must both be held simultaneously during an actual response.
 
 **Deliverable:** `/role-analyses/week-07/synthesis.md`
 
 ---
 
-## Coding Agent Workshop — Workshop 7: Zimmerman in Nuclear Context
+## Coding Agent Workshop — Workshop 7: Incident on an Inherited System
 
-**Capability focus:** Full MCP stack — web search for current CISA advisories + web reader for live NRC regulatory text, combined in a single session. By this point in the course, MCP integration should be a routine part of your workflow.
+**Capability focus:** Full MCP stack — web search for a current CISA ICS advisory and web reader for live NRC regulatory text and Technical Specifications, combined in a single session.
 
-**The task:** Apply Zimmerman's 10 Rules for Incident Response to the nuclear operational environment. For each rule, produce a structured analysis covering how the rule applies, where the nuclear context creates constraints or contradictions, and what the notification implications are.
+**The task:** Two phases and one system rotation. In Phase 1 the student writes a readiness handoff (a one-page charter, after MITRE Section 2.1 and 4.4) for the system they hold. After the rotation, an incident is waiting on the system they inherit. They respond as its owner, with the plant's OT-SIEM, status board and a shared discussion as the plant's security operations center. No one sees the whole incident from one system, so owners exchange evidence in writing.
 
-**Required output structure:**
-
-For each of the 10 rules, produce a section with:
-
-```markdown
-## Rule [N]: [Rule Name]
-
-**The rule:** [Zimmerman's original statement]
-
-**How it applies in nuclear OT:**
-[Where the rule is directly applicable and how it maps to nuclear IR procedures]
-
-**Where the nuclear context creates constraints:**
-[What the rule assumes that is not true in a nuclear operational environment — legacy systems, safety primacy, operational continuity requirements, vendor dependencies]
-
-**Notification implications:**
-[If applying this rule generates evidence or reveals facts that trigger 10 CFR 50.72 or 73.71 notification, describe the obligation and timeline]
-
-**Confidence & Provenance:**
-[documented | inferred | theoretical — source]
-```
-
-Use MCP web search to pull a current CISA ICS advisory. For at least two of the 10 rules, demonstrate how the advisory's recommended mitigations interact with (support or complicate) the rule's application in a nuclear environment.
-
-**Output files:**
-- `/workshops/week-07/zimmerman-nuclear-application.md`
-- `/workshops/week-07/session-log.md`
+**Deliverables (primary repo, `/workshops/week-07/`):**
+- `readiness-handoff.md` (Phase 1).
+- `incident-record.md`: timeline with event, receipt and discovery time kept apart; triage; a physics check (a reading the plant could not have produced, shown from first principles and, where one exists, a neighboring system's reading; where the records establish only a disagreement, what each source supports and the independent measurement that would resolve it); an interface sheet for every link in and out of the system; a containment decision modeled on the book's Table 8 with the Technical Specification condition each action would enter; evidence preserved; and the notification analysis under 10 CFR 50.72, 73.77 and 73.1200.
+- `soc-capability-map.md`: seven capability cards, one functional area from each of the seven categories in the book's Table 1, each bound to the system's data, people and processes, with its dependencies, the adversary type it protects against, how long it holds (dwell time, time to respond or time to contain), what breaks it, and whether it was present, absent or defeated in this incident. One card is built for real: a detection for the system, from the student's W2 adversary or a current CISA ICS advisory, tested against the incident's events. Closes with the dependency chain across the cards and the shortest path to failure for the student's W2 adversary.
+- `prior-ownership-statement.md`: a post incident review (book Section 5.5) covering any system the student used to own that the evidence touches, with findings in the book's format. The student discloses and hands the thread to the current owner rather than investigating their own tenure.
+- `session-log.md`.
 
 ---
 
 ## KSA Developed — Module 7
 
 **Knowledge**
-- Zimmerman's 10 Rules for Incident Response and their enterprise IT assumptions
-- Where nuclear OT IR differs: legacy systems, safety primacy, operational continuity, regulatory notification obligations
-- NRC notification requirements: 10 CFR 50.72 (Safety) and 10 CFR 73.71 (Security) — timing, triggering conditions, recipients
+- The functional categories and areas of a security operations center (MITRE Table 1), and how they depend on each other
+- Where nuclear OT incident response differs: legacy systems, safety primacy, operational continuity, Technical Specification limits, regulatory notification obligations
+- NRC notification requirements: 10 CFR 50.72 (Safety), 73.77 and 73.1200 (Security) — timing, triggering conditions, recipients
 - The tension between evidence preservation and operational continuity in a nuclear plant event
-- NIST SP 800-61 incident handling lifecycle as the foundational framework
+- How plant systems interconnect: signal source, scaling, update rate, failure behavior and safety classification at each interface
 
 **Skills**
-- Applying general IR principles to domain-specific constraints
+- Mapping SOC capabilities onto a specific plant system's data, people and processes
+- Distinguishing a physically impossible reading from a disagreement between sources
 - MCP full stack: live advisory retrieval and regulatory text integration in a single session
 - NRC notification obligation analysis from incident facts
-- IR procedure documentation for regulatory review
 
 **Abilities**
-- Apply Zimmerman's rules while simultaneously tracking documentation obligations for post-incident regulatory review
-- Identify where an IR action that is correct from a security standpoint may conflict with nuclear operational or safety requirements
-- Produce an IR analysis that is useful both to the person in the chair during the incident and to an inspector reviewing it afterward
+- Respond to an incident on an inherited system while tracking documentation obligations for post-incident regulatory review
+- Identify where a response action that is correct from a security standpoint would enter a Technical Specification condition or conflict with safe operation
+- Disclose one's own prior involvement in an incident without clearing or convicting oneself beyond the evidence
+- Produce an incident record that is useful both to the person in the chair and to an inspector reviewing it afterward
 
 ---
 
 ## Employer Signal
 
 **Primary repo artifact** signals:
-> *"This candidate applied Zimmerman's IR framework to the nuclear OT context with specific attention to regulatory notification obligations — the kind of analysis that IR teams at NRC-regulated utilities use to prepare their response procedures."*
+> *"This candidate worked an incident on a nuclear plant system they had just inherited, mapped SOC capabilities onto it, weighed containment against Technical Specification limits, and tracked NRC notification obligations — and disclosed their own prior involvement cleanly."*
 
 **Secondary repo artifact** signals:
 > *"This candidate understands that the plant cybersecurity manager and the NRC Security Inspector are reading the same incident from fundamentally different temporal positions — one in real time, one retrospectively — and that every IR decision has a documentation consequence."*
